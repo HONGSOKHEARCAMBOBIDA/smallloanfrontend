@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:loanfrontend/core/constant/api_endpoint.dart';
 import 'package:loanfrontend/data/providers/api_provider.dart';
 class ClientService {
@@ -15,7 +17,7 @@ class ClientService {
     required String phone,
     required int villageId,
     String? notes,
-    File? clientImage,
+    XFile? clientImage,
   }) async {
     try {
       final formData = FormData.fromMap({
@@ -28,11 +30,18 @@ class ClientService {
         'phone': phone,
         'village_id': villageId,
         'notes': notes,
-        if (clientImage != null)
-          'clientimage': await MultipartFile.fromFile(
-            clientImage.path,
-            filename: clientImage.path.split('/').last,
-          ),
+   if (clientImage != null)
+  if (kIsWeb)
+    'clientimage': MultipartFile.fromBytes(
+      await clientImage.readAsBytes(),
+      filename: clientImage.name,
+    )
+  else
+    'clientimage': await MultipartFile.fromFile(
+      clientImage.path,
+      filename: clientImage.name,
+    ),
+
       });
       final response = await apiProvider.post(
         ApiEndpoint.addClient,

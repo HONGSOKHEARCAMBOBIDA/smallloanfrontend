@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:loanfrontend/module/client/clientservice/clientservice.dart';
@@ -10,16 +8,20 @@ class ClientController extends GetxController {
   final ImagePicker imagePicker = ImagePicker();
 
   var isLoading = false.obs;
-  var clientImage = Rx<File?>(null);
+  XFile? clientImage;
+Future<XFile?> pickImage() async {
+  final XFile? pickedFile = await imagePicker.pickImage(
+    source: ImageSource.gallery,
+  );
 
-  Future<void> pickImage() async {
-    final XFile? pickedFile =
-        await imagePicker.pickImage(source: ImageSource.gallery);
-
-    if (pickedFile != null) {
-      clientImage.value = File(pickedFile.path);
-    }
+  if (pickedFile != null) {
+    clientImage = pickedFile;
+    
+    return clientImage;
   }
+  return null;
+}
+
 
   Future<void> createclient({
     required String name,
@@ -45,7 +47,7 @@ class ClientController extends GetxController {
         phone: phone,
         villageId: villageId,
         notes: notes,
-        clientImage: clientImage.value,
+        clientImage: clientImage,
       );
 
       if (isCreated) {
@@ -54,6 +56,7 @@ class ClientController extends GetxController {
       }
     } catch (e) {
       CustomSnackbar.error(title: "Error", message: e.toString());
+      print(e.toString());
     } finally {
       isLoading.value = false;
     }

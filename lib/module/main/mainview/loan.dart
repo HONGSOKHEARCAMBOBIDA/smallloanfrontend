@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:loanfrontend/core/theme/app_color.dart';
 import 'package:loanfrontend/core/theme/text_styles.dart';
 import 'package:loanfrontend/share/widgets/app_bar.dart';
+import 'package:get/get.dart';
 
 class Loan extends StatelessWidget {
   const Loan({super.key});
@@ -15,6 +16,7 @@ class Loan extends StatelessWidget {
       body: isMobile ? _buildBody(context) : _buildWebLayout(context),
     );
   }
+
   Widget _buildWebLayout(BuildContext context) {
     return Row(
       children: [
@@ -28,6 +30,7 @@ class Loan extends StatelessWidget {
       ],
     );
   }
+
   Widget _buildDrawer({bool permanent = false}) {
     return Drawer(
       elevation: permanent ? 0 : 12,
@@ -56,14 +59,19 @@ class Loan extends StatelessWidget {
               padding: EdgeInsets.zero,
               children: [
                 _buildDrawerItem(Icons.dashboard, "សង្ខែបទិន្ន័យ", () {}),
-                _buildDrawerItem(Icons.group, "អតិថិជន", () {}),
+                _buildDrawerItem(Icons.group, "អតិថិជន", () {
+                  Get.toNamed('/createclient');
+                }),
                 _buildDrawerItem(Icons.add_circle_outline, "ស្នើកម្ចី", () {}),
-                _buildDrawerItem(Icons.task_alt, "កម្ចីត្រូវត្រួតពិនិត្យ", () {}),
+                _buildDrawerItem(
+                    Icons.task_alt, "កម្ចីត្រូវត្រួតពិនិត្យ", () {}),
                 _buildDrawerItem(Icons.verified, "កម្ចីត្រូវអនុម័ត", () {}),
                 _buildDrawerItem(Icons.list_alt, "បញ្ជីកម្ចីទាំងអស់", () {}),
-                _buildDrawerItem(Icons.request_quote, "បញ្ជីកម្ចីត្រូវប្រមូល", () {}),
+                _buildDrawerItem(
+                    Icons.request_quote, "បញ្ជីកម្ចីត្រូវប្រមូល", () {}),
                 _buildDrawerItem(Icons.attach_money, "លទ្ធផលប្រមូលបាន", () {}),
-                _buildDrawerItem(Icons.account_balance_wallet, "ផ្ទៀងលុយ", () {}),
+                _buildDrawerItem(
+                    Icons.account_balance_wallet, "ផ្ទៀងលុយ", () {}),
                 _buildDrawerItem(Icons.settings, "ការកំណត់", () {}),
               ],
             ),
@@ -71,13 +79,16 @@ class Loan extends StatelessWidget {
           // Logout button at bottom
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: _buildDrawerItem(Icons.logout, "ចាកចេញ", () {}, color: Colors.red),
+            child: _buildDrawerItem(Icons.logout, "ចាកចេញ", () {},
+                color: Colors.red),
           ),
         ],
       ),
     );
   }
-  Widget _buildDrawerItem(IconData icon, String title, VoidCallback onTap, {Color? color}) {
+
+  Widget _buildDrawerItem(IconData icon, String title, VoidCallback onTap,
+      {Color? color}) {
     return Builder(
       builder: (context) => ListTile(
         leading: Icon(icon, color: color ?? TheColors.errorColor),
@@ -94,6 +105,7 @@ class Loan extends StatelessWidget {
       ),
     );
   }
+
   Widget _buildBody(BuildContext context) {
     return Center(
       child: Text(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:loanfrontend/core/theme/app_color.dart';
 import 'package:loanfrontend/module/main/maincontroller/maincontroller.dart';
