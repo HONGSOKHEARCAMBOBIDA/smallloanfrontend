@@ -11,16 +11,19 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     Key? key,
     required this.title,
     this.backgroundColor = TheColors.errorColor, // Default color
-    this.height = 50, // Default height
+    this.height = 70, // Default height
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
       child: AppBar(
-        title: Text(title,
-            style: TextStyles.siemreap(context,
-                color: TheColors.bgColor, fontSize: 16)),
+        title: Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: Text(title,
+              style: TextStyles.moul(context,
+                  color: TheColors.warningColor, fontSize: 20)),
+        ),
         centerTitle: true,
         backgroundColor: backgroundColor,
         iconTheme: IconThemeData(

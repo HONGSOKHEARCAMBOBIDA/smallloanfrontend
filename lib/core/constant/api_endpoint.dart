@@ -3,8 +3,9 @@ class ApiEndpoint {
   static const String listClient = "listclient";
   static const String addClient = "addclient";
 
+
   // Endpoints with dynamic parameters
-  static String editClient(String id) => "editclient/$id";
+  static String editClient(int id) => "editclient/$id";
   static String changeStatusClient(String id) => "changestatusclient/$id";
 
   static const String viewProvince = "viewprovince"; 

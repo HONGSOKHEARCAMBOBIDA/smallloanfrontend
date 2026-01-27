@@ -9,7 +9,7 @@ class CustomSnackbar {
       '',
       '',
       snackPosition: SnackPosition.TOP,
-      backgroundColor: Colors.transparent,
+      backgroundColor: TheColors.successColor,
       borderRadius: 12,
       margin: const EdgeInsets.all(12),
       duration: const Duration(seconds: 3),
@@ -17,17 +17,11 @@ class CustomSnackbar {
       dismissDirection: DismissDirection.horizontal,
       forwardAnimationCurve: Curves.easeOutCubic,
       reverseAnimationCurve: Curves.easeInCubic,
-
-      // Background container with gradient
       snackStyle: SnackStyle.FLOATING,
-      boxShadows: [
-        BoxShadow(
-          color: TheColors.successColor,
-          blurRadius: 12,
-          spreadRadius: 1,
-          offset: Offset(0, 4),
-        ),
-      ],
+
+      // Remove shadow
+      boxShadows: [],
+
       icon: Container(
         padding: EdgeInsets.all(8),
         decoration: BoxDecoration(
@@ -41,7 +35,6 @@ class CustomSnackbar {
         ),
       ),
 
-      // Title
       titleText: Text(
         title,
         style: GoogleFonts.siemreap(
@@ -52,7 +45,6 @@ class CustomSnackbar {
         ),
       ),
 
-      // Message
       messageText: Text(
         message,
         style: GoogleFonts.siemreap(
@@ -64,30 +56,21 @@ class CustomSnackbar {
     );
   }
 
-  // Error Snackbar - Rich Red with Gradient
   static void error({required String title, required String message}) {
     Get.snackbar(
       '',
       '',
       snackPosition: SnackPosition.TOP,
-      backgroundColor: Colors.transparent,
+      backgroundColor: TheColors.red,
       borderRadius: 12,
       margin: const EdgeInsets.all(12),
       duration: const Duration(seconds: 4),
       isDismissible: true,
       forwardAnimationCurve: Curves.easeOutBack,
 
-      // Shadow
-      boxShadows: [
-        BoxShadow(
-          color: TheColors.red,
-          blurRadius: 15,
-          spreadRadius: 1,
-          offset: Offset(0, 4),
-        ),
-      ],
+      // Remove shadow
+      boxShadows: [],
 
-      // Icon with circular background
       icon: Container(
         padding: EdgeInsets.all(8),
         decoration: BoxDecoration(
@@ -118,7 +101,6 @@ class CustomSnackbar {
         ),
       ),
 
-      // Optional: Add a dismiss icon
       mainButton: TextButton(
         child: Icon(
           Icons.close,

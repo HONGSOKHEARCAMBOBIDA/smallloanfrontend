@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:loanfrontend/module/auth/binding/authbinding.dart';
 import 'package:loanfrontend/module/auth/view/loginview.dart';
 import 'package:loanfrontend/module/client/clientbinding/clientbinding.dart';
+import 'package:loanfrontend/module/client/clientview/clientview.dart';
 import 'package:loanfrontend/module/client/clientview/createclientview.dart';
 import 'package:loanfrontend/module/communce/communcebinding/communcebinding.dart';
 import 'package:loanfrontend/module/district/districtbinding/districtbinding.dart';
@@ -34,6 +35,11 @@ class AppPage {
         Communcebinding(),
         Villagebinding(),
       ]
+      ),
+    GetPage(
+      name: '/listclient', 
+      page: ()=>Clientview(),
+      binding: Clientbinding()
       )
 
       

@@ -3,6 +3,7 @@ import 'package:loanfrontend/core/theme/app_color.dart';
 import 'package:loanfrontend/core/theme/text_styles.dart';
 import 'package:loanfrontend/share/widgets/app_bar.dart';
 import 'package:get/get.dart';
+import 'package:loanfrontend/share/widgets/common_widgets.dart';
 
 class Loan extends StatelessWidget {
   const Loan({super.key});
@@ -44,10 +45,10 @@ class Loan extends StatelessWidget {
               child: Builder(
                 builder: (context) => Text(
                   'ផ្នែកកម្ចី',
-                  style: TextStyles.siemreap(
+                  style: TextStyles.moul(
                     context,
-                    fontweight: FontWeight.bold,
-                    color: permanent ? TheColors.errorColor : TheColors.bgColor,
+                    fontSize: CommonWidgets.fontsize20,
+                    color: permanent ? TheColors.errorColor : TheColors.warningColor,
                   ),
                 ),
               ),
@@ -60,7 +61,7 @@ class Loan extends StatelessWidget {
               children: [
                 _buildDrawerItem(Icons.dashboard, "សង្ខែបទិន្ន័យ", () {}),
                 _buildDrawerItem(Icons.group, "អតិថិជន", () {
-                  Get.toNamed('/createclient');
+                  Get.toNamed('/listclient');
                 }),
                 _buildDrawerItem(Icons.add_circle_outline, "ស្នើកម្ចី", () {}),
                 _buildDrawerItem(
@@ -94,9 +95,9 @@ class Loan extends StatelessWidget {
         leading: Icon(icon, color: color ?? TheColors.errorColor),
         title: Text(
           title,
-          style: TextStyles.siemreap(
+          style: TextStyles.kantomruy(
             context,
-            fontSize: 11,
+            fontSize: CommonWidgets.fontsize15,
             color: color ?? Colors.black87,
           ),
         ),

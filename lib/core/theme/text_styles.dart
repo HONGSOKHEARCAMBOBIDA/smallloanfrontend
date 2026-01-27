@@ -12,10 +12,19 @@ class TextStyles {
   }
 
   // Add more custom text styles as needed
-  static TextStyle anotherStyle(BuildContext context, {double fontSize = 14, Color color = Colors.blue}) {
-    return GoogleFonts.koulen(
+  static TextStyle moul(BuildContext context, {double fontSize = 14, Color color = Colors.blue}) {
+    return GoogleFonts.moul(
       fontSize: fontSize,
       color: color,
     );
   }
+
+  static TextStyle kantomruy(BuildContext context, {double fontSize = 14, Color color = Colors.blue,FontWeight fontweight =FontWeight.normal,}) {
+    return GoogleFonts.kantumruyPro(
+      fontSize: fontSize,
+      color: color,
+       fontWeight: fontweight
+    );
+  }
+
 }

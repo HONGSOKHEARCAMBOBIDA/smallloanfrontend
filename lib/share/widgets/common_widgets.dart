@@ -42,4 +42,6 @@ class CommonWidgets {
   static const radius = 12.0;
   static const borderwidth = 0.5;
   static const fontsize12 = 12.0;
+  static const fontsize20 = 20.0;
+  static const fontsize15 = 15.0;
 }

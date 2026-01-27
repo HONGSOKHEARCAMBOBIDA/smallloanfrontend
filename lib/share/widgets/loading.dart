@@ -15,7 +15,7 @@ class CustomLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: LoadingAnimationWidget.progressiveDots(
+      child: LoadingAnimationWidget.beat(
         color: color,
         size: size,
       ),
