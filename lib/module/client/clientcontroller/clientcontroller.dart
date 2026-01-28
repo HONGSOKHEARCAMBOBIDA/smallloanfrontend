@@ -88,6 +88,10 @@ class ClientController extends GetxController {
     bool isRefresh = false,
     bool loadMore = false,
   }) async {
+  // var isLoading = false.obs;
+  // var isLoadingMore = false.obs;
+  // var hasMore = true.obs; // Make it observable
+  // var currentPage = 1.obs; // Make it observable
     if (loadMore && (!hasMore.value || isLoadingMore.value)) return;
 
     try {

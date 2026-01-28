@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:loanfrontend/core/constant/constants.dart';
 import 'package:loanfrontend/core/theme/app_color.dart';
 import 'package:loanfrontend/core/theme/text_styles.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class Clientcard extends StatelessWidget {
   final String name;
@@ -61,18 +62,29 @@ class Clientcard extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  @override
   Widget build(BuildContext context) {
+    // responsive helpers
+    final breakpoints = ResponsiveBreakpoints.of(context);
+    final bool isMobile = breakpoints.isMobile;
+    final bool isTablet = breakpoints.isTablet;
+    final bool isDesktop = breakpoints.isDesktop;
+
+    // responsive sizes
+    final double avatarRadius = isMobile ? 36 : (isTablet ? 44 : 56);
+    final double iconSize = isMobile ? 12 : 14;
+    final double nameFontSize = isMobile ? 13 : (isTablet ? 14 : 16);
+    final double smallFontSize = isMobile ? 12 : 15;
+    final double cardPadding = isMobile ? 10 : 12;
+
     int calculateAge(String dob) {
       DateTime birthDate = DateTime.parse(dob);
       DateTime today = DateTime.now();
-
       int age = today.year - birthDate.year;
-
       if (today.month < birthDate.month ||
           (today.month == birthDate.month && today.day < birthDate.day)) {
         age--;
       }
-
       return age;
     }
 
@@ -83,17 +95,17 @@ class Clientcard extends StatelessWidget {
       onTap: onTap,
       borderRadius: BorderRadius.circular(18.0),
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+        margin:
+            EdgeInsets.symmetric(horizontal: isMobile ? 8 : 18, vertical: 1),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(18),
           border: Border.all(color: TheColors.orange, width: 0.5),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: EdgeInsets.all(cardPadding),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Avatar with online/offline dot
               Stack(
                 children: [
                   Container(
@@ -102,12 +114,12 @@ class Clientcard extends StatelessWidget {
                         color: TheColors.warningColor,
                         width: 0.9,
                       ),
-                      borderRadius: BorderRadius.circular(50),
+                      borderRadius: BorderRadius.circular(isMobile ? 50 : 60),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(2.0),
                       child: CircleAvatar(
-                        radius: 44,
+                        radius: avatarRadius,
                         backgroundColor: TheColors.bgColor,
                         backgroundImage: imagePath.isNotEmpty
                             ? NetworkImage(
@@ -122,8 +134,8 @@ class Clientcard extends StatelessWidget {
                     bottom: 2,
                     right: 2,
                     child: Container(
-                      width: 14,
-                      height: 14,
+                      width: isMobile ? 12 : 14,
+                      height: isMobile ? 12 : 14,
                       decoration: BoxDecoration(
                         color:
                             isActive ? TheColors.successColor : TheColors.red,
@@ -137,141 +149,151 @@ class Clientcard extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(width: 16),
+              SizedBox(width: isMobile ? 12 : 25),
               // Client info
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Name row
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          Text(
-                            "$name",
-                            style: TextStyles.siemreap(
-                              context,
-                              fontSize: 13,
-                              fontweight: FontWeight.bold,
+                child: Padding(
+                  padding: EdgeInsets.all(isMobile ? 0.0 : 8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Name row
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            Text(
+                              name,
+                              style: TextStyles.siemreap(
+                                context,
+                                fontSize: nameFontSize,
+                                fontweight: FontWeight.bold,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 4),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
+                      SizedBox(height: 4),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            Text(
+                              "មុខរបរ : ",
+                              style: GoogleFonts.siemreap(
+                                fontSize: smallFontSize,
+                                color: TheColors.successColor,
+                              ),
+                            ),
+                            SizedBox(width: 4),
+                            Text(
+                              occupation,
+                              style: GoogleFonts.siemreap(
+                                fontSize: smallFontSize,
+                                color: TheColors.red,
+                              ),
+                            ),
+                            SizedBox(width: 8),
+                            Text(
+                              "ភេទ : ",
+                              style: GoogleFonts.siemreap(
+                                fontSize: smallFontSize,
+                                color: TheColors.successColor,
+                              ),
+                            ),
+                            SizedBox(width: 4),
+                            Text(
+                              gender == 1 ? "ប្រុស" : "ស្រី",
+                              style: GoogleFonts.siemreap(
+                                fontSize: smallFontSize,
+                                color: TheColors.orange,
+                              ),
+                            ),
+                            SizedBox(width: 8),
+                            Text(
+                              "អាយុ: ",
+                              style: GoogleFonts.siemreap(
+                                fontSize: smallFontSize,
+                                color: TheColors.successColor,
+                              ),
+                            ),
+                            SizedBox(width: 4),
+                            Text(
+                              "${calculateAge(dateOfBirth)} ឆ្នាំ",
+                              style: GoogleFonts.siemreap(
+                                fontSize: smallFontSize,
+                                color: TheColors.orange,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 6),
+                      // Phone number
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            Icon(Icons.phone,
+                                size: iconSize,
+                                color: TheColors.secondaryColor),
+                            SizedBox(width: 6),
+                            Text(
+                              phone,
+                              style: TextStyles.siemreap(context,
+                                  color: TheColors.secondaryColor,
+                                  fontSize: smallFontSize),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 6),
+                      Row(
                         children: [
                           Text(
-                            "មុខរបរ : ",
+                            "លេខអត្តសញ្ញាណបណ្ណ : ",
                             style: GoogleFonts.siemreap(
-                              fontSize: 12,
+                              fontSize: smallFontSize,
                               color: TheColors.successColor,
                             ),
                           ),
-                          const SizedBox(width: 4),
+                          SizedBox(width: 4),
                           Text(
-                            occupation,
+                            idCardNumber,
                             style: GoogleFonts.siemreap(
-                              fontSize: 12,
-                              color: TheColors.red,
-                            ),
-                          ),
-                          const SizedBox(width: 4),
-                          Text(
-                            "ភេទ : ",
-                            style: GoogleFonts.siemreap(
-                              fontSize: 12,
-                              color: TheColors.successColor,
-                            ),
-                          ),
-                          const SizedBox(width: 4),
-                          Text(
-                            gender == 1 ? "ប្រុស" : "ស្រី",
-                            style: GoogleFonts.siemreap(
-                              fontSize: 12,
+                              fontSize: smallFontSize,
                               color: TheColors.orange,
                             ),
                           ),
-                          const SizedBox(width: 4),
-                          Text(
-                            "អាយុ: : ",
-                            style: GoogleFonts.siemreap(
-                              fontSize: 12,
-                              color: TheColors.successColor,
-                            ),
-                          ),
-                          const SizedBox(width: 4),
-                          Text(
-                            "${calculateAge(dateOfBirth)} ឆ្នាំ",
-                            style: GoogleFonts.siemreap(
-                              fontSize: 12,
-                              color: TheColors.orange,
-                            ),
-                          ),
                         ],
                       ),
-                    ),
-                    const SizedBox(height: 4),
-                    // Phone number
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          const Icon(Icons.phone,
-                              size: 12, color: TheColors.secondaryColor),
-                          const SizedBox(width: 4),
-                          Text(
-                            phone,
-                            style: TextStyles.siemreap(context,
-                                color: TheColors.secondaryColor, fontSize: 11),
-                          ),
-                        ],
+                      SizedBox(height: 4),
+                      // Location
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        physics:
+                            const BouncingScrollPhysics(), // smooth scroll (optional)
+                        child: Row(
+                          children: [
+                            Icon(Icons.location_on,
+                                size: iconSize,
+                                color: TheColors.secondaryColor),
+                            const SizedBox(width: 6),
+                            Text(
+                              "$villageName, $communceName, $districtName, $provinceName",
+                              style: TextStyles.siemreap(
+                                context,
+                                fontSize: smallFontSize,
+                                color: TheColors.secondaryColor,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 4),
-                    Row(
-                      children: [
-                        Text(
-                          "លេខអត្តសញ្ញាណបណ្ណ : ",
-                          style: GoogleFonts.siemreap(
-                            fontSize: 12,
-                            color: TheColors.successColor,
-                          ),
-                        ),
-                        const SizedBox(width: 4),
-                        Text(
-                          idCardNumber,
-                          style: GoogleFonts.siemreap(
-                            fontSize: 12,
-                            color: TheColors.orange,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 4),
-                    // Location
-                    Row(
-                      children: [
-                        const Icon(Icons.location_on,
-                            size: 12, color: TheColors.secondaryColor),
-                        const SizedBox(width: 4),
-                        Expanded(
-                          child: Text(
-                            "$villageName, $communceName, $districtName, $provinceName",
-                            style: TextStyles.siemreap(context,
-                                fontSize: 11, color: TheColors.secondaryColor),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               _buildActionMenu(context),
@@ -283,10 +305,15 @@ class Clientcard extends StatelessWidget {
   }
 
   Widget _buildActionMenu(BuildContext context) {
+    final breakpoints = ResponsiveBreakpoints.of(context);
+    final bool isMobile = breakpoints.isMobile;
+    final double iconSize = isMobile ? 18 : 20;
+
     return PopupMenuButton<String>(
       icon: Icon(
         Icons.more_vert,
         color: Theme.of(context).iconTheme.color?.withOpacity(0.7),
+        size: iconSize,
       ),
       color: TheColors.bgColor,
       elevation: 3,
@@ -299,15 +326,13 @@ class Clientcard extends StatelessWidget {
         } else if (value == 'delete') {
           onDelete();
         }
-        // Note: Other actions (promote, changeshift, etc.) are not available
-        // since you don't have those callbacks in your parameters
       },
       itemBuilder: (context) => [
         PopupMenuItem(
           value: 'edit',
           child: Row(
             children: [
-              const Icon(Icons.edit, color: TheColors.orange, size: 20),
+              Icon(Icons.edit, color: TheColors.orange, size: iconSize),
               const SizedBox(width: 8),
               Text('កែប្រែ', style: TextStyles.siemreap(context, fontSize: 12)),
             ],
@@ -320,7 +345,7 @@ class Clientcard extends StatelessWidget {
               Icon(
                 isActive ? Icons.block : Icons.check_circle,
                 color: isActive ? TheColors.errorColor : TheColors.successColor,
-                size: 20,
+                size: iconSize,
               ),
               const SizedBox(width: 8),
               Text(
