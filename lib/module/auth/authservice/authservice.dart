@@ -8,7 +8,10 @@ class AuthService {
     try {
       final body = {'username': username, 'password': password};
 
-      final response = await apiProvider.post("login", body);
+      final response = await apiProvider.post(
+        "login",
+        body,
+      );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         return LoginResModel.fromJson(response.data);

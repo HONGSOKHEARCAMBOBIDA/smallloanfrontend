@@ -53,6 +53,7 @@ dependencies:
   url_launcher: ^6.3.2
   jwt_decoder: ^2.0.1
   responsive_framework: ^1.5.1
+  uuid: ^4.5.2
 
 dev_dependencies:
   flutter_test:

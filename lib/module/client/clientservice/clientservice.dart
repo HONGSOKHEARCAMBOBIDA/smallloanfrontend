@@ -3,12 +3,14 @@ import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:loanfrontend/core/constant/api_endpoint.dart';
 import 'package:loanfrontend/data/models/clientlistmodel.dart';
+import 'package:loanfrontend/data/models/clientmodel.dart' as clientmodel;
 import 'package:loanfrontend/data/providers/api_provider.dart';
 
 class ClientService {
   final ApiProvider apiProvider = ApiProvider();
 
   Future<bool> createclient({
+    required String idempotency,
     required String name,
     required int gender,
     required String maritalStatus,
@@ -43,10 +45,8 @@ class ClientService {
               filename: clientImage.name,
             ),
       });
-      final response = await apiProvider.post(
-        ApiEndpoint.addClient,
-        formData,
-      );
+      final response = await apiProvider.post(ApiEndpoint.addClient, formData,
+          idempotency: idempotency);
       return response.statusCode == 200 || response.statusCode == 201;
     } on DioException catch (e) {
       throw Exception(e.response?.data ?? "Network error");
@@ -71,6 +71,21 @@ class ClientService {
       if (response.statusCode == 200) {
         final json = response.data;
         final model = ListClientModel.fromJson(json);
+        return model.data ?? [];
+      } else {
+        throw Exception("Failed ${response.statusCode}");
+      }
+    } catch (e) {
+      throw Exception("Failed ${e.toString()}");
+    }
+  }
+
+  Future<List<clientmodel.Data>> getclientforcreateloan() async {
+    try {
+      final response = await apiProvider.get(ApiEndpoint.viewClient);
+      if (response.statusCode == 200) {
+        final json = response.data;
+        final model = clientmodel.ViewClientModel.fromJson(json);
         return model.data ?? [];
       } else {
         throw Exception("Failed ${response.statusCode}");

@@ -27,6 +27,7 @@ class _ClientviewState extends State<Clientview> {
 
   @override
   void initState() {
+    clientcontroller.listclient();
     super.initState();
     _scrollController.addListener(_onScroll);
   }
@@ -98,42 +99,45 @@ class _ClientviewState extends State<Clientview> {
                   child: Column(
                     children: [
                       Padding(
-                        padding:  EdgeInsets.only(left: 8, right: 8,top: isMobile ? 0 : 30),
+                        padding: EdgeInsets.only(
+                            left: 8, right: 8, top: isMobile ? 0 : 30),
                         child: Row(
                           children: [
-                          isMobile
-    ? Expanded(
-        child: SizedBox(
-          height: searchHeight,
-          child: CustomTextField(
-            controller: searchQuery,
-            hintText: "ស្វែងរក".tr,
-            prefixIcon: Icons.search,
-            onChanged: (value) {
-              clientcontroller.searchQuery.value = value;
-            },
-          ),
-        ),
-      )
-    : Padding(
-      padding: const EdgeInsets.only(left: 10),
-      child: SizedBox(
-          width: 500,
-          height: searchHeight,
-          child: CustomTextField(
-            controller: searchQuery,
-            hintText: "ស្វែងរក".tr,
-            prefixIcon: Icons.search,
-            onChanged: (value) {
-              clientcontroller.searchQuery.value = value;
-            },
-          ),
-        ),
-    ),
-
+                            isMobile
+                                ? Expanded(
+                                    child: SizedBox(
+                                      height: searchHeight,
+                                      child: CustomTextField(
+                                        controller: searchQuery,
+                                        hintText: "ស្វែងរក".tr,
+                                        prefixIcon: Icons.search,
+                                        onChanged: (value) {
+                                          clientcontroller.searchQuery.value =
+                                              value;
+                                        },
+                                      ),
+                                    ),
+                                  )
+                                : Padding(
+                                    padding: const EdgeInsets.only(left: 10),
+                                    child: SizedBox(
+                                      width: 500,
+                                      height: searchHeight,
+                                      child: CustomTextField(
+                                        controller: searchQuery,
+                                        hintText: "ស្វែងរក".tr,
+                                        prefixIcon: Icons.search,
+                                        onChanged: (value) {
+                                          clientcontroller.searchQuery.value =
+                                              value;
+                                        },
+                                      ),
+                                    ),
+                                  ),
                             CommonWidgets.SizeBoxwidh5,
                             Padding(
-                              padding:  EdgeInsets.only(left: 8,bottom: isMobile ? 0.0 : 10),
+                              padding: EdgeInsets.only(
+                                  left: 8, bottom: isMobile ? 0.0 : 10),
                               child: Container(
                                 decoration: BoxDecoration(
                                   color: TheColors.orange,

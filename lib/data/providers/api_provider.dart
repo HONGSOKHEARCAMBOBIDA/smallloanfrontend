@@ -32,13 +32,22 @@ class ApiProvider {
     return _box.read('token') ?? '';
   }
 
-  Options _getOptions({Map<String, String>? extraHeaders}) {
+  Options _getOptions({
+    Map<String, String>? extraHeaders,
+    String? idempotency,
+  }) {
+    final headers = <String, String>{
+      'Authorization': 'Bearer ${getToken()}',
+      'Content-Type': 'application/json',
+      ...?extraHeaders,
+    };
+
+    if (idempotency != null && idempotency.isNotEmpty) {
+      headers['Idempotency-Key'] = idempotency;
+    }
+
     return Options(
-      headers: {
-        'Authorization': 'Bearer ${getToken()}',
-        'Content-Type': 'application/json',
-        ...?extraHeaders,
-      },
+      headers: headers,
       followRedirects: false,
       validateStatus: (status) =>
           status != null && status >= 200 && status < 300,
@@ -47,15 +56,17 @@ class ApiProvider {
 
   Future<Response> post(
     String endpoint,
-    dynamic data,
-    //មានន័យថា function នោះកំពុងធ្វើការ asynchronous call
-  ) async {
+    dynamic data, {
+    String? idempotency,
+  }
+      //មានន័យថា function នោះកំពុងធ្វើការ asynchronous call
+      ) async {
     try {
       //  print("POST Request: $endpoint, Data: $data");
       final response = await _dio.post(
         endpoint.startsWith('/') ? endpoint : '/$endpoint',
         data: data,
-        options: _getOptions(),
+        options: _getOptions(idempotency: idempotency),
       );
       //  print("Response: ${response.data}");
       return response;

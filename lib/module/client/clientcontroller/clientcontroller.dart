@@ -3,20 +3,23 @@ import 'package:image_picker/image_picker.dart';
 import 'package:loanfrontend/data/models/clientlistmodel.dart';
 import 'package:loanfrontend/module/client/clientservice/clientservice.dart';
 import 'package:loanfrontend/share/widgets/snackbar.dart';
+import 'package:uuid/uuid.dart';
+import 'package:loanfrontend/data/models/clientmodel.dart' as clientmodel;
 
 class ClientController extends GetxController {
   final ClientService clientService = ClientService();
   final ImagePicker imagePicker = ImagePicker();
   var client = <Data>[].obs;
+  var clientforcreateloan = <clientmodel.Data>[].obs;
   final RxString searchQuery = ''.obs;
   var isLoading = false.obs;
   var isLoadingMore = false.obs;
   XFile? clientImage;
   var hasMore = true.obs; // Make it observable
   var currentPage = 1.obs; // Make it observable
+
   @override
   void onInit() {
-    listclient();
     debounce(
       searchQuery,
       (_) {
@@ -67,6 +70,7 @@ class ClientController extends GetxController {
         villageId: villageId,
         notes: notes,
         clientImage: clientImage,
+        idempotency: Uuid().v4().substring(8),
       );
 
       if (isCreated) {
@@ -88,10 +92,10 @@ class ClientController extends GetxController {
     bool isRefresh = false,
     bool loadMore = false,
   }) async {
-  // var isLoading = false.obs;
-  // var isLoadingMore = false.obs;
-  // var hasMore = true.obs; // Make it observable
-  // var currentPage = 1.obs; // Make it observable
+    // var isLoading = false.obs;
+    // var isLoadingMore = false.obs;
+    // var hasMore = true.obs; // Make it observable
+    // var currentPage = 1.obs; // Make it observable
     if (loadMore && (!hasMore.value || isLoadingMore.value)) return;
 
     try {
@@ -143,7 +147,7 @@ class ClientController extends GetxController {
     );
   }
 
-    Future<void> updateclient({
+  Future<void> updateclient({
     required int id,
     required String name,
     required int gender,
@@ -182,6 +186,15 @@ class ClientController extends GetxController {
       print(e.toString());
     } finally {
       isLoading.value = false;
+    }
+  }
+
+  Future<void> getclientforcreateloan() async {
+    try {
+      final result = await clientService.getclientforcreateloan();
+      clientforcreateloan.assignAll(result);
+    } catch (e) {
+      CustomSnackbar.error(title: "មានបញ្ហា", message: e.toString());
     }
   }
 }
