@@ -25,7 +25,7 @@ class LoanproductSelector extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('ជ្រើសរើសប្រភេទកម្ចី', style: TextStyles.siemreap(context)),
+              Text('ជ្រើសរើសប្រភេទកម្ចី', style: TextStyles.siemreap(context,color: TheColors.white)),
               IconButton(
                 icon: const Icon(Icons.close, color: TheColors.errorColor),
                 onPressed: () => Navigator.pop(context),

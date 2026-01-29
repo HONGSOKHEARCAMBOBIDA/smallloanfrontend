@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:loanfrontend/core/theme/app_color.dart';
 import 'package:loanfrontend/core/theme/text_styles.dart';
 
@@ -49,7 +48,7 @@ class CustomDropdown extends StatelessWidget {
         iconSize: 20,
         elevation: 2,
         menuMaxHeight: 180,
-        style: TextStyles.siemreap(context, fontSize: 12),
+        style: TextStyles.siemreap(context, fontSize: 12,color: TheColors.white),
         items: isLoading
             ? [] // Empty while loading
             : items.map((item) {

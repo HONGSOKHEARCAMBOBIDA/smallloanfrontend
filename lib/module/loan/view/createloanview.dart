@@ -6,6 +6,7 @@ import 'package:loanfrontend/core/helper/show_client_buttonsheet.dart';
 import 'package:loanfrontend/core/helper/show_loanproduct_buttonsheet.dart';
 import 'package:loanfrontend/core/helper/show_user_buttonsheet.dart';
 import 'package:loanfrontend/core/theme/app_color.dart';
+import 'package:loanfrontend/core/theme/text_styles.dart';
 import 'package:loanfrontend/module/auth/controller/authcontroller.dart';
 import 'package:loanfrontend/module/client/clientcontroller/clientcontroller.dart';
 import 'package:loanfrontend/module/documenttype/controller/documenttyecontroller.dart';
@@ -16,6 +17,7 @@ import 'package:loanfrontend/share/widgets/common_widgets.dart';
 import 'package:loanfrontend/share/widgets/customoutlinebutton.dart';
 import 'package:loanfrontend/share/widgets/dropdown.dart';
 import 'package:loanfrontend/share/widgets/elevated_button.dart';
+import 'package:loanfrontend/share/widgets/loading.dart';
 import 'package:loanfrontend/share/widgets/snackbar.dart';
 import 'package:loanfrontend/share/widgets/textfield.dart';
 
@@ -70,20 +72,19 @@ class _CreateloanviewState extends State<Createloanview> {
         selectdocumenttype.value == null ||
         selectcheckby.value == null ||
         selectapproveby.value == null) {
-      CustomSnackbar.error(
-          title: "Error", message: "Please fill all required fields");
+      CustomSnackbar.error(title: Message.Error, message: Message.BadRequest);
       return;
     }
 
     if (guarantors.isEmpty) {
       CustomSnackbar.error(
-          title: "Error", message: "Please add at least one guarantor");
+          title: Message.Error, message: Message.BadRequestClient);
       return;
     }
 
     final amount = double.tryParse(loanamount.text);
     if (amount == null) {
-      CustomSnackbar.error(title: "Error", message: "Invalid loan amount");
+      CustomSnackbar.error(title: Message.Error, message: Message.BadRequest);
       return;
     }
 
@@ -102,18 +103,16 @@ class _CreateloanviewState extends State<Createloanview> {
   void _addGuarantor() {
     if (selectedGuarantors.isEmpty) {
       CustomSnackbar.error(
-          title: "Error", message: "Please select a guarantor");
+          title: Message.BadRequest, message: Message.BadRequestClient);
       return;
     }
 
     if (relationshipController.text.isEmpty) {
-      CustomSnackbar.error(
-          title: "Error", message: "Please enter relationship");
+      CustomSnackbar.error(title: Message.Error, message: Message.BadRequest);
       return;
     }
 
     for (var guarantorId in selectedGuarantors) {
-      // Check if already added
       if (guarantors.any((g) => g['client_id'] == guarantorId)) {
         CustomSnackbar.error(
             title: Message.Error, message: Message.ClientDuplicate);
@@ -123,18 +122,10 @@ class _CreateloanviewState extends State<Createloanview> {
       guarantors.add({
         'client_id': guarantorId,
         'relationship': relationshipController.text,
-        'signed_date': signedDateController.text.isEmpty
-            ? DateTime.now().toIso8601String().split('T')[0]
-            : signedDateController.text,
-        'notes': notesController.text,
       });
     }
-
-    // Clear fields
     selectedGuarantors.clear();
     relationshipController.clear();
-    signedDateController.clear();
-    notesController.clear();
     selectGuarantorName.value = 'ជ្រើសអ្នកធានា';
   }
 
@@ -147,15 +138,13 @@ class _CreateloanviewState extends State<Createloanview> {
     loanamount.dispose();
     purpose.dispose();
     relationshipController.dispose();
-    signedDateController.dispose();
-    notesController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "ស្នេីរកម្ចី"),
+      appBar: const CustomAppBar(title: "ស្នេីរកម្ចី"),
       backgroundColor: TheColors.bgColor,
       body: mobile(),
     );
@@ -372,6 +361,7 @@ class _CreateloanviewState extends State<Createloanview> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildTextField("ចំនួនប្រាក់ស្នើសុំ", loanamount, "1000000"),
+            CommonWidgets.SizeBox8,
             _buildTextField("គោលបំណងកម្ចី", purpose, "ពង្រីកមុខរបរ"),
           ],
         ),
@@ -390,17 +380,6 @@ class _CreateloanviewState extends State<Createloanview> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "អ្នកធានា",
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: TheColors.primaryColor,
-              ),
-            ),
-            const SizedBox(height: 16),
-
-            // Guarantor Selection
             CommonWidgets.buildLabel(context, "ជ្រើសអ្នកធានា"),
             const SizedBox(height: 8),
             Obx(
@@ -411,39 +390,25 @@ class _CreateloanviewState extends State<Createloanview> {
                     context: context,
                     client: clientcontroller.clientforcreateloan,
                     selectedClientId: null,
-                    onSelected: (id) {
-                      if (!selectedGuarantors.contains(id)) {
-                        selectedGuarantors.add(id);
+                    allowMultiple: true,
+                    onMultipleSelected: (ids) {
+                      selectedGuarantors.assignAll(ids);
+
+                      if (ids.isNotEmpty) {
                         final client = clientcontroller.clientforcreateloan
-                            .firstWhere((p) => p.id == id);
-                        selectGuarantorName.value = client.name!;
+                            .firstWhere((p) => p.id == ids.last);
+                        selectGuarantorName.value =
+                            client.name ?? 'ជ្រើសអ្នកធានា';
                       }
                     },
-                    allowMultiple: true,
                   );
                 },
               ),
             ),
-
             const SizedBox(height: 16),
-
-            // Relationship
             _buildTextField(
                 "ទំនាក់ទំនង", relationshipController, "បងប្អូន/មិត្ត"),
-
-            const SizedBox(height: 16),
-
-            // Signed Date
-            CommonWidgets.buildLabel(context, "កាលបរិច្ឆេទចុះហត្ថលេខា"),
-
-            const SizedBox(height: 16),
-
-            // Notes
-            _buildTextField("កំណត់ចំណាំ", notesController, "កំណត់ចំណាំបន្ថែម"),
-
-            const SizedBox(height: 16),
-
-            // Add Button
+            const SizedBox(height: 16), // Signed Date
             Center(
               child: CustomElevatedButton(
                 text: "បញ្ចូលអ្នកធានា",
@@ -469,40 +434,67 @@ class _CreateloanviewState extends State<Createloanview> {
         ),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Row(
+           
             children: [
               Text(
-                "បញ្ជីអ្នកធានា (${guarantors.length})",
-                style: TextStyle(
+                "បញ្ជីអ្នកធានា (${guarantors.length}) នាក់",
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color: TheColors.primaryColor,
+                  color: TheColors.white,
                 ),
               ),
               const SizedBox(height: 16),
               ...guarantors.asMap().entries.map((entry) {
                 final index = entry.key;
                 final guarantor = entry.value;
-
-                return Card(
-                  margin: const EdgeInsets.only(bottom: 8),
-                  child: ListTile(
-                    title: Text(
-                      clientcontroller.clientforcreateloan
-                          .firstWhere((c) => c.id == guarantor['client_id'])
-                          .name!,
+                final client = clientcontroller.clientforcreateloan.firstWhereOrNull((c) => c.id == guarantor['client_id']);
+                final relationship =guarantor['relationship']?.toString() ?? 'មិនបានបញ្ជាក់';
+                return Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: ChoiceChip(
+                    
+                    label: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                      Text(
+                        client!.name ?? 'មិនមានឈ្មោះ',
+                        style: TextStyles.kantomruy(
+                          context,
+                          color: TheColors.white,
+                          fontweight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        relationship,
+                        style: TextStyles.kantomruy(
+                          context,
+                          color: TheColors.white,
+                          fontSize: 11,
+                        ),) 
+                      ],
                     ),
-                    subtitle: Text(
-                      "ទំនាក់ទំនង: ${guarantor['relationship']}\nកាលបរិច្ឆេទ: ${guarantor['signed_date']}",
+                   
+                    selected: false,
+                    backgroundColor: TheColors.green,
+                    selectedColor: TheColors.red,
+                     shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      side: BorderSide.none
                     ),
-                    trailing: IconButton(
-                      icon: Icon(Icons.delete, color: Colors.red),
-                      onPressed: () => _removeGuarantor(index),
+                    avatar: const Icon(
+                      Icons.close,
+                      size: 18,
+                      color: TheColors.red,
                     ),
+                    onSelected: (_) {
+                      _removeGuarantor(index);
+                    },
                   ),
                 );
-              }).toList(),
+              })
             ],
           ),
         ),
@@ -528,10 +520,13 @@ class _CreateloanviewState extends State<Createloanview> {
   Widget _buildSubmitButton() {
     return Obx(() {
       return loancontroller.isLoading.value
-          ? Center(child: CircularProgressIndicator())
-          : CustomElevatedButton(
-              text: "បង្កើតថ្មី",
-              onPressed: createloan,
+          ? const Center(child: CustomLoading())
+          : Padding(
+              padding: const EdgeInsets.only(left: 14, right: 14),
+              child: CustomElevatedButton(
+                text: "បង្កើតថ្មី",
+                onPressed: createloan,
+              ),
             );
     });
   }

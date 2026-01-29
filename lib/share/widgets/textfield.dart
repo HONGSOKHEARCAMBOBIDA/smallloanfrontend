@@ -49,13 +49,13 @@ class _CustomTextFieldState extends State<CustomTextField> {
       keyboardType: widget.keyboardType,
       obscureText: _obscureText,
       decoration: InputDecoration(
-        prefixIcon: Icon(widget.prefixIcon, color: TheColors.errorColor),
+        prefixIcon: Icon(widget.prefixIcon, color: TheColors.white),
         // suffixIcon: Icon(suffixIcon,color: TheColors.errorColor,),
         suffixIcon: widget.obscureText
             ? IconButton(
                 icon: Icon(
                   _obscureText ? Icons.visibility_off : Icons.visibility,
-                  color: TheColors.errorColor,
+                  color: TheColors.white,
                 ),
                 onPressed: () {
                   setState(() {

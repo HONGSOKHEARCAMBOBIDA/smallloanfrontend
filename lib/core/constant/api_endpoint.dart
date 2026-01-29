@@ -24,6 +24,7 @@ class Message {
   static const String UpdateError = "កែប្រែមិនបាន";
   static const String Success = "ជោគជ័យ";
   static const String Error = "បរាជ័យ";
-  static const String BadRequest = "សូមបំពេញទិន្នន័យមិនត្រឹមត្រូវ";
+  static const String BadRequest = "បំពេញទិន្នន័យមិនត្រឹមត្រូវ";
   static const String ClientDuplicate = "អិថិជនបានជ្រេីសរេីសម្ដងហេីយ";
+  static const String BadRequestClient = "សូមជ្រេីសរេីសអ្នកធានាកម្ចី";
 }

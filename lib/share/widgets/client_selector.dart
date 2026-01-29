@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:loanfrontend/core/theme/app_color.dart';
 import 'package:loanfrontend/core/theme/text_styles.dart';
 import 'package:loanfrontend/data/models/clientmodel.dart';
+import 'package:loanfrontend/share/widgets/elevated_button.dart';
 
 class ClientSelector extends StatelessWidget {
   final List<Data> client;
@@ -23,11 +24,7 @@ class ClientSelector extends StatelessWidget {
     this.onMultipleSelected,
     this.allowMultiple = false,
     this.searchController,
-  })  : assert(!allowMultiple || (allowMultiple && onMultipleSelected != null),
-            'onMultipleSelected must be provided when allowMultiple is true'),
-        assert(allowMultiple || (!allowMultiple && onSelected != null),
-            'onSelected must be provided when allowMultiple is false'),
-        super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -119,9 +116,10 @@ class ClientSelector extends StatelessWidget {
                       const SizedBox(width: 8),
                       Text(
                         'បានជ្រើសរើស: ${tempSelectedIds.length} នាក់',
-                        style: TextStyle(
+                        style: TextStyles.kantomruy(
+                          context,
                           color: TheColors.orange,
-                          fontWeight: FontWeight.w500,
+                          fontweight: FontWeight.w500,
                         ),
                       ),
                     ],
@@ -205,12 +203,14 @@ class ClientSelector extends StatelessWidget {
                               checkColor: Colors.white,
                             )
                           : isSelected
-                              ? Icon(
+                              ? const Icon(
                                   Icons.check_circle,
                                   color: TheColors.green,
                                 )
                               : null,
                       onTap: () {
+                        if (client.id == null) return;
+
                         if (allowMultiple) {
                           if (tempSelectedIds.contains(client.id)) {
                             tempSelectedIds.remove(client.id);
@@ -218,7 +218,7 @@ class ClientSelector extends StatelessWidget {
                             tempSelectedIds.add(client.id!);
                           }
                         } else {
-                          onSelected!(client.id!);
+                          onSelected?.call(client.id!);
                           Navigator.pop(context);
                         }
                       },
@@ -240,46 +240,31 @@ class ClientSelector extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
-                    child: OutlinedButton(
-                      onPressed: () => Navigator.pop(context),
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: Colors.grey[700],
-                        side: BorderSide(color: TheColors.gray),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        padding: const EdgeInsets.symmetric(vertical: 14),
-                      ),
-                      child: Text(
-                        'បោះបង់',
-                        style: TextStyles.siemreap(context),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Obx(() => ElevatedButton(
+                    child: Obx(() => CustomElevatedButton(
                           onPressed: tempSelectedIds.isEmpty
                               ? null
                               : () {
-                                  onMultipleSelected!(
-                                      List.from(tempSelectedIds));
                                   Navigator.pop(context);
                                 },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: TheColors.orange,
-                            foregroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            padding: const EdgeInsets.symmetric(vertical: 14),
-                          ),
-                          child: Text(
-                            'បញ្ជូន',
-                            style: TextStyles.siemreap(context).copyWith(
-                              color: Colors.white,
-                            ),
-                          ),
+                          text: "ត្រឡប់ក្រោយ",
+                          backgroundColor: TheColors.red,
+                        )),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Obx(() => CustomElevatedButton(
+                          onPressed: tempSelectedIds.isEmpty
+                              ? null
+                              : () {
+                                  if (onMultipleSelected != null) {
+                                    onMultipleSelected
+                                        ?.call(List.from(tempSelectedIds));
+                                  }
+
+                                  Navigator.pop(context);
+                                },
+                          text: "បញ្ជូន",
+                          backgroundColor: TheColors.green,
                         )),
                   ),
                 ],

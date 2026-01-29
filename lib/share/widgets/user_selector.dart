@@ -25,7 +25,7 @@ class UserSelector extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('ជ្រើសរើស', style: TextStyles.siemreap(context)),
+              Text('ជ្រើសរើស', style: TextStyles.siemreap(context,color: TheColors.white)),
               IconButton(
                 icon: const Icon(Icons.close, color: TheColors.errorColor),
                 onPressed: () => Navigator.pop(context),
