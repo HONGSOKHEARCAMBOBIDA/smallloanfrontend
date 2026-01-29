@@ -18,7 +18,7 @@ class CustomElevatedButton extends StatelessWidget {
     required this.text,
     this.onPressed,
     this.backgroundColor = TheColors.errorColor,
-    this.textColor = TheColors.bgColor,
+    this.textColor = TheColors.white,
     this.borderRadius = 14,
     this.fontSize = 16.0,
     this.width = double.infinity,

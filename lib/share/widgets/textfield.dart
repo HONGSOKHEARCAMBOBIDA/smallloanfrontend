@@ -69,12 +69,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
         hintStyle: TextStyles.siemreap(
           context,
           fontSize: 11,
-          color: TheColors.gray,
+          color: TheColors.white,
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(
-            color: TheColors.orange,
+            color: TheColors.gray,
             width: 0.5,
           ), // Primary Blue
         ),
@@ -91,7 +91,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           horizontal: 12,
         ),
       ),
-      style: TextStyles.siemreap(context, fontSize: 12),
+      style: TextStyles.siemreap(context, fontSize: 12, color: TheColors.white),
       validator: widget.validator ??
           (value) {
             if (value == null || value.isEmpty) {

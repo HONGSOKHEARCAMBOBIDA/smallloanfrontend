@@ -8,7 +8,9 @@ class CommonWidgets {
       padding: const EdgeInsets.all(4.0),
       child: Column(
         children: [
-          Text(label, style: TextStyles.siemreap(context, fontSize: 12)),
+          Text(label,
+              style: TextStyles.siemreap(context,
+                  fontSize: 12, color: TheColors.white)),
           const SizedBox(height: 5),
         ],
       ),
@@ -28,17 +30,26 @@ class CommonWidgets {
               context,
               fontweight: FontWeight.bold,
               fontSize: 14,
-              color: TheColors.black,
+              color: TheColors.white,
             ),
           ),
         ],
       ),
     );
   }
-  static const SizeBoxh20 = SizedBox(height: 20,);
-  static const SizeBoxwidh5 = SizedBox(width: 5,);
-  static const SizeBoxh15 = SizedBox(height: 15,);
-  static const SizeBox8 = SizedBox(height: 8,);
+
+  static const SizeBoxh20 = SizedBox(
+    height: 20,
+  );
+  static const SizeBoxwidh5 = SizedBox(
+    width: 5,
+  );
+  static const SizeBoxh15 = SizedBox(
+    height: 15,
+  );
+  static const SizeBox8 = SizedBox(
+    height: 8,
+  );
   static const radius = 12.0;
   static const borderwidth = 0.5;
   static const fontsize12 = 12.0;

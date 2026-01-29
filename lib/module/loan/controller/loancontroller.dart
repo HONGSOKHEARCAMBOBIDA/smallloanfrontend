@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:loanfrontend/core/constant/api_endpoint.dart';
 import 'package:loanfrontend/module/loan/service/loanservice.dart';
 import 'package:loanfrontend/share/widgets/snackbar.dart';
 
@@ -19,7 +20,7 @@ class LoanController extends GetxController {
     try {
       isLoading.value = true;
 
-      final isCreated = await service.createloan(
+      final success = await service.createloan(
         clientid: clientid,
         loanproductid: loanproductid,
         loanamount: loanamount,
@@ -30,14 +31,19 @@ class LoanController extends GetxController {
         guarantors: guarantors,
       );
 
-      if (isCreated) {
+      if (success) {
         Get.back();
-        CustomSnackbar.success(title: "Success", message: "Loan created");
+        CustomSnackbar.success(
+          title: Message.Success,
+          message: Message.CreateSuccess,
+        );
       } else {
-        CustomSnackbar.error(title: "Error", message: "Failed to create loan");
+        CustomSnackbar.error(
+          title: Message.Error,
+          message: Message.CreateError,
+        );
       }
     } catch (e) {
-      print("Loan creation error: $e");
       CustomSnackbar.error(title: "Error", message: e.toString());
     } finally {
       isLoading.value = false;

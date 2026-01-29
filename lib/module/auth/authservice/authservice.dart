@@ -1,8 +1,11 @@
+import 'package:loanfrontend/core/constant/api_endpoint.dart';
 import 'package:loanfrontend/data/models/loginmodel.dart';
+import 'package:loanfrontend/data/models/usermodel.dart' as usermodel;
 import 'package:loanfrontend/data/providers/api_provider.dart';
 
 class AuthService {
   final ApiProvider apiProvider = ApiProvider();
+
   Future<LoginResModel> login(
       {required String username, required String password}) async {
     try {
@@ -20,6 +23,21 @@ class AuthService {
       }
     } catch (e) {
       throw Exception(e.toString());
+    }
+  }
+
+  Future<List<usermodel.Data>> getuser() async {
+    try {
+      final response = await apiProvider.get(ApiEndpoint.viewuser);
+      if (response.statusCode == 200) {
+        final json = response.data;
+        final model = usermodel.UserModel.fromJson(json);
+        return model.data ?? [];
+      } else {
+        throw Exception("Failed ${response.statusCode}");
+      }
+    } catch (e) {
+      throw Exception("Failed ${e.toString()}");
     }
   }
 }

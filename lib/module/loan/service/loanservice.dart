@@ -3,6 +3,7 @@ import 'package:loanfrontend/data/providers/api_provider.dart';
 
 class Loanservice {
   final ApiProvider apiProvider = ApiProvider();
+
   Future<bool> createloan({
     required int clientid,
     required int loanproductid,
@@ -24,14 +25,12 @@ class Loanservice {
         'approve_by_id': approveby,
         'guarantor_id': guarantors,
       };
+
       final response = await apiProvider.post(ApiEndpoint.createloan, body);
-      if (response.statusCode == 200) {
-        return true;
-      } else {
-        return false;
-      }
+
+      return response.statusCode == 200 || response.statusCode == 201;
     } catch (e) {
-      throw Exception("Unexpected error: $e");
+      throw Exception("Create loan failed: $e");
     }
   }
 }

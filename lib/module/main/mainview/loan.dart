@@ -48,7 +48,9 @@ class Loan extends StatelessWidget {
                   style: TextStyles.moul(
                     context,
                     fontSize: CommonWidgets.fontsize20,
-                    color: permanent ? TheColors.errorColor : TheColors.warningColor,
+                    color: permanent
+                        ? TheColors.errorColor
+                        : TheColors.warningColor,
                   ),
                 ),
               ),
@@ -63,7 +65,9 @@ class Loan extends StatelessWidget {
                 _buildDrawerItem(Icons.group, "អតិថិជន", () {
                   Get.toNamed('/listclient');
                 }),
-                _buildDrawerItem(Icons.add_circle_outline, "ស្នើកម្ចី", () {}),
+                _buildDrawerItem(Icons.add_circle_outline, "ស្នើកម្ចី", () {
+                  Get.toNamed('/creatloan');
+                }),
                 _buildDrawerItem(
                     Icons.task_alt, "កម្ចីត្រូវត្រួតពិនិត្យ", () {}),
                 _buildDrawerItem(Icons.verified, "កម្ចីត្រូវអនុម័ត", () {}),
@@ -98,7 +102,7 @@ class Loan extends StatelessWidget {
           style: TextStyles.kantomruy(
             context,
             fontSize: CommonWidgets.fontsize15,
-            color: color ?? Colors.black87,
+            color: color ?? TheColors.white,
           ),
         ),
         onTap: onTap,
