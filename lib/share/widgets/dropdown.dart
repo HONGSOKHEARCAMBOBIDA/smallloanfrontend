@@ -32,12 +32,23 @@ class CustomDropdown extends StatelessWidget {
             prefixIcon:
                 const Icon(Icons.location_on, color: TheColors.errorColor),
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(15),
             ),
-            hintText: hintText,
+            hint: Padding(
+              padding: const EdgeInsets.only(bottom: 8, left: 8, top: 12),
+              child: Text(
+                hintText,
+                style: TextStyles.siemreap(
+                  context,
+                  fontSize: 12,
+                  color: TheColors.white,
+                ),
+              ),
+            ),
             focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide(color: TheColors.orange, width: 0.5))),
+                borderSide:
+                    const BorderSide(color: TheColors.orange, width: 0.5))),
 
         dropdownColor: TheColors.bgColor,
         borderRadius: BorderRadius.circular(12),
@@ -47,8 +58,9 @@ class CustomDropdown extends StatelessWidget {
         ),
         iconSize: 20,
         elevation: 2,
-        menuMaxHeight: 180,
-        style: TextStyles.siemreap(context, fontSize: 12,color: TheColors.white),
+        menuMaxHeight: 200,
+        style:
+            TextStyles.siemreap(context, fontSize: 12, color: TheColors.white),
         items: isLoading
             ? [] // Empty while loading
             : items.map((item) {

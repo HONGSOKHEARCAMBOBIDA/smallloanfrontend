@@ -83,6 +83,8 @@ class _ClientviewState extends State<Clientview> {
         },
       ),
       body: RefreshIndicator(
+        backgroundColor: TheColors.white,
+        color: TheColors.warningColor,
         onRefresh: refresh,
         child: Obx(() {
           if (clientcontroller.isLoading.value &&

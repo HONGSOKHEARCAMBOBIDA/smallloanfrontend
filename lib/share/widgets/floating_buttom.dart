@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loanfrontend/core/theme/app_color.dart';
+
 class CustomFloatingActionButton extends StatelessWidget {
   final VoidCallback onPressed;
   final IconData icon;
@@ -16,8 +17,8 @@ class CustomFloatingActionButton extends StatelessWidget {
     this.borderRadius = 28.0,
     this.icon = Icons.add,
     this.label,
-    this.backgroundColor = TheColors.orange,
-    this.iconColor = TheColors.warningColor,
+    this.backgroundColor = TheColors.green,
+    this.iconColor = TheColors.white,
     this.size = 66.0,
     this.isExtended = false,
     this.heroTag = "default_fab", // ✅ Default heroTag

@@ -164,11 +164,10 @@ class Clientcard extends StatelessWidget {
                           children: [
                             Text(
                               name,
-                              style: TextStyles.siemreap(
-                                context,
-                                fontSize: nameFontSize,
-                                fontweight: FontWeight.bold,
-                              ),
+                              style: TextStyles.siemreap(context,
+                                  fontSize: nameFontSize,
+                                  fontweight: FontWeight.bold,
+                                  color: TheColors.white),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -250,24 +249,27 @@ class Clientcard extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 6),
-                      Row(
-                        children: [
-                          Text(
-                            "លេខអត្តសញ្ញាណបណ្ណ : ",
-                            style: GoogleFonts.siemreap(
-                              fontSize: smallFontSize,
-                              color: TheColors.successColor,
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            Text(
+                              "លេខអត្តសញ្ញាណបណ្ណ : ",
+                              style: GoogleFonts.siemreap(
+                                fontSize: smallFontSize,
+                                color: TheColors.successColor,
+                              ),
                             ),
-                          ),
-                          SizedBox(width: 4),
-                          Text(
-                            idCardNumber,
-                            style: GoogleFonts.siemreap(
-                              fontSize: smallFontSize,
-                              color: TheColors.orange,
+                            SizedBox(width: 4),
+                            Text(
+                              idCardNumber,
+                              style: GoogleFonts.siemreap(
+                                fontSize: smallFontSize,
+                                color: TheColors.orange,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                       SizedBox(height: 4),
                       // Location
@@ -286,7 +288,7 @@ class Clientcard extends StatelessWidget {
                               style: TextStyles.siemreap(
                                 context,
                                 fontSize: smallFontSize,
-                                color: TheColors.secondaryColor,
+                                color: TheColors.white,
                               ),
                             ),
                           ],
@@ -315,7 +317,7 @@ class Clientcard extends StatelessWidget {
         color: Theme.of(context).iconTheme.color?.withOpacity(0.7),
         size: iconSize,
       ),
-      color: TheColors.bgColor,
+      color: TheColors.white,
       elevation: 3,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),

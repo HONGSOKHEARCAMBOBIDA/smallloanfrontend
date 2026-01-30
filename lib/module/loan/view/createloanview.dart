@@ -20,6 +20,7 @@ import 'package:loanfrontend/share/widgets/elevated_button.dart';
 import 'package:loanfrontend/share/widgets/loading.dart';
 import 'package:loanfrontend/share/widgets/snackbar.dart';
 import 'package:loanfrontend/share/widgets/textfield.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class Createloanview extends StatefulWidget {
   const Createloanview({super.key});
@@ -143,35 +144,83 @@ class _CreateloanviewState extends State<Createloanview> {
 
   @override
   Widget build(BuildContext context) {
+    final breakpoints = ResponsiveBreakpoints.of(context);
+    final bool isMobile = breakpoints.isMobile;
+    final bool isTablet = breakpoints.isTablet;
+    final bool isDesktop = breakpoints.isDesktop;
     return Scaffold(
-      appBar: const CustomAppBar(title: "ស្នេីរកម្ចី"),
-      backgroundColor: TheColors.bgColor,
-      body: mobile(),
-    );
+        appBar: const CustomAppBar(title: "ស្នេីរកម្ចី"),
+        backgroundColor: TheColors.bgColor,
+        body: isMobile ? mobile() : web());
   }
 
   Widget mobile() {
-    return SingleChildScrollView(
-      child: Form(
-        key: _formkey,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              _buildclientSection(),
-              CommonWidgets.SizeBoxh15,
-              _buildloanprodcutftdocumenttype(),
-              CommonWidgets.SizeBoxh15,
-              _builduserSection(),
-              CommonWidgets.SizeBoxh15,
-              _buildloanInfoSection(),
-              CommonWidgets.SizeBoxh15,
-              _buildGuarantorSection(),
-              CommonWidgets.SizeBoxh15,
-              _buildGuarantorList(),
-              CommonWidgets.SizeBoxh15,
-              _buildSubmitButton(),
-            ],
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: SingleChildScrollView(
+        child: Form(
+          key: _formkey,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                _buildclientSection(),
+                CommonWidgets.SizeBoxh15,
+                _buildloanprodcutftdocumenttype(),
+                CommonWidgets.SizeBoxh15,
+                _builduserSection(),
+                CommonWidgets.SizeBoxh15,
+                _buildloanInfoSection(),
+                CommonWidgets.SizeBoxh15,
+                _buildGuarantorSection(),
+                CommonWidgets.SizeBoxh15,
+                _buildGuarantorList(),
+                CommonWidgets.SizeBoxh15,
+                _buildSubmitButton(),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget web() {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+    return Center(
+      child: SizedBox(
+        width: screenWidth * 0.5, // 80% of screen width
+        height: screenHeight * 0.8, // 50% of screen height
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: TheColors.gray, width: 0.5),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: SingleChildScrollView(
+            child: Form(
+              key: _formkey,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    _buildclientSection(),
+                    CommonWidgets.SizeBoxh15,
+                    _buildloanprodcutftdocumenttype(),
+                    CommonWidgets.SizeBoxh15,
+                    _builduserSection(),
+                    CommonWidgets.SizeBoxh15,
+                    _buildloanInfoSection(),
+                    CommonWidgets.SizeBoxh15,
+                    _buildGuarantorSection(),
+                    CommonWidgets.SizeBoxh15,
+                    _buildGuarantorList(),
+                    CommonWidgets.SizeBoxh15,
+                    _buildSubmitButton(),
+                  ],
+                ),
+              ),
+            ),
           ),
         ),
       ),
@@ -427,75 +476,77 @@ class _CreateloanviewState extends State<Createloanview> {
         return Container();
       }
 
-      return Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: TheColors.gray, width: 0.5),
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-           
-            children: [
-              Text(
-                "បញ្ជីអ្នកធានា (${guarantors.length}) នាក់",
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: TheColors.white,
-                ),
-              ),
-              const SizedBox(height: 16),
-              ...guarantors.asMap().entries.map((entry) {
-                final index = entry.key;
-                final guarantor = entry.value;
-                final client = clientcontroller.clientforcreateloan.firstWhereOrNull((c) => c.id == guarantor['client_id']);
-                final relationship =guarantor['relationship']?.toString() ?? 'មិនបានបញ្ជាក់';
-                return Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: ChoiceChip(
-                    
-                    label: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                      Text(
-                        client!.name ?? 'មិនមានឈ្មោះ',
-                        style: TextStyles.kantomruy(
-                          context,
-                          color: TheColors.white,
-                          fontweight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        relationship,
-                        style: TextStyles.kantomruy(
-                          context,
-                          color: TheColors.white,
-                          fontSize: 11,
-                        ),) 
-                      ],
-                    ),
-                   
-                    selected: false,
-                    backgroundColor: TheColors.green,
-                    selectedColor: TheColors.red,
-                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      side: BorderSide.none
-                    ),
-                    avatar: const Icon(
-                      Icons.close,
-                      size: 18,
-                      color: TheColors.red,
-                    ),
-                    onSelected: (_) {
-                      _removeGuarantor(index);
-                    },
+      return SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: TheColors.gray, width: 0.5),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              children: [
+                Text(
+                  "បញ្ជីអ្នកធានា (${guarantors.length}) នាក់",
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: TheColors.white,
                   ),
-                );
-              })
-            ],
+                ),
+                const SizedBox(height: 16),
+                ...guarantors.asMap().entries.map((entry) {
+                  final index = entry.key;
+                  final guarantor = entry.value;
+                  final client = clientcontroller.clientforcreateloan
+                      .firstWhereOrNull((c) => c.id == guarantor['client_id']);
+                  final relationship =
+                      guarantor['relationship']?.toString() ?? 'មិនបានបញ្ជាក់';
+                  return Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: ChoiceChip(
+                      label: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            client!.name ?? 'មិនមានឈ្មោះ',
+                            style: TextStyles.kantomruy(
+                              context,
+                              color: TheColors.white,
+                              fontweight: FontWeight.w600,
+                            ),
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            relationship,
+                            style: TextStyles.kantomruy(
+                              context,
+                              color: TheColors.white,
+                              fontSize: 11,
+                            ),
+                          )
+                        ],
+                      ),
+                      selected: false,
+                      backgroundColor: TheColors.green,
+                      selectedColor: TheColors.red,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                          side: BorderSide.none),
+                      avatar: const Icon(
+                        Icons.close,
+                        size: 18,
+                        color: TheColors.red,
+                      ),
+                      onSelected: (_) {
+                        _removeGuarantor(index);
+                      },
+                    ),
+                  );
+                })
+              ],
+            ),
           ),
         ),
       );
