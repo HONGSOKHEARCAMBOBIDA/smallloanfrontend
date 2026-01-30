@@ -1,4 +1,5 @@
   import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
   import 'package:loanfrontend/core/theme/app_color.dart';
   import 'package:loanfrontend/core/theme/text_styles.dart';
   import 'package:get/get.dart';
@@ -22,6 +23,9 @@
             GestureDetector(
               onTap: () async {
   final pickedDate = await showDatePicker(
+    helpText: "ជ្រេីសរេីស",
+    cancelText: "បោះបង់",
+    confirmText: "ជ្រេីសរេីស",
     context: context,
     initialDate: selectedDate.value ?? DateTime.now(),
     firstDate: DateTime(1900),
@@ -29,21 +33,30 @@
     builder: (context, child) {
       return Theme(
         data: Theme.of(context).copyWith(
-          useMaterial3: true,
-          dialogBackgroundColor: TheColors.bgColor,
-          colorScheme: ColorScheme.light(
-            primary: TheColors.orange,        // Header + selected date
-            onPrimary: TheColors.warningColor,          // Header text
-            onSurface: Colors.black,          // Normal text
+          colorScheme: const ColorScheme.light(
+            primary: TheColors.bgColor,        // Header + selected date
+            onPrimary: TheColors.green,          // Header text
+            onSurface: TheColors.white,          // Normal text
           ),
           dialogTheme:DialogThemeData(
+            
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
           ),
+          datePickerTheme:  DatePickerThemeData(
+            dividerColor: TheColors.white,
+            weekdayStyle: TextStyles.siemreap(context,color: TheColors.white),
+            dayStyle: TextStyles.siemreap(context,color: TheColors.white),
+            headerForegroundColor: TheColors.white,
+            headerHeadlineStyle: TextStyles.siemreap(context,color: TheColors.white),
+            backgroundColor: TheColors.bgColor,
+            yearStyle: TextStyles.siemreap(context,color: TheColors.white),
+            todayForegroundColor: MaterialStateProperty.all(TheColors.white),
+          ),
           textButtonTheme: TextButtonThemeData(
             style: TextButton.styleFrom(
-              foregroundColor: TheColors.orange, // OK / CANCEL
+              foregroundColor: TheColors.green, // OK / CANCEL
             ),
           ),
         ),

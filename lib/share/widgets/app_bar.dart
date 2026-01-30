@@ -10,7 +10,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({
     Key? key,
     required this.title,
-    this.backgroundColor = TheColors.bgColor, // Default color
+    this.backgroundColor =  Colors.transparent,
     this.height = 70, // Default height
   }) : super(key: key);
 
@@ -20,13 +20,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       child: AppBar(
         title: Padding(
           padding: const EdgeInsets.all(4.0),
-          child: Text(title,
-              style: TextStyles.moul(context,
-                  color: TheColors.warningColor, fontSize: 20)),
+          child: Center(
+            child: Text(title,
+                style: TextStyles.moul(context,
+                    color: TheColors.warningColor, fontSize: 22)),
+          ),
         ),
         centerTitle: true,
         backgroundColor: backgroundColor,
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: TheColors.white, // set your drawer icon color here
         ),
       ),

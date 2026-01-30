@@ -72,8 +72,8 @@ class Clientcard extends StatelessWidget {
 
     // responsive sizes
     final double avatarRadius = isMobile ? 36 : (isTablet ? 44 : 56);
-    final double iconSize = isMobile ? 12 : 14;
-    final double nameFontSize = isMobile ? 13 : (isTablet ? 14 : 16);
+    final double iconSize = isMobile ? 12 : 18;
+    final double nameFontSize = isMobile ? 13 : (isTablet ? 14 : 18);
     final double smallFontSize = isMobile ? 12 : 15;
     final double cardPadding = isMobile ? 10 : 12;
 
@@ -98,7 +98,7 @@ class Clientcard extends StatelessWidget {
         margin:
             EdgeInsets.symmetric(horizontal: isMobile ? 8 : 18, vertical: 1),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: BorderRadius.circular(20),
           border: Border.all(color: TheColors.orange, width: 0.5),
         ),
         child: Padding(
@@ -191,7 +191,7 @@ class Clientcard extends StatelessWidget {
                               occupation,
                               style: GoogleFonts.siemreap(
                                 fontSize: smallFontSize,
-                                color: TheColors.red,
+                                color: TheColors.white,
                               ),
                             ),
                             SizedBox(width: 8),
@@ -309,15 +309,15 @@ class Clientcard extends StatelessWidget {
   Widget _buildActionMenu(BuildContext context) {
     final breakpoints = ResponsiveBreakpoints.of(context);
     final bool isMobile = breakpoints.isMobile;
-    final double iconSize = isMobile ? 18 : 20;
+    final double iconSize = isMobile ? 18 : 30;
 
     return PopupMenuButton<String>(
       icon: Icon(
         Icons.more_vert,
-        color: Theme.of(context).iconTheme.color?.withOpacity(0.7),
+        color: TheColors.white,
         size: iconSize,
       ),
-      color: TheColors.white,
+      color: TheColors.bgColor,
       elevation: 3,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),

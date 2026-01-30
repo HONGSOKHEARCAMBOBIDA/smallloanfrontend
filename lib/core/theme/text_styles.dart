@@ -7,11 +7,12 @@ class TextStyles {
   static TextStyle siemreap(
     BuildContext context, {
     double fontSize = 16,
-    Color color = Colors.black,
+    Color color = TheColors.white,
     FontWeight fontweight = FontWeight.normal,
-  }) {
+  }) 
+  {
     return GoogleFonts.siemreap(
-        fontSize: fontSize, color: TheColors.white, fontWeight: fontweight);
+        fontSize: fontSize, color: color, fontWeight: fontweight);
   }
 
   // Add more custom text styles as needed

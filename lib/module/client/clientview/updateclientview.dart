@@ -162,7 +162,7 @@ class _UpdateclientviewState extends State<Updateclientview> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: TheColors.bgColor,
-      appBar: CustomAppBar(title: "បង្កេីតអតិថិជនថ្មី"),
+      appBar:const CustomAppBar(title: "កែប្រែអតិថិជន"),
       body: Responsive(
         mobile: mobile(),
         web: web(),

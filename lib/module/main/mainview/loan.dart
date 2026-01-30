@@ -40,7 +40,7 @@ class Loan extends StatelessWidget {
         children: [
           Container(
             height: 60,
-            color: permanent ? TheColors.bgColor : TheColors.errorColor,
+            color: permanent ? TheColors.bgColor : TheColors.bgColor,
             child: Center(
               child: Builder(
                 builder: (context) => Text(
