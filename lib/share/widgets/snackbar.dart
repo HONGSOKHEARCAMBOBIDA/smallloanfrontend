@@ -2,39 +2,42 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:loanfrontend/core/theme/app_color.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class CustomSnackbar {
   static void success({required String title, required String message}) {
+    final context = Get.context!;
+    final breakpoin = ResponsiveBreakpoints.of(context);
+    final bool isMobile = breakpoin.isMobile;
     Get.snackbar(
       '',
       '',
+      maxWidth: isMobile ? double.infinity : 400.0,
       snackPosition: SnackPosition.TOP,
       backgroundColor: TheColors.successColor,
       borderRadius: 12,
       margin: const EdgeInsets.all(12),
-      duration: const Duration(seconds: 3),
+      duration: const Duration(seconds: 2),
       isDismissible: true,
+      // isDismissible tell user can switch to close or not
       dismissDirection: DismissDirection.horizontal,
-      forwardAnimationCurve: Curves.easeOutCubic,
+      // what direction user can switch
+      forwardAnimationCurve: Curves.easeOut,
       reverseAnimationCurve: Curves.easeInCubic,
       snackStyle: SnackStyle.FLOATING,
-
-      // Remove shadow
-      boxShadows: [],
-
       icon: Container(
-        padding: EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.2),
+        padding: const EdgeInsets.all(8),
+        decoration: const BoxDecoration(
+         
           shape: BoxShape.circle,
+         
         ),
-        child: Icon(
+        child: const Icon(
           Icons.check_circle_rounded,
           color: Colors.white,
           size: 22,
         ),
       ),
-
       titleText: Text(
         title,
         style: GoogleFonts.siemreap(
@@ -44,12 +47,11 @@ class CustomSnackbar {
           height: 1.3,
         ),
       ),
-
       messageText: Text(
         message,
         style: GoogleFonts.siemreap(
           fontSize: 13,
-          color: Colors.white.withOpacity(0.9),
+          color: TheColors.white,
           height: 1.4,
         ),
       ),
@@ -57,33 +59,33 @@ class CustomSnackbar {
   }
 
   static void error({required String title, required String message}) {
+    final context = Get.context!;
+    final breakpoin = ResponsiveBreakpoints.of(context);
+     final bool isMobile = breakpoin.isMobile;
     Get.snackbar(
       '',
       '',
+      maxWidth: isMobile ? double.infinity : 400.0,
       snackPosition: SnackPosition.TOP,
       backgroundColor: TheColors.red,
       borderRadius: 12,
       margin: const EdgeInsets.all(12),
-      duration: const Duration(seconds: 4),
+      duration: const Duration(seconds: 2),
       isDismissible: true,
-      forwardAnimationCurve: Curves.easeOutBack,
-
-      // Remove shadow
-      boxShadows: [],
-
+      forwardAnimationCurve: Curves.easeInOut,
+      reverseAnimationCurve: Curves.easeOut,
       icon: Container(
-        padding: EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.15),
+        padding: const EdgeInsets.all(8),
+        decoration: const BoxDecoration(
+         
           shape: BoxShape.circle,
         ),
-        child: Icon(
+        child: const Icon(
           Icons.error_outline_rounded,
-          color: Colors.white,
+          color: TheColors.white,
           size: 22,
         ),
       ),
-
       titleText: Text(
         title,
         style: GoogleFonts.siemreap(
@@ -92,7 +94,6 @@ class CustomSnackbar {
           color: Colors.white,
         ),
       ),
-
       messageText: Text(
         message,
         style: GoogleFonts.siemreap(
@@ -100,7 +101,6 @@ class CustomSnackbar {
           color: Colors.white.withOpacity(0.9),
         ),
       ),
-
       mainButton: TextButton(
         child: Icon(
           Icons.close,
@@ -120,7 +120,6 @@ enum SnackbarType {
   info,
 }
 
-// Extension for easy usage
 extension SnackbarExtension on GetInterface {
   void showSuccess(String title, String message) {
     CustomSnackbar.success(title: title, message: message);
@@ -130,14 +129,3 @@ extension SnackbarExtension on GetInterface {
     CustomSnackbar.error(title: title, message: message);
   }
 }
-
-// Usage example:
-// Get.showSuccess('ជោគជ័យ', 'ទិន្នន័យត្រូវបានរក្សាទុកដោយជោគជ័យ');
-// Get.showError('បរាជ័យ', 'មិនអាចរក្សាទិន្នន័យបានទេ');
-// CustomSnackbar.withAction(
-//   title: 'ពិនិត្យឡើងវិញ',
-//   message: 'តើអ្នកចង់លុបទិន្នន័យនេះទេ?',
-//   actionText: 'លុប',
-//   onAction: () => deleteItem(),
-//   type: SnackbarType.warning,
-// );

@@ -1,4 +1,5 @@
 import 'package:loanfrontend/core/constant/api_endpoint.dart';
+import 'package:loanfrontend/data/models/loancheckmodel.dart';
 import 'package:loanfrontend/data/providers/api_provider.dart';
 
 class Loanservice {
@@ -31,6 +32,21 @@ class Loanservice {
       return response.statusCode == 200 || response.statusCode == 201;
     } catch (e) {
       throw Exception("Create loan failed: $e");
+    }
+  }
+
+  Future<List<Data>> getloanforcheck() async {
+    try {
+      final response = await apiProvider.get(ApiEndpoint.getloanforcheck);
+      if (response.statusCode == 200) {
+        final json = response.data;
+        final model = LoanCheckModel.fromJson(json);
+        return model.data ?? [];
+      } else {
+        throw Exception("Failed ${response.statusCode}");
+      }
+    } catch (e) {
+      throw Exception("Failed ${e.toString()}");
     }
   }
 }

@@ -60,10 +60,10 @@ class _VillageSelectorState extends State<VillageSelector> {
                                   ? TheColors.bgColor
                                   : TheColors.black)),
                       selected: isSelected,
-                      backgroundColor: TheColors.warningColor,
+                      backgroundColor: TheColors.cutecolo,
                       selectedColor: TheColors.orange,
                       side: const BorderSide(
-                          color: TheColors.warningColor, width: 0.3),
+                          color: TheColors.cutecolo, width: 0.3),
                       onSelected: (_) {
                         widget.onSelected(villages.id!);
                         Navigator.pop(context);

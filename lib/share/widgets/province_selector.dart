@@ -59,11 +59,11 @@ class _ProvinceSelectorState extends State<ProvinceSelector> {
                                   ? TheColors.bgColor
                                   : TheColors.black)),
                       selected: isSelected,
-                      backgroundColor: TheColors.warningColor,
+                      backgroundColor: TheColors.cutecolo,
                       selectedColor: TheColors.orange,
                       surfaceTintColor: Colors.transparent,
                       selectedShadowColor: TheColors.orange,
-                      side: BorderSide(color: TheColors.warningColor, width: 0.3),
+                      side: BorderSide(color: TheColors.cutecolo, width: 0.3),
                       onSelected: (_) {
                         widget.onSelected(province.id!);
                         Navigator.pop(context);

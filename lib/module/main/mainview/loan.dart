@@ -68,8 +68,9 @@ class Loan extends StatelessWidget {
                 _buildDrawerItem(Icons.add_circle_outline, "ស្នើកម្ចី", () {
                   Get.toNamed('/creatloan');
                 }),
-                _buildDrawerItem(
-                    Icons.task_alt, "កម្ចីត្រូវត្រួតពិនិត្យ", () {}),
+                _buildDrawerItem(Icons.task_alt, "កម្ចីត្រូវត្រួតពិនិត្យ", () {
+                  Get.toNamed('/checkloan');
+                }),
                 _buildDrawerItem(Icons.verified, "កម្ចីត្រូវអនុម័ត", () {}),
                 _buildDrawerItem(Icons.list_alt, "បញ្ជីកម្ចីទាំងអស់", () {}),
                 _buildDrawerItem(
@@ -114,7 +115,7 @@ class Loan extends StatelessWidget {
   Widget _buildBody(BuildContext context) {
     return Center(
       child: Text(
-        'Loan Content Goes Here',
+        '',
         style: TextStyles.siemreap(
           context,
           fontSize: 18,

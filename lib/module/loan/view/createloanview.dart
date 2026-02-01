@@ -146,10 +146,8 @@ class _CreateloanviewState extends State<Createloanview> {
   Widget build(BuildContext context) {
     final breakpoints = ResponsiveBreakpoints.of(context);
     final bool isMobile = breakpoints.isMobile;
-    final bool isTablet = breakpoints.isTablet;
-    final bool isDesktop = breakpoints.isDesktop;
     return Scaffold(
-        appBar: const CustomAppBar(title: "ស្នេីរកម្ចី"),
+        appBar: const CustomAppBar(title: "ស្នេីរកម្ចីថ្មី"),
         backgroundColor: TheColors.bgColor,
         body: isMobile ? mobile() : web());
   }
@@ -346,6 +344,7 @@ class _CreateloanviewState extends State<Createloanview> {
                     () => CustomOutlinedButton(
                       text: selectCheckName.value,
                       onPressed: () {
+                      //final filteredUsers = authcontroller.user.where((u) => u.id != selectapproveby.value).toList();
                         showUserSelectorsheet(
                           context: context,
                           user: authcontroller.user,
@@ -375,6 +374,7 @@ class _CreateloanviewState extends State<Createloanview> {
                     () => CustomOutlinedButton(
                       text: selectApproveName.value,
                       onPressed: () {
+                     // final filteredUsers = authcontroller.user.where((u) => u.id != selectcheckby.value).toList();
                         showUserSelectorsheet(
                           context: context,
                           user: authcontroller.user,
@@ -529,7 +529,7 @@ class _CreateloanviewState extends State<Createloanview> {
                         ],
                       ),
                       selected: false,
-                      backgroundColor: TheColors.green,
+                      backgroundColor: TheColors.cutecolo,
                       selectedColor: TheColors.red,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16),

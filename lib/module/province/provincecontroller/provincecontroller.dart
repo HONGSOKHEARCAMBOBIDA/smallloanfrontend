@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:loanfrontend/core/constant/api_endpoint.dart';
 import 'package:loanfrontend/data/models/provincemodel.dart';
 import 'package:loanfrontend/module/province/provinceservice/provinceservice.dart';
 import 'package:loanfrontend/share/widgets/snackbar.dart';
@@ -19,7 +20,7 @@ class Provincecontroller extends GetxController {
       final result = await provinceservice.getProvince();
       provinces.assignAll(result);
     } catch (e) {
-      CustomSnackbar.error(title: "មានបញ្ហា", message: e.toString());
+      CustomSnackbar.error(title: Message.Error, message: e.toString());
     }
   }
 }

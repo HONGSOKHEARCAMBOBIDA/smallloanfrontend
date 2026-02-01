@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:loanfrontend/core/constant/api_endpoint.dart';
 import 'package:loanfrontend/data/models/clientlistmodel.dart';
 import 'package:loanfrontend/module/client/clientservice/clientservice.dart';
 import 'package:loanfrontend/share/widgets/snackbar.dart';
@@ -179,11 +180,10 @@ class ClientController extends GetxController {
       if (isUpdated) {
         await listclient(isRefresh: true);
         Get.back();
-        CustomSnackbar.success(title: "Success", message: "Client added");
+        CustomSnackbar.success(title: Message.Success, message: Message.UpdateSuccess);
       }
     } catch (e) {
       CustomSnackbar.error(title: "Error", message: e.toString());
-      print(e.toString());
     } finally {
       isLoading.value = false;
     }

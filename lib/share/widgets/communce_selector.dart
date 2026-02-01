@@ -60,10 +60,10 @@ class _CommunceSelectorState extends State<CommunceSelector> {
                                   ? TheColors.bgColor
                                   : TheColors.black)),
                       selected: isSelected,
-                      backgroundColor: TheColors.warningColor,
+                      backgroundColor: TheColors.cutecolo,
                       selectedColor: TheColors.orange,
                       side: const BorderSide(
-                          color: TheColors.warningColor, width: 0.3),
+                          color: TheColors.cutecolo, width: 0.3),
                       onSelected: (_) {
                         widget.onSelected(communces.id!);
                         Navigator.pop(context);

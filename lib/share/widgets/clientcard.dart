@@ -68,7 +68,6 @@ class Clientcard extends StatelessWidget {
     final breakpoints = ResponsiveBreakpoints.of(context);
     final bool isMobile = breakpoints.isMobile;
     final bool isTablet = breakpoints.isTablet;
-    final bool isDesktop = breakpoints.isDesktop;
 
     // responsive sizes
     final double avatarRadius = isMobile ? 36 : (isTablet ? 44 : 56);
@@ -237,12 +236,12 @@ class Clientcard extends StatelessWidget {
                           children: [
                             Icon(Icons.phone,
                                 size: iconSize,
-                                color: TheColors.secondaryColor),
+                                color: TheColors.lightOrage),
                             SizedBox(width: 6),
                             Text(
                               phone,
                               style: TextStyles.siemreap(context,
-                                  color: TheColors.secondaryColor,
+                                  color: TheColors.white,
                                   fontSize: smallFontSize),
                             ),
                           ],
@@ -281,7 +280,7 @@ class Clientcard extends StatelessWidget {
                           children: [
                             Icon(Icons.location_on,
                                 size: iconSize,
-                                color: TheColors.secondaryColor),
+                                color: TheColors.lightOrage),
                             const SizedBox(width: 6),
                             Text(
                               "$villageName, $communceName, $districtName, $provinceName",

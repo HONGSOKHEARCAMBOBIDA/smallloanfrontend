@@ -6,6 +6,7 @@ class ApiEndpoint {
   static const String createloan = "addloan";
   static const String viewdocumenttype = "viewdocumenttype";
   static const String viewuser = "viewuser";
+  static const String getloanforcheck = "viewloanforcheck";
 
   // Endpoints with dynamic parameters
   static String editClient(int id) => "editclient/$id";

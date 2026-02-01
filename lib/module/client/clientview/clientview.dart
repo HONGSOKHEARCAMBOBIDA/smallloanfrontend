@@ -76,14 +76,14 @@ class _ClientviewState extends State<Clientview> {
 
     return Scaffold(
       backgroundColor: TheColors.bgColor,
-      appBar: CustomAppBar(title: "បញ្ជីអតិថិជន"),
+      appBar: const CustomAppBar(title: "បញ្ជីអតិថិជន"),
       floatingActionButton: CustomFloatingActionButton(
         onPressed: () {
           Get.toNamed('/createclient');
         },
       ),
       body: RefreshIndicator(
-        backgroundColor: TheColors.white,
+        backgroundColor: TheColors.cutecolo,
         color: TheColors.warningColor,
         onRefresh: refresh,
         child: Obx(() {
@@ -142,7 +142,7 @@ class _ClientviewState extends State<Clientview> {
                                   left: 8, bottom: isMobile ? 0.0 : 10),
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: TheColors.orange,
+                                  color: TheColors.cutecolo,
                                   borderRadius: BorderRadius.circular(50),
                                 ),
                                 child: Padding(
@@ -153,7 +153,7 @@ class _ClientviewState extends State<Clientview> {
                                     },
                                     child: Icon(
                                       Icons.refresh_outlined,
-                                      color: TheColors.warningColor,
+                                      color: TheColors.white,
                                       size: refreshIconSize,
                                     ),
                                   ),

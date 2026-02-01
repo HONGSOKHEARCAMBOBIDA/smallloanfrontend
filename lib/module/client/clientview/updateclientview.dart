@@ -609,9 +609,11 @@ Widget _buildProfileImageSection({double radius = 50}) {
   }
 
   Widget _buildSubmitButton() {
-    return CustomElevatedButton(
-      text: "កែប្រែ",
-      onPressed: updateclient,
+    return Obx((){
+      return CustomElevatedButton(
+      text: clientcontroller.isLoading.value ? "កំពុងកែប្រែ..." : "កែប្រែ",
+      onPressed: updateclient
     );
+    });
   }
 }

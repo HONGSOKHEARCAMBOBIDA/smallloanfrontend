@@ -1,12 +1,13 @@
 import 'package:get/get.dart';
 import 'package:loanfrontend/core/constant/api_endpoint.dart';
+import 'package:loanfrontend/data/models/loancheckmodel.dart';
 import 'package:loanfrontend/module/loan/service/loanservice.dart';
 import 'package:loanfrontend/share/widgets/snackbar.dart';
 
 class LoanController extends GetxController {
   final Loanservice service = Loanservice();
   var isLoading = false.obs;
-
+  var loanforcheck = <Data>[].obs;
   Future<void> createloan({
     required int clientid,
     required int loanproductid,
@@ -45,6 +46,18 @@ class LoanController extends GetxController {
       }
     } catch (e) {
       CustomSnackbar.error(title: "Error", message: e.toString());
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> getloanforcheck() async {
+    try {
+      isLoading.value = true;
+      final result = await service.getloanforcheck();
+      loanforcheck.assignAll(result);
+    } catch (e) {
+      CustomSnackbar.error(title: Message.Error, message: e.toString());
     } finally {
       isLoading.value = false;
     }

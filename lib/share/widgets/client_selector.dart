@@ -138,7 +138,7 @@ class _ClientSelectorState extends State<ClientSelector> {
                       decoration: BoxDecoration(
                         border: Border.all(
                           color:
-                              isSelected ? TheColors.white : Colors.transparent,
+                              isSelected ? TheColors.cutecolo : Colors.transparent,
                           width: isSelected ? 1.5 : 0.5,
                         ),
                         borderRadius: BorderRadius.circular(20),
@@ -151,7 +151,7 @@ class _ClientSelectorState extends State<ClientSelector> {
                           width: 40,
                           height: 40,
                           decoration: BoxDecoration(
-                            color: TheColors.green,
+                            color: TheColors.errorColor,
                             borderRadius: BorderRadius.circular(50),
                           ),
                           child: Padding(

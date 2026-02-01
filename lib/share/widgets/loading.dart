@@ -15,8 +15,9 @@ class CustomLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: LoadingAnimationWidget.beat(
-        color: color,
+      child: LoadingAnimationWidget.flickr(
+        leftDotColor: TheColors.red,
+        rightDotColor: TheColors.green,
         size: size,
       ),
     );
