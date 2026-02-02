@@ -126,7 +126,7 @@ class _CreateloanviewState extends State<Createloanview> {
       });
     }
     selectedGuarantors.clear();
-    relationshipController.clear();
+    
     selectGuarantorName.value = 'ជ្រើសអ្នកធានា';
   }
 

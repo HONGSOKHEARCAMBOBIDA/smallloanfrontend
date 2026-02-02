@@ -71,8 +71,12 @@ class Loan extends StatelessWidget {
                 _buildDrawerItem(Icons.task_alt, "កម្ចីត្រូវត្រួតពិនិត្យ", () {
                   Get.toNamed('/checkloan');
                 }),
-                _buildDrawerItem(Icons.verified, "កម្ចីត្រូវអនុម័ត", () {}),
-                _buildDrawerItem(Icons.list_alt, "បញ្ជីកម្ចីទាំងអស់", () {}),
+                _buildDrawerItem(Icons.verified, "កម្ចីត្រូវអនុម័ត", () {
+                  Get.toNamed('/approveloan');
+                }),
+                _buildDrawerItem(Icons.list_alt, "បញ្ជីកម្ចីទាំងអស់", () {
+                  Get.toNamed('/viewloan');
+                }),
                 _buildDrawerItem(
                     Icons.request_quote, "បញ្ជីកម្ចីត្រូវប្រមូល", () {}),
                 _buildDrawerItem(Icons.attach_money, "លទ្ធផលប្រមូលបាន", () {}),

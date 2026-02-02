@@ -5,28 +5,29 @@ import 'package:loanfrontend/core/theme/text_styles.dart';
 import 'package:loanfrontend/module/loan/controller/loancontroller.dart';
 import 'package:loanfrontend/share/widgets/app_bar.dart';
 import 'package:loanfrontend/share/widgets/loading.dart';
+import 'package:loanfrontend/share/widgets/loanapprovecard.dart';
 import 'package:loanfrontend/share/widgets/loancard.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
-class Loanforcheck extends StatefulWidget {
-  const Loanforcheck({super.key});
+class Loanforapprove extends StatefulWidget {
+  const Loanforapprove({super.key});
 
   @override
-  State<Loanforcheck> createState() => _LoanforcheckState();
+  State<Loanforapprove> createState() => _LoanforapproveState();
 }
 
-class _LoanforcheckState extends State<Loanforcheck> {
+class _LoanforapproveState extends State<Loanforapprove> {
   final loancontroller = Get.find<LoanController>();
   final ScrollController scrollController = ScrollController();
 
   Future<void> refresh() async {
-    loancontroller.loanforcheck.clear();
-    await loancontroller.getloanforcheck();
+    loancontroller.loanforapprove.clear();
+    await loancontroller.getloanforapprove();
   }
 
   @override
   void initState() {
-    loancontroller.getloanforcheck();
+    loancontroller.getloanforapprove();
     super.initState();
   }
 
@@ -42,7 +43,7 @@ class _LoanforcheckState extends State<Loanforcheck> {
         EdgeInsets.symmetric(horizontal: isMobile ? 8 : 20, vertical: 8);
     return Scaffold(
       backgroundColor: TheColors.bgColor,
-      appBar: const CustomAppBar(title: "បញ្ជីកម្ចីត្រូវពិនិត្យ"),
+      appBar: const CustomAppBar(title: "បញ្ជីកម្ចីត្រូវអនុម័ត"),
       body: RefreshIndicator(
         backgroundColor: TheColors.cutecolo,
         color: TheColors.warningColor,
@@ -55,19 +56,20 @@ class _LoanforcheckState extends State<Loanforcheck> {
           return CustomScrollView(
             controller: scrollController,
             slivers: [
-              if (loancontroller.loanforcheck.isNotEmpty)
+              if (loancontroller.loanforapprove.isNotEmpty)
                 if (gridCount == 1)
                   SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
-                        final loan = loancontroller.loanforcheck[index];
+                        final loan = loancontroller.loanforapprove[index];
                         return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          child: Loancard(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 8),
+                          child: Loanapprovecard(
                               loan: loan,
                               onTap: () {
                                 Get.defaultDialog(
-                                  title: "ត្រួតពិនិត្យកម្ចី",
+                                  title: "អនុម័តកម្ចី",
                                   titleStyle: TextStyles.moul(context,
                                       fontSize: smallFontSize,
                                       color: TheColors.warningColor),
@@ -97,7 +99,7 @@ class _LoanforcheckState extends State<Loanforcheck> {
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
                                           Text(
-                                            "តើអ្នកចង់ត្រួតពិនិត្យកម្ចី ${loan.clientName} មែនទេ?",
+                                            "តើអ្នកចង់អនុម័តកម្ចី ${loan.clientName} មែនទេ?",
                                             style: TextStyles.siemreap(context),
                                             textAlign: TextAlign.center,
                                           ),
@@ -137,7 +139,7 @@ class _LoanforcheckState extends State<Loanforcheck> {
                                                         ? null
                                                         : () {
                                                             loancontroller
-                                                                .checkloan(
+                                                                .approveloan(
                                                                     loan.id);
                                                             Get.back();
                                                           },
@@ -165,7 +167,7 @@ class _LoanforcheckState extends State<Loanforcheck> {
                                                             ),
                                                           )
                                                         : Text(
-                                                            "ត្រួតពិនិត្យ",
+                                                            "អនុម័ត",
                                                             style: TextStyles
                                                                 .siemreap(
                                                               context,
@@ -188,7 +190,7 @@ class _LoanforcheckState extends State<Loanforcheck> {
                               }),
                         );
                       },
-                      childCount: loancontroller.loanforcheck.length,
+                      childCount: loancontroller.loanforapprove.length,
                     ),
                   )
                 else
@@ -196,14 +198,14 @@ class _LoanforcheckState extends State<Loanforcheck> {
                     padding: pagePadding,
                     sliver: SliverGrid(
                       delegate: SliverChildBuilderDelegate((context, index) {
-                        final loan = loancontroller.loanforcheck[index];
+                        final loan = loancontroller.loanforapprove[index];
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 16),
-                          child: Loancard(
+                          child: Loanapprovecard(
                               loan: loan,
                               onTap: () {
                                 Get.defaultDialog(
-                                  title: "ត្រួតពិនិត្យកម្ចី",
+                                  title: "អនុម័តកម្ចី",
                                   titleStyle: TextStyles.moul(context,
                                       fontSize: smallFontSize,
                                       color: TheColors.warningColor),
@@ -233,7 +235,7 @@ class _LoanforcheckState extends State<Loanforcheck> {
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
                                           Text(
-                                            "តើអ្នកចង់ត្រួតពិនិត្យកម្ចី ${loan.clientName} មែនទេ?",
+                                            "តើអ្នកចង់អនុម័តកម្ចី ${loan.clientName} មែនទេ?",
                                             style: TextStyles.siemreap(context),
                                             textAlign: TextAlign.center,
                                           ),
@@ -273,7 +275,7 @@ class _LoanforcheckState extends State<Loanforcheck> {
                                                         ? null
                                                         : () {
                                                             loancontroller
-                                                                .checkloan(
+                                                                .approveloan(
                                                                     loan.id);
                                                             Get.back();
                                                           },
@@ -301,7 +303,7 @@ class _LoanforcheckState extends State<Loanforcheck> {
                                                             ),
                                                           )
                                                         : Text(
-                                                            "ត្រួតពិនិត្យ",
+                                                            "អនុម័ត",
                                                             style: TextStyles
                                                                 .siemreap(
                                                               context,
@@ -323,7 +325,7 @@ class _LoanforcheckState extends State<Loanforcheck> {
                                 );
                               }),
                         );
-                      }, childCount: loancontroller.loanforcheck.length),
+                      }, childCount: loancontroller.loanforapprove.length),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: gridCount,
                         mainAxisSpacing: 8,

@@ -7,7 +7,10 @@ class ApiEndpoint {
   static const String viewdocumenttype = "viewdocumenttype";
   static const String viewuser = "viewuser";
   static const String getloanforcheck = "viewloanforcheck";
-
+  static const String getloanforapprove = "viewloanforapprove";
+  static checkloan(int id) => "checkloan/$id";
+  static approveloan(int id) => "approveloan/$id";
+  static const String viewloan = "viewloan";
   // Endpoints with dynamic parameters
   static String editClient(int id) => "editclient/$id";
   static String changeStatusClient(String id) => "changestatusclient/$id";
@@ -28,4 +31,6 @@ class Message {
   static const String BadRequest = "បំពេញទិន្នន័យមិនត្រឹមត្រូវ";
   static const String ClientDuplicate = "អិថិជនបានជ្រេីសរេីសម្ដងហេីយ";
   static const String BadRequestClient = "សូមជ្រេីសរេីសអ្នកធានាកម្ចី";
+  static const String Checksuccess = "ត្រួតពិនិត្យកម្ចីបានជោគជ័យ";
+  static const String Approvesuccess = "អនុម័តកម្ចីបានជោគជ័យ";
 }

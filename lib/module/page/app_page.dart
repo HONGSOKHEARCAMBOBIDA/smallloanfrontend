@@ -9,7 +9,9 @@ import 'package:loanfrontend/module/district/districtbinding/districtbinding.dar
 import 'package:loanfrontend/module/documenttype/bindng/documenttypebinding.dart';
 import 'package:loanfrontend/module/loan/binding/loanbinding.dart';
 import 'package:loanfrontend/module/loan/view/createloanview.dart';
+import 'package:loanfrontend/module/loan/view/loanforapprove.dart';
 import 'package:loanfrontend/module/loan/view/loanforcheck.dart';
+import 'package:loanfrontend/module/loan/view/loanview.dart';
 import 'package:loanfrontend/module/loanproduct/binding/loanproductbinding.dart';
 import 'package:loanfrontend/module/main/binding/mainbinding.dart';
 import 'package:loanfrontend/module/main/mainmiddleware/mainmiddleware.dart';
@@ -49,6 +51,14 @@ class AppPage {
     GetPage(
         name: '/checkloan',
         page: () => const Loanforcheck(),
+        binding: Loanbinding()),
+    GetPage(
+        name: '/approveloan',
+        page: () => const Loanforapprove(),
+        binding: Loanbinding()),
+    GetPage(
+        name: '/viewloan',
+        page: () => const Loanview(),
         binding: Loanbinding())
   ];
 }
