@@ -155,6 +155,7 @@ class LoanController extends GetxController {
           startdate: startdate,
           page: currentPage.value,
           pageSize: pageSize);
+
       if (loadMore) {
         loan.addAll(result);
       } else {

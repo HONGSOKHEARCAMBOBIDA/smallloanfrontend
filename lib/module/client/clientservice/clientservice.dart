@@ -10,7 +10,6 @@ class ClientService {
   final ApiProvider apiProvider = ApiProvider();
 
   Future<bool> createclient({
-    required String idempotency,
     required String name,
     required int gender,
     required String maritalStatus,
@@ -45,11 +44,8 @@ class ClientService {
               filename: clientImage.name,
             ),
       });
-      final response = await apiProvider.post(ApiEndpoint.addClient, formData,
-          idempotency: idempotency);
+      final response = await apiProvider.post(ApiEndpoint.addClient, formData);
       return response.statusCode == 200 || response.statusCode == 201;
-    } on DioException catch (e) {
-      throw Exception(e.response?.data ?? "Network error");
     } catch (e) {
       throw Exception("Unexpected error: $e");
     }

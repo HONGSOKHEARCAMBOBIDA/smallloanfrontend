@@ -71,8 +71,9 @@ class ClientController extends GetxController {
         villageId: villageId,
         notes: notes,
         clientImage: clientImage,
-        idempotency: Uuid().v4().substring(8),
       );
+
+      
 
       if (isCreated) {
         await listclient(isRefresh: true);

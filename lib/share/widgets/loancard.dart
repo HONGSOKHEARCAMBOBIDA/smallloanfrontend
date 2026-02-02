@@ -31,9 +31,9 @@ class Loancard extends StatelessWidget {
     switch (status) {
       case "1":
         return TheColors.pending;
-      case "checked":
+      case "2":
         return TheColors.checked;
-      case "approved":
+      case "3":
         return TheColors.approve;
       default:
         return TheColors.gray;

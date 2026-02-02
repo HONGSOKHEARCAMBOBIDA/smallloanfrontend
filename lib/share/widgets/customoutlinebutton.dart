@@ -24,7 +24,7 @@ class CustomOutlinedButton extends StatelessWidget {
     this.width = double.infinity,
     this.height = 50.0,
     this.icon,
-    this.alignment = MainAxisAlignment.start,
+    this.alignment = MainAxisAlignment.center,
   }) : super(key: key);
 
   @override

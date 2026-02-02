@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:loanfrontend/core/helper/show_loan_buttonsheet.dart';
 import 'package:loanfrontend/core/theme/app_color.dart';
 import 'package:loanfrontend/core/theme/text_styles.dart';
 import 'package:loanfrontend/module/loan/controller/loancontroller.dart';
 import 'package:loanfrontend/share/widgets/app_bar.dart';
 import 'package:loanfrontend/share/widgets/common_widgets.dart';
 import 'package:loanfrontend/share/widgets/loading.dart';
-import 'package:loanfrontend/share/widgets/loancard.dart';
+import 'package:loanfrontend/share/widgets/loanlistcard.dart';
 import 'package:loanfrontend/share/widgets/textfield.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
@@ -64,7 +65,6 @@ class _LoanviewState extends State<Loanview> {
     final double searchHeight = isMobile ? 50 : (isTablet ? 56 : 64);
     final double refreshIconSize = isMobile ? 30 : (isTablet ? 34 : 38);
     final int gridCount = isDesktop ? 3 : (isTablet ? 2 : 1);
-    final double smallFontSize = isMobile ? 12 : 15;
     final EdgeInsetsGeometry pagePadding =
         EdgeInsets.symmetric(horizontal: isMobile ? 8 : 20, vertical: 8);
     return Scaffold(
@@ -168,16 +168,24 @@ class _LoanviewState extends State<Loanview> {
                   ),
                 ),
 
+
+          
+              
               // List or Grid of clients
               if (loancontroller.loan.isNotEmpty)
                 if (gridCount == 1)
                   SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
-                        final loan = loancontroller.loanforcheck[index];
+                        final loan = loancontroller.loan[index];
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 16),
-                          child: Loancard(loan: loan, onTap: () {}),
+                          child: Loanlistcard(
+                              loan: loan,
+                              onTap: () {
+                                showLoanButtonsheet(
+                                    context: context, loan: loan);
+                              }),
                         );
                       },
                       childCount: loancontroller.loanforcheck.length,
@@ -188,17 +196,22 @@ class _LoanviewState extends State<Loanview> {
                     padding: pagePadding,
                     sliver: SliverGrid(
                       delegate: SliverChildBuilderDelegate((context, index) {
-                        final loan = loancontroller.loanforcheck[index];
+                        final loan = loancontroller.loan[index];
                         return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          child: Loancard(loan: loan, onTap: () {}),
+                          padding: const EdgeInsets.symmetric(vertical: 8,),
+                          child: Loanlistcard(
+                              loan: loan,
+                              onTap: () {
+                                showLoanButtonsheet(
+                                    context: context, loan: loan);
+                              }),
                         );
-                      }, childCount: loancontroller.loanforcheck.length),
+                      }, childCount: loancontroller.loan.length),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: gridCount,
                         mainAxisSpacing: 8,
                         crossAxisSpacing: 8,
-                        childAspectRatio: isDesktop ? 1.8 : 1.8,
+                        childAspectRatio: isDesktop ? 3.0 : 1.8,
                       ),
                     ),
                   ),
