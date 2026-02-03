@@ -69,7 +69,7 @@ class _PaymentcardState extends State<Paymentcard> {
           children: [
             Flexible(
               child: Text(
-                "កម្ចី #${widget.paymentschedule.loanId}",
+                "កម្ចី ${widget.paymentschedule.loanId}",
                 style: TextStyles.moul(
                   context,
                   fontSize: 18,
@@ -168,7 +168,7 @@ class _PaymentcardState extends State<Paymentcard> {
               ),
               _buildInfoRowDesktop(
                 "ភេទ:",
-                widget.paymentschedule.clientGender == 1 ? "ប្រុស" : "ស្រី",
+                widget.paymentschedule.clientGender,
               ),
               _buildInfoRowDesktop(
                   "ទូរសព្ទ:", widget.paymentschedule.clientPhone),
@@ -440,28 +440,13 @@ class _PaymentcardState extends State<Paymentcard> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [
-                  TheColors.green,
-                  TheColors.cutecolo,
-                ],
-              ),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: TheColors.lightOrage.withOpacity(0.2)),
+              border: Border.all(color: TheColors.green),
             ),
             child: Row(
               children: [
-                if (isAmount)
-                  Icon(
-                    Icons.attach_money,
-                    color: TheColors.lightOrage,
-                    size: 20,
-                  ),
-                if (isAmount) const SizedBox(width: 8),
                 Text(
-                  value,
+                  "${value} ៛",
                   style: TextStyles.siemreap(
                     context,
                     fontSize: isAmount ? 20 : 16,

@@ -7,6 +7,7 @@ import 'package:loanfrontend/share/widgets/app_bar.dart';
 import 'package:loanfrontend/share/widgets/loading.dart';
 import 'package:loanfrontend/share/widgets/paymentcard.dart';
 import 'package:loanfrontend/share/widgets/schedulecard.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class PaymentScheduleView extends StatefulWidget {
   final int loanId;
@@ -33,6 +34,13 @@ class _PaymentScheduleViewState extends State<PaymentScheduleView> {
 
   @override
   Widget build(BuildContext context) {
+    final breakpoints = ResponsiveBreakpoints.of(context);
+    final bool isMobile = breakpoints.isMobile;
+    final bool isTablet = breakpoints.isTablet;
+    final bool isDesktop = breakpoints.isDesktop;
+
+    final int gridCount = isDesktop ? 3 : (isTablet ? 2 : 1);
+
     return Scaffold(
       backgroundColor: TheColors.bgColor,
       appBar: const CustomAppBar(
@@ -40,70 +48,75 @@ class _PaymentScheduleViewState extends State<PaymentScheduleView> {
       ),
       body: Obx(() {
         final paymentData = controller.paymentschedule.value;
-        final isLoading = paymentData == null;
 
-        if (isLoading) {
+        if (paymentData == null) {
           return const Center(child: CustomLoading());
         }
+
+        final schedules = paymentData.schedule ?? [];
 
         return RefreshIndicator(
           onRefresh: _loadData,
           backgroundColor: TheColors.cutecolo,
           color: TheColors.warningColor,
           child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
             padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Paymentcard(
-                  paymentschedule: paymentData!,
+                  paymentschedule: paymentData,
                   onTap: () {},
                 ),
                 const SizedBox(height: 24),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'កាលវិភាគបង់ប្រាក់',
-                        style: TextStyles.siemreap(
-                          context,
-                          fontSize: 18,
-                          fontweight: FontWeight.bold,
-                          color: TheColors.white,
-                        ),
+
+                /// Header
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'កាលវិភាគបង់ប្រាក់',
+                      style: TextStyles.siemreap(
+                        context,
+                        fontSize: 18,
+                        fontweight: FontWeight.bold,
+                        color: TheColors.white,
                       ),
-                      Text(
-                        'សរុប: ${paymentData.schedule?.length ?? 0} លើក',
-                        style: TextStyles.siemreap(
-                          context,
-                          fontSize: 14,
-                          color: TheColors.gray,
-                        ),
+                    ),
+                    Text(
+                      'សរុប: ${schedules.length} លើក',
+                      style: TextStyles.siemreap(
+                        context,
+                        fontSize: 14,
+                        color: TheColors.white,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 16),
-                if (paymentData.schedule != null &&
-                    paymentData.schedule!.isNotEmpty)
-                  ...paymentData.schedule!.map((schedule) {
-                    return Column(
-                      children: [
-                        ScheduleCard(
-                          schedule: schedule,
-                          onPayNow: () {},
-                          onViewDetails: () {
-                            // Handle view details
-                          },
-                        ),
-                        const SizedBox(height: 12),
-                      ],
-                    );
-                  }).toList()
+
+                /// Content
+                if (schedules.isNotEmpty)
+                  GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: schedules.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: gridCount,
+                      mainAxisSpacing: 8,
+                      crossAxisSpacing: 8,
+                      childAspectRatio: isDesktop ? 2.3 : 2.6,
+                    ),
+                    itemBuilder: (context, index) {
+                      return ScheduleCard(
+                        schedule: schedules[index],
+                      );
+                    },
+                  )
                 else
                   Container(
+                    width: double.infinity,
                     padding: const EdgeInsets.all(32),
                     decoration: BoxDecoration(
                       color: Colors.black.withOpacity(0.2),
@@ -122,7 +135,8 @@ class _PaymentScheduleViewState extends State<PaymentScheduleView> {
                         const SizedBox(height: 16),
                         Text(
                           'មិនមានកាលវិភាគបង់ប្រាក់',
-                          style: TextStyle(
+                          style: TextStyles.siemreap(
+                            context,
                             fontSize: 16,
                             color: TheColors.gray,
                           ),

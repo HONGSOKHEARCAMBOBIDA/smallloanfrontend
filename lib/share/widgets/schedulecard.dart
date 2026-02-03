@@ -25,13 +25,13 @@ class _ScheduleCardState extends State<ScheduleCard> {
   bool _isExpanded = false;
 
   Color _getStatusColor(String? status) {
-    switch (status?.toLowerCase()) {
+    switch (status) {
       case 'PAID':
         return TheColors.green;
       case 'OVERDUE':
         return TheColors.red;
       case 'PENDING':
-        return TheColors.lightOrage;
+        return TheColors.warningColor;
       default:
         return Colors.grey;
     }
@@ -49,23 +49,25 @@ class _ScheduleCardState extends State<ScheduleCard> {
   }
 
   double _getProgressPercentage() {
-    final paid = widget.schedule.paidAmount ?? 0;
-    final total = widget.schedule.totalOwe ?? 1;
-    return total > 0 ? paid / total : 0;
+    final total = (widget.schedule.total ?? 0).toDouble();
+    final paid = (widget.schedule.paidAmount ?? 0).toDouble();
+
+    if (total <= 0) return 0.0;
+
+    return (paid / total).clamp(0.0, 1.0);
   }
 
   @override
   Widget build(BuildContext context) {
     final breakpoint = ResponsiveBreakpoints.of(context);
     final bool isMobile = breakpoint.isMobile;
-    final bool isTablet = breakpoint.isTablet;
     final double iconSize = isMobile ? 12 : 18;
     final double smallFontSize = isMobile ? 12 : 15;
     final status = widget.schedule.staus;
     final statusColor = _getStatusColor(status);
     final progress = _getProgressPercentage();
-    final isPaid = status?.toLowerCase() == 'PAID';
-    final isOverdue = status?.toLowerCase() == 'OVERDUE';
+    final isPaid = status == 'PAID';
+    final isOverdue = status == 'OVERDUE';
 
     return Card(
       color: TheColors.bgColor,
@@ -80,334 +82,300 @@ class _ScheduleCardState extends State<ScheduleCard> {
       ),
       child: Padding(
         padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Header with Installment Number and Status
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                // Installment Badge
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.calendar_today,
-                        size: iconSize,
-                        color: TheColors.lightOrage,
-                      ),
-                      const SizedBox(width: 6),
-                      Text(
-                        'លេខរៀង ${widget.schedule.scheduleNumber ?? ''}',
-                        style: TextStyles.siemreap(
-                          context,
-                          color: Colors.white,
-                          fontweight: FontWeight.w600,
-                          fontSize: smallFontSize,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                // Status Badge
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: statusColor,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Text(
-                    (status ?? 'N/A').toUpperCase(),
-                    style: TextStyle(
-                      color: statusColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-
-            const SizedBox(height: 16),
-
-            // Due Date with optional overdue indicator
-            Row(
-              children: [
-                Icon(
-                  Icons.calendar_month_outlined,
-                  size: iconSize,
-                  color: isOverdue ? Colors.red : Colors.grey[600],
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    'Due Date: ${_formatDate(widget.schedule.paymentDate)}',
-                    style: TextStyles.siemreap(
-                      context,
-                      color: TheColors.gray,
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-                if (isOverdue)
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Header with Installment Number and Status
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // Installment Badge
                   Container(
                     padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
-                      color: Colors.red.shade50,
-                      borderRadius: BorderRadius.circular(12),
+                      color: TheColors.cutecolo,
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    child: const Row(
+                    child: Row(
                       children: [
                         Icon(
-                          Icons.warning_amber,
-                          size: 14,
-                          color: Colors.red,
+                          Icons.calendar_today,
+                          size: iconSize,
+                          color: TheColors.black,
                         ),
-                        SizedBox(width: 4),
+                        const SizedBox(width: 6),
                         Text(
-                          'Overdue',
-                          style: TextStyle(
-                            color: Colors.red,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
+                          'លេខរៀង ${widget.schedule.scheduleNumber ?? ''}',
+                          style: TextStyles.siemreap(
+                            context,
+                            color: TheColors.bgColor,
+                            fontweight: FontWeight.w600,
+                            fontSize: smallFontSize,
                           ),
                         ),
                       ],
                     ),
                   ),
-              ],
-            ),
-
-            const SizedBox(height: 12),
-
-            // Progress Bar
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Payment Progress',
-                      style: TextStyles.siemreap(
-                        context,
-                        fontSize: smallFontSize,
-                        color: TheColors.gray,
+          
+                  // Status Badge
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: statusColor,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Text(
+                        (status ?? 'N/A'),
+                        style: TextStyle(
+                          color: TheColors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                        ),
                       ),
                     ),
-                    Text(
-                      '${(progress * 100).toStringAsFixed(0)}%',
-                      style: TextStyle(
-                        fontSize: smallFontSize,
-                        color: TheColors.gray,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 4),
-                LinearProgressIndicator(
-                  value: progress,
-                  backgroundColor: TheColors.gray,
-                  valueColor: AlwaysStoppedAnimation<Color>(statusColor),
-                  borderRadius: BorderRadius.circular(4),
-                  minHeight: 8,
-                ),
-              ],
-            ),
-
-            const SizedBox(height: 16),
-
-            // Expand/Collapse Button
-            InkWell(
-              onTap: () {
-                setState(() {
-                  _isExpanded = !_isExpanded;
-                });
-              },
-              borderRadius: BorderRadius.circular(8),
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      _isExpanded ? 'Show Less' : 'View Details',
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(width: 4),
-                    Icon(
-                      _isExpanded ? Icons.expand_less : Icons.expand_more,
-                      size: 18,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-
-            // Expanded Details Section
-            if (_isExpanded) ...[
-              const Divider(),
-              const SizedBox(height: 12),
-
-              // Amount Breakdown Table
-              Column(
-                children: [
-                  _buildAmountRow(
-                    label: 'ប្រាក់ត្រូវបង់',
-                    amount: widget.schedule.dueAmount,
-                    isOptional: false,
-                  ),
-                  if ((widget.schedule.penalty ?? 0) > 0)
-                    _buildAmountRow(
-                      label: 'ប្រាក់ពិន័យ',
-                      amount: widget.schedule.penalty,
-                      isOptional: true,
-                      prefix: '+',
-                      textColor: Colors.red,
-                      icon: Icons.warning_amber_outlined,
-                    ),
-                  const Divider(height: 16),
-                  _buildAmountRow(
-                    label: 'ប្រាក់ត្រូវបង់សរុប​',
-                    amount: widget.schedule.totalOwe,
-                    isOptional: false,
-                    isBold: true,
-                    textColor: Colors.black,
-                  ),
-                  _buildAmountRow(
-                    label: 'ប្រាក់បានបង់',
-                    amount: widget.schedule.paidAmount,
-                    isOptional: false,
-                    textColor: Colors.green,
-                    icon: Icons.check_circle_outline,
-                  ),
-                  const Divider(height: 16),
-                  _buildAmountRow(
-                    label: widget.schedule.totalOwe! > 0
-                        ? 'ប្រាក់ត្រូវបង់សរុប'
-                        : 'បានបង់',
-                    amount: widget.schedule.totalOwe,
-                    isOptional: false,
-                    isBold: true,
-                    textColor: widget.schedule.totalOwe! > 0
-                        ? Colors.red
-                        : Colors.green,
-                    icon: widget.schedule.totalOwe! > 0
-                        ? Icons.error_outline
-                        : Icons.check_circle,
                   ),
                 ],
               ),
-
+          
               const SizedBox(height: 16),
-
-              // Action Buttons
+          
+              // Due Date with optional overdue indicator
               Row(
                 children: [
-                  if (!isPaid && widget.onPayNow != null)
-                    Expanded(
-                      child: CustomElevatedButton(
-                        onPressed: widget.onPayNow,
-                        text: "បង់ប្រាក់",
+                  Icon(
+                    Icons.calendar_month_outlined,
+                    size: iconSize,
+                    color: isOverdue ? Colors.red : Colors.grey[600],
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      'ថ្ងៃបង់ប្រាក់: ${_formatDate(widget.schedule.paymentDate)}',
+                      style: TextStyles.siemreap(
+                        context,
+                        color: TheColors.white,
+                        fontSize: 14,
                       ),
                     ),
-                  if (!isPaid && widget.onPayNow != null)
-                    const SizedBox(width: 12),
-                  Expanded(
-                    child: OutlinedButton(
-                      onPressed: widget.onViewDetails,
-                      style: OutlinedButton.styleFrom(
-                        side: BorderSide(color: Theme.of(context).primaryColor),
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
+                  ),
+                  if (isOverdue)
+                    Container(
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: Colors.red.shade50,
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                      child: const Row(
                         children: [
-                          const Icon(Icons.receipt_long_outlined, size: 18),
-                          const SizedBox(width: 8),
-                          Text(isPaid ? 'View Receipt' : 'Details'),
+                          Icon(
+                            Icons.warning_amber,
+                            size: 14,
+                            color: Colors.red,
+                          ),
+                          SizedBox(width: 4),
+                          Text(
+                            'Overdue',
+                            style: TextStyle(
+                              color: Colors.red,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
                         ],
                       ),
                     ),
-                  ),
                 ],
               ),
-            ] else ...[
-              // Summary view when collapsed
+          
               const SizedBox(height: 12),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          
+              // Progress Bar
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'ប្រាក់ជំបាក់សរុប',
-                        style: TextStyles.siemreap(
-                          context,
+                        '${(progress * 100).toStringAsFixed(0)}%',
+                        style: TextStyle(
                           fontSize: smallFontSize,
-                          color: TheColors.gray,
-                        ),
-                      ),
-                      Text(
-                        widget.schedule.total.toString(),
-                        style: TextStyles.siemreap(
-                          context,
-                          fontSize: 16,
-                          fontweight: FontWeight.bold,
+                          color: TheColors.white,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ],
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        widget.schedule.totalOwe! > 0
-                            ? 'ប្រាក់ជំពាក់សរុប'
-                            : 'បានបង់',
-                        style: TextStyles.siemreap(
-                          context,
-                          fontSize: 12,
-                          color: TheColors.gray,
-                        ),
-                      ),
-                      Text(
-                        widget.schedule.totalOwe! > 0
-                            ? widget.schedule.totalOwe.toString()
-                            : 'បង់រួចរាល់',
-                        style: TextStyles.siemreap(
-                          context,
-                          fontSize: smallFontSize,
-                          fontweight: FontWeight.bold,
-                          color: widget.schedule.totalOwe! > 0
-                              ? Colors.red
-                              : Colors.green,
-                        ),
-                      ),
-                    ],
-                  ),
+                  const SizedBox(height: 4),
+                  LinearProgressIndicator(
+                    value: progress,
+                    minHeight: 8,
+                    backgroundColor: TheColors.gray,
+                    valueColor: AlwaysStoppedAnimation<Color>(statusColor),
+                    borderRadius: BorderRadius.circular(4),
+                  )
                 ],
               ),
+          
+              const SizedBox(height: 16),
+          
+              // Expand/Collapse Button
+              InkWell(
+                onTap: () {
+                  setState(() {
+                    _isExpanded = !_isExpanded;
+                  });
+                },
+                borderRadius: BorderRadius.circular(8),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        _isExpanded ? 'លាក់' : 'បង្ហាញច្រេីន',
+                        style: TextStyles.siemreap(
+                          context,
+                          color: TheColors.white,
+                          fontweight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(width: 4),
+                      Icon(
+                        _isExpanded ? Icons.expand_less : Icons.expand_more,
+                        size: 18,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+          
+              // Expanded Details Section
+              if (_isExpanded) ...[
+                const Divider(
+                  color: TheColors.gray,
+                  height: 0.5,
+                ),
+                const SizedBox(height: 12),
+          
+                // Amount Breakdown Table
+                Column(
+                  children: [
+                    _buildAmountRow(
+                      label: 'ប្រាក់ត្រូវបង់',
+                      amount: widget.schedule.dueAmount,
+                      isOptional: false,
+                    ),
+                    if ((widget.schedule.penalty ?? 0) > 0)
+                      _buildAmountRow(
+                        label: 'ប្រាក់ពិន័យ',
+                        amount: widget.schedule.penalty,
+                        isOptional: true,
+                        prefix: '+',
+                        textColor: Colors.red,
+                        icon: Icons.warning_amber_outlined,
+                      ),
+                    const Divider(height: 16),
+                    _buildAmountRow(
+                      label: 'ប្រាក់ត្រូវបង់សរុប​',
+                      amount: widget.schedule.totalOwe,
+                      isOptional: false,
+                      isBold: true,
+                      textColor: Colors.black,
+                    ),
+                    _buildAmountRow(
+                      label: 'ប្រាក់បានបង់',
+                      amount: widget.schedule.paidAmount,
+                      isOptional: false,
+                      textColor: Colors.green,
+                      icon: Icons.check_circle_outline,
+                    ),
+                    const Divider(height: 16),
+                    _buildAmountRow(
+                      label: widget.schedule.totalOwe! > 0
+                          ? 'ប្រាក់ត្រូវបង់សរុប'
+                          : 'បានបង់',
+                      amount: widget.schedule.totalOwe,
+                      isOptional: false,
+                      isBold: true,
+                      textColor: widget.schedule.totalOwe! > 0
+                          ? Colors.red
+                          : Colors.green,
+                      icon: widget.schedule.totalOwe! > 0
+                          ? Icons.error_outline
+                          : Icons.check_circle,
+                    ),
+                  ],
+                ),
+          
+                const SizedBox(height: 16),
+              ] else ...[
+                // Summary view when collapsed
+                const SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'ប្រាក់ជំបាក់សរុប',
+                          style: TextStyles.siemreap(
+                            context,
+                            fontSize: smallFontSize,
+                            color: TheColors.white,
+                          ),
+                        ),
+                        Text(
+                          widget.schedule.total.toString(),
+                          style: TextStyles.siemreap(
+                            context,
+                            fontSize: 16,
+                            fontweight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          widget.schedule.totalOwe! > 0
+                              ? 'ប្រាក់ជំពាក់សរុប'
+                              : 'បានបង់',
+                          style: TextStyles.siemreap(
+                            context,
+                            fontSize: 12,
+                            color: TheColors.white,
+                          ),
+                        ),
+                        Text(
+                          widget.schedule.totalOwe! > 0
+                              ? widget.schedule.totalOwe.toString()
+                              : 'បង់រួចរាល់',
+                          style: TextStyles.siemreap(
+                            context,
+                            fontSize: smallFontSize,
+                            fontweight: FontWeight.bold,
+                            color: widget.schedule.totalOwe! > 0
+                                ? Colors.red
+                                : Colors.green,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
             ],
-          ],
+          ),
         ),
       ),
     );
@@ -447,17 +415,17 @@ class _ScheduleCardState extends State<ScheduleCard> {
                   context,
                   fontSize: 14,
                   fontweight: isBold ? FontWeight.bold : FontWeight.normal,
-                  color: TheColors.gray,
+                  color: TheColors.white,
                 ),
               ),
             ],
           ),
           Text(
-            '${amount}',
+            '${amount} ៛',
             style: TextStyles.siemreap(context,
                 fontSize: 14,
                 fontweight: isBold ? FontWeight.bold : FontWeight.normal,
-                color: TheColors.gray),
+                color: TheColors.white),
           ),
         ],
       ),
