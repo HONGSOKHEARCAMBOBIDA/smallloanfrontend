@@ -3,9 +3,12 @@ import 'package:loanfrontend/core/constant/constants.dart';
 import 'package:loanfrontend/core/theme/app_color.dart';
 import 'package:loanfrontend/core/theme/text_styles.dart';
 import 'package:loanfrontend/data/models/loanmodel.dart';
+import 'package:loanfrontend/module/paymentschedule/binding/paymentschedulebinding.dart';
+import 'package:loanfrontend/module/paymentschedule/view/paymentscheduleview.dart';
 import 'package:loanfrontend/share/widgets/common_widgets.dart';
 import 'package:loanfrontend/share/widgets/customoutlinebutton.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:get/get.dart';
 
 Future<void> showLoanButtonsheet({
   required BuildContext context,
@@ -334,7 +337,6 @@ Widget _buildActionButtons(BuildContext context, Data loan) {
     children: [
       Expanded(
         child: CustomOutlinedButton(
-          
           onPressed: () {
             Navigator.pop(context);
           },
@@ -345,10 +347,10 @@ Widget _buildActionButtons(BuildContext context, Data loan) {
       if (loan.status == "3")
         Expanded(
           child: CustomOutlinedButton(
-            
             onPressed: () {
               // Approve action
-              Navigator.pop(context);
+              Get.to(() => PaymentScheduleView(loanId: loan.id!),
+                  binding: Paymentschedulebinding());
             },
             text: "មេីលតារាំងបង់ប្រាក់",
           ),

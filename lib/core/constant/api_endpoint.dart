@@ -19,6 +19,7 @@ class ApiEndpoint {
   static String viewDistrict(int provinceId) => "viewdistrict/${provinceId}";
   static String viewCommunce(int districtId) => "viewcommunce/$districtId";
   static String viewVillage(int communceId) => "viewvillage/$communceId";
+  static String viewschedule(int id) => "viewschedule/${id}";
 }
 
 class Message {

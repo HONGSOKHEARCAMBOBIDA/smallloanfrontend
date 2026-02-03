@@ -168,9 +168,6 @@ class _LoanviewState extends State<Loanview> {
                   ),
                 ),
 
-
-          
-              
               // List or Grid of clients
               if (loancontroller.loan.isNotEmpty)
                 if (gridCount == 1)
@@ -179,7 +176,7 @@ class _LoanviewState extends State<Loanview> {
                       (context, index) {
                         final loan = loancontroller.loan[index];
                         return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          padding: const EdgeInsets.symmetric(vertical: 8),
                           child: Loanlistcard(
                               loan: loan,
                               onTap: () {
@@ -188,7 +185,7 @@ class _LoanviewState extends State<Loanview> {
                               }),
                         );
                       },
-                      childCount: loancontroller.loanforcheck.length,
+                      childCount: loancontroller.loan.length,
                     ),
                   )
                 else
@@ -198,7 +195,9 @@ class _LoanviewState extends State<Loanview> {
                       delegate: SliverChildBuilderDelegate((context, index) {
                         final loan = loancontroller.loan[index];
                         return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8,),
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 8,
+                          ),
                           child: Loanlistcard(
                               loan: loan,
                               onTap: () {

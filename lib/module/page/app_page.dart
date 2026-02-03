@@ -59,6 +59,6 @@ class AppPage {
     GetPage(
         name: '/viewloan',
         page: () => const Loanview(),
-        binding: Loanbinding())
+        binding: Loanbinding()),
   ];
 }

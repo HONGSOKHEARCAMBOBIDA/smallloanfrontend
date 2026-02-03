@@ -39,8 +39,8 @@ class _PaymentcardState extends State<Paymentcard> {
       elevation: 4,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
-        side: BorderSide(
-          color: TheColors.gray.withOpacity(0.3),
+        side: const BorderSide(
+          color: TheColors.gray,
           width: 1,
         ),
       ),
@@ -70,11 +70,10 @@ class _PaymentcardState extends State<Paymentcard> {
             Flexible(
               child: Text(
                 "កម្ចី #${widget.paymentschedule.loanId}",
-                style: TextStyles.siemreap(
+                style: TextStyles.moul(
                   context,
                   fontSize: 18,
-                  fontweight: FontWeight.bold,
-                  color: TheColors.white,
+                  color: TheColors.warningColor,
                 ),
                 overflow: TextOverflow.ellipsis,
               ),
@@ -121,7 +120,7 @@ class _PaymentcardState extends State<Paymentcard> {
         // Expandable section
         if (_isExpanded) ...[
           const SizedBox(height: 16),
-          Divider(color: TheColors.gray.withOpacity(0.3), height: 1),
+          Divider(color: TheColors.gray, height: 1),
           const SizedBox(height: 16),
 
           // Expanded details in cards
@@ -163,16 +162,19 @@ class _PaymentcardState extends State<Paymentcard> {
             icon: Icons.person_outline,
             children: [
               _buildInfoRowDesktop(
-                "ឈ្មោះ",
+                "ឈ្មោះ:",
                 widget.paymentschedule.clientName,
                 showIcon: true,
               ),
               _buildInfoRowDesktop(
-                "ភេទ",
+                "ភេទ:",
                 widget.paymentschedule.clientGender == 1 ? "ប្រុស" : "ស្រី",
               ),
               _buildInfoRowDesktop(
-                  "ទូរសព្ទ", widget.paymentschedule.clientPhone),
+                  "ទូរសព្ទ:", widget.paymentschedule.clientPhone),
+              SizedBox(
+                height: 125,
+              )
             ],
           ),
         ),
@@ -181,7 +183,7 @@ class _PaymentcardState extends State<Paymentcard> {
         Container(
           width: 1,
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          color: TheColors.gray.withOpacity(0.3),
+          color: TheColors.gray,
         ),
 
         Expanded(
@@ -191,17 +193,17 @@ class _PaymentcardState extends State<Paymentcard> {
             icon: Icons.credit_card,
             children: [
               _buildHighlightedInfoRow(
-                "ទំហំកម្ចី",
+                "ទំហំកម្ចី:",
                 "${widget.paymentschedule.loanAmount}",
                 isAmount: true,
               ),
               _buildInfoRowDesktop(
-                  "រយៈពេល", "${widget.paymentschedule.duration} ខែ"),
+                  "រយៈពេល:", "${widget.paymentschedule.duration} ខែ"),
+              _buildInfoRowDesktop("ថ្លៃសេវា",
+                  "${widget.paymentschedule.processFee.toString()} ៛"),
               _buildInfoRowDesktop(
-                  "ថ្លៃសេវា", widget.paymentschedule.processFee.toString()),
-              _buildInfoRowDesktop(
-                  "កាលបរិច្ឆេទ", widget.paymentschedule.approveDate),
-              _buildInfoRowDesktop("គោលបំណង", widget.paymentschedule.purpose),
+                  "កាលបរិច្ឆេទ:", widget.paymentschedule.approveDate),
+              _buildInfoRowDesktop("គោលបំណង:", widget.paymentschedule.purpose),
             ],
           ),
         ),
@@ -226,10 +228,9 @@ class _PaymentcardState extends State<Paymentcard> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
-                  color: TheColors.lightOrage.withOpacity(0.1),
+                  color: TheColors.green.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(20),
-                  border:
-                      Border.all(color: TheColors.lightOrage.withOpacity(0.3)),
+                  border: Border.all(color: TheColors.green.withOpacity(0.3)),
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -241,17 +242,20 @@ class _PaymentcardState extends State<Paymentcard> {
                     ),
                     const SizedBox(width: 6),
                     Text(
-                      "បានអនុម័ត",
+                      "កំពុងដំណេីរការ",
                       style: TextStyles.siemreap(
                         context,
                         fontSize: 12,
-                        color: TheColors.lightOrage,
+                        color: TheColors.white,
                         fontweight: FontWeight.w500,
                       ),
                     ),
                   ],
                 ),
               ),
+              SizedBox(
+                height: 115,
+              )
             ],
           ),
         ),
@@ -264,27 +268,34 @@ class _PaymentcardState extends State<Paymentcard> {
     required IconData icon,
     required List<Widget> children,
   }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Icon(icon, color: TheColors.lightOrage, size: 20),
-            const SizedBox(width: 8),
-            Text(
-              title,
-              style: TextStyles.siemreap(
-                context,
-                fontSize: 16,
-                fontweight: FontWeight.w600,
-                color: TheColors.white,
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: TheColors.bgColor,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: TheColors.gray),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(icon, color: TheColors.green, size: 20),
+              const SizedBox(width: 8),
+              Text(
+                title,
+                style: TextStyles.moul(
+                  context,
+                  fontSize: 18,
+                  color: TheColors.warningColor,
+                ),
               ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 12),
-        ...children,
-      ],
+            ],
+          ),
+          const SizedBox(height: 12),
+          ...children,
+        ],
+      ),
     );
   }
 
@@ -312,7 +323,7 @@ class _PaymentcardState extends State<Paymentcard> {
                   label,
                   style: TextStyles.siemreap(
                     context,
-                    fontSize: 10,
+                    fontSize: 12,
                     color: TheColors.lightOrage.withOpacity(0.8),
                   ),
                 ),
@@ -352,7 +363,7 @@ class _PaymentcardState extends State<Paymentcard> {
               style: TextStyles.siemreap(
                 context,
                 fontSize: 14,
-                color: TheColors.lightOrage.withOpacity(0.8),
+                color: TheColors.white,
               ),
             ),
           ),
@@ -383,30 +394,27 @@ class _PaymentcardState extends State<Paymentcard> {
         children: [
           Row(
             children: [
-              if (showIcon)
-                Icon(Icons.circle, size: 6, color: TheColors.lightOrage),
-              if (showIcon) const SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  label,
-                  style: TextStyles.siemreap(
-                    context,
-                    fontSize: 13,
-                    color: TheColors.lightOrage.withOpacity(0.8),
-                  ),
+              Text(
+                label,
+                style: TextStyles.siemreap(
+                  context,
+                  fontSize: 18,
+                  color: TheColors.lightOrage,
+                ),
+              ),
+              const SizedBox(
+                width: 20,
+              ),
+              Text(
+                value ?? "មិនមាន",
+                style: TextStyles.siemreap(
+                  context,
+                  fontSize: 18,
+                  color: TheColors.white,
+                  fontweight: FontWeight.w500,
                 ),
               ),
             ],
-          ),
-          const SizedBox(height: 4),
-          Text(
-            value ?? "មិនមាន",
-            style: TextStyles.siemreap(
-              context,
-              fontSize: 15,
-              color: TheColors.white,
-              fontweight: FontWeight.w500,
-            ),
           ),
         ],
       ),
@@ -417,15 +425,15 @@ class _PaymentcardState extends State<Paymentcard> {
       {bool isAmount = false}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             label,
             style: TextStyles.siemreap(
               context,
-              fontSize: 13,
-              color: TheColors.lightOrage.withOpacity(0.8),
+              fontSize: 18,
+              color: TheColors.lightOrage,
             ),
           ),
           const SizedBox(height: 6),
@@ -436,8 +444,8 @@ class _PaymentcardState extends State<Paymentcard> {
                 begin: Alignment.centerLeft,
                 end: Alignment.centerRight,
                 colors: [
-                  TheColors.lightOrage.withOpacity(0.1),
-                  TheColors.lightOrage.withOpacity(0.05),
+                  TheColors.green,
+                  TheColors.cutecolo,
                 ],
               ),
               borderRadius: BorderRadius.circular(12),
@@ -452,15 +460,13 @@ class _PaymentcardState extends State<Paymentcard> {
                     size: 20,
                   ),
                 if (isAmount) const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    value,
-                    style: TextStyles.siemreap(
-                      context,
-                      fontSize: isAmount ? 20 : 16,
-                      color: TheColors.white,
-                      fontweight: FontWeight.bold,
-                    ),
+                Text(
+                  value,
+                  style: TextStyles.siemreap(
+                    context,
+                    fontSize: isAmount ? 20 : 16,
+                    color: TheColors.white,
+                    fontweight: FontWeight.bold,
                   ),
                 ),
               ],
@@ -479,20 +485,19 @@ class _PaymentcardState extends State<Paymentcard> {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.2),
+        color: TheColors.bgColor,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: TheColors.gray.withOpacity(0.2)),
+        border: Border.all(color: TheColors.gray),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             title,
-            style: TextStyles.siemreap(
+            style: TextStyles.moul(
               context,
               fontSize: 16,
-              fontweight: FontWeight.w600,
-              color: TheColors.white,
+              color: TheColors.warningColor,
             ),
           ),
           const SizedBox(height: 12),
