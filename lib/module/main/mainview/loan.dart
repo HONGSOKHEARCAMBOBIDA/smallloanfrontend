@@ -61,7 +61,9 @@ class Loan extends StatelessWidget {
             child: ListView(
               padding: EdgeInsets.zero,
               children: [
-                _buildDrawerItem(Icons.dashboard, "សង្ខែបទិន្ន័យ", () {}),
+                _buildDrawerItem(Icons.dashboard, "បេីកប្រអប់", () {
+                  Get.toNamed('/creatsession');
+                }),
                 _buildDrawerItem(Icons.group, "អតិថិជន", () {
                   Get.toNamed('/listclient');
                 }),

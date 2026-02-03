@@ -17,9 +17,11 @@ class MainView extends GetView<MainController> {
         web: _webLayout(),
       ),
       bottomNavigationBar: Responsive(
-      mobile: _bottomNav(),
-      web: SizedBox(height: 0.1,), 
-    ),
+        mobile: _bottomNav(),
+        web: SizedBox(
+          height: 0.1,
+        ),
+      ),
     );
   }
 
@@ -39,7 +41,7 @@ class MainView extends GetView<MainController> {
   Widget _bottomNav() {
     return Container(
       decoration: BoxDecoration(
-        color: TheColors.warningColor,
+        color: TheColors.bgColor,
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
@@ -55,12 +57,14 @@ class MainView extends GetView<MainController> {
             id: 'bottom_navigation_bar',
             builder: (controller) {
               return GNav(
-                backgroundColor: TheColors.warningColor,
+                color: TheColors.warningColor,
+                backgroundColor: Colors.transparent,
                 activeColor: Colors.white,
                 tabBackgroundColor: TheColors.errorColor,
                 tabBorderRadius: 12,
                 gap: 8,
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 selectedIndex: controller.selectedIndex,
                 onTabChange: controller.onItemTapped,
                 tabs: controller.getTabs(),

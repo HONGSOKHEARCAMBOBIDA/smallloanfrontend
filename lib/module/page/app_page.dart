@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:loanfrontend/module/auth/binding/authbinding.dart';
 import 'package:loanfrontend/module/auth/view/loginview.dart';
+import 'package:loanfrontend/module/cashiersession/binding/cashiersessionbinding.dart';
+import 'package:loanfrontend/module/cashiersession/view/createcashiersessionview.dart';
 import 'package:loanfrontend/module/client/clientbinding/clientbinding.dart';
 import 'package:loanfrontend/module/client/clientview/clientview.dart';
 import 'package:loanfrontend/module/client/clientview/createclientview.dart';
@@ -60,5 +62,9 @@ class AppPage {
         name: '/viewloan',
         page: () => const Loanview(),
         binding: Loanbinding()),
+    GetPage(
+        name: '/creatsession',
+        page: () => const Createcashiersessionview(),
+        binding: Cashiersessionbinding())
   ];
 }
