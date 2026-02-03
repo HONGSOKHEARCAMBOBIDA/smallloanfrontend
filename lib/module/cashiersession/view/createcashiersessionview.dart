@@ -29,6 +29,7 @@ class _CreatecashiersessionviewState extends State<Createcashiersessionview> {
     final breakpoint = ResponsiveBreakpoints.of(context);
     final bool isMobile = breakpoint.isMobile;
     final double padding = isMobile ? 8 : 200;
+    final double smallFontSize = isMobile ? 12 : 15;
     return Scaffold(
       backgroundColor: TheColors.bgColor,
       appBar: CustomAppBar(title: "បេីកប្រអប់ទទួលលុយ"),
@@ -65,7 +66,123 @@ class _CreatecashiersessionviewState extends State<Createcashiersessionview> {
                       delegate: SliverChildBuilderDelegate(
                         (context, index) {
                           final data = controller.session[index];
-                          return CashierSessionCard(session: data);
+                          return CashierSessionCard(
+                            session: data,
+                            onTap: () {
+                              Get.defaultDialog(
+                                title: "ផ្ទៀងផ្ទាត់ប្រាក់",
+                                titleStyle: TextStyles.moul(context,
+                                    fontSize: smallFontSize,
+                                    color: TheColors.warningColor),
+                                backgroundColor: TheColors.bgColor, // important
+                                content: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(16),
+                                    decoration: BoxDecoration(
+                                      color: TheColors.bgColor,
+                                      borderRadius: BorderRadius.circular(16),
+                                      border: Border.all(
+                                        color: TheColors.gray,
+                                        width: 1.2,
+                                      ),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.15),
+                                          blurRadius: 12,
+                                          offset: const Offset(0, 6),
+                                        ),
+                                      ],
+                                    ),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          "តើត្រឹមត្រូវហេីយមែនទេ?",
+                                          style: TextStyles.siemreap(context),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        const SizedBox(height: 20),
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: OutlinedButton(
+                                                onPressed: () => Get.back(),
+                                                style: OutlinedButton.styleFrom(
+                                                  side: const BorderSide(
+                                                      color: TheColors.red),
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                  ),
+                                                ),
+                                                child: Text("ពិនិត្យម្ដងទៀត",
+                                                    style: TextStyles.siemreap(
+                                                        context,
+                                                        fontSize: smallFontSize,
+                                                        color:
+                                                            TheColors.white)),
+                                              ),
+                                            ),
+                                            const SizedBox(width: 12),
+                                            Expanded(
+                                              child: Obx(() {
+                                                return ElevatedButton(
+                                                  onPressed: controller
+                                                          .isLoading.value
+                                                      ? null
+                                                      : () {
+                                                          controller
+                                                              .verify(data.id!);
+                                                          Get.back();
+                                                        },
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                    backgroundColor:
+                                                        TheColors.green,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                    ),
+                                                  ),
+                                                  child: controller
+                                                          .isLoading.value
+                                                      ? const SizedBox(
+                                                          width: 20,
+                                                          height: 20,
+                                                          child:
+                                                              CircularProgressIndicator(
+                                                            strokeWidth: 2,
+                                                            color: TheColors
+                                                                .cutecolo,
+                                                          ),
+                                                        )
+                                                      : Text(
+                                                          "ផ្ទៀងផ្ទាត់",
+                                                          style: TextStyles
+                                                              .siemreap(
+                                                            context,
+                                                            fontSize:
+                                                                smallFontSize,
+                                                            color:
+                                                                TheColors.white,
+                                                          ),
+                                                        ),
+                                                );
+                                              }),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          );
                         },
                         childCount: controller.session.length,
                       ),

@@ -1,3 +1,4 @@
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:confetti/confetti.dart';
 import 'package:loanfrontend/core/constant/api_endpoint.dart';
@@ -56,6 +57,22 @@ class Cashiersessioncontroller extends GetxController {
         title: Message.Error,
         message: e.toString(),
       );
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> verify(int id) async {
+    try {
+      isLoading.value = true;
+      final verify = await service.verify(id);
+      if (verify) {
+        await getcashiersession();
+        CustomSnackbar.success(
+            title: Message.Success, message: Message.Verifysuccess);
+      }
+    } catch (e) {
+      CustomSnackbar.error(title: Message.Error, message: e.toString());
     } finally {
       isLoading.value = false;
     }

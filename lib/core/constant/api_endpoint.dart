@@ -22,6 +22,8 @@ class ApiEndpoint {
   static String viewCommunce(int districtId) => "viewcommunce/$districtId";
   static String viewVillage(int communceId) => "viewvillage/$communceId";
   static String viewschedule(int id) => "viewschedule/${id}";
+  static String VerifyCashierSession(int id) => "verifysession/$id";
+  static String RollbackVerify(int id) => "rollbackverify/$id";
 }
 
 class Message {
@@ -36,4 +38,6 @@ class Message {
   static const String BadRequestClient = "សូមជ្រេីសរេីសអ្នកធានាកម្ចី";
   static const String Checksuccess = "ត្រួតពិនិត្យកម្ចីបានជោគជ័យ";
   static const String Approvesuccess = "អនុម័តកម្ចីបានជោគជ័យ";
+  static const String Verifysuccess = "ផ្ទៀងផ្ទាត់បានជោគជ័យ";
+  static const String Verifyeerror = "ផ្ទៀងផ្ទាត់មិនបាន";
 }

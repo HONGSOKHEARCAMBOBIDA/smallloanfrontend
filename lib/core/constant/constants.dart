@@ -1,3 +1,3 @@
 class Appconstants {
-  static const String baseUrl = "https://z1kqcbg7-8080.asse.devtunnels.ms";
+  static const String baseUrl = "http://localhost:8080";
 }

@@ -27,4 +27,23 @@ class Cashiersessionservice {
       throw Exception("Failed ${e.toString()}");
     }
   }
+
+  Future<bool> verify(int id) async {
+    try {
+      final verify =
+          await apiProvider.put(ApiEndpoint.VerifyCashierSession(id), 1);
+      return verify.statusCode == 200 || verify.statusCode == 201;
+    } catch (e) {
+      throw Exception("Unexpected error: $e");
+    }
+  }
+
+  Future<bool> rollbackverify(int id) async {
+    try {
+      final rollback = await apiProvider.put(ApiEndpoint.RollbackVerify(id), 1);
+      return rollback.statusCode == 200 || rollback.statusCode == 201;
+    } catch (e) {
+      throw Exception("Unexpected error: $e");
+    }
+  }
 }
