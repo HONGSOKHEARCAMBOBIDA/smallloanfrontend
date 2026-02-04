@@ -5,8 +5,10 @@ import 'package:loanfrontend/core/theme/text_styles.dart';
 import 'package:loanfrontend/data/models/loanmodel.dart';
 import 'package:loanfrontend/module/paymentschedule/binding/paymentschedulebinding.dart';
 import 'package:loanfrontend/module/paymentschedule/view/paymentscheduleview.dart';
+import 'package:loanfrontend/module/reciept/controller/recieptcontroller.dart';
 import 'package:loanfrontend/share/widgets/common_widgets.dart';
 import 'package:loanfrontend/share/widgets/customoutlinebutton.dart';
+import 'package:loanfrontend/share/widgets/textfield.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:get/get.dart';
 
@@ -333,12 +335,121 @@ Widget _buildInfoRow(String label, String? value, BuildContext context) {
 }
 
 Widget _buildActionButtons(BuildContext context, Data loan) {
+  final controller = Get.find<Recieptcontroller>();
+
+  final breakpoint = ResponsiveBreakpoints.of(context);
+  final bool isMobile = breakpoint.isMobile;
+  final bool isTablet = breakpoint.isTablet;
+  final bool isDesktop = breakpoint.isDesktop;
+  final int gridCount = isDesktop ? 3 : (isTablet ? 2 : 1);
+  final double smallFontSize = isMobile ? 12 : 15;
+  final totalcontroller = TextEditingController();
   return Row(
     children: [
       Expanded(
         child: CustomOutlinedButton(
           onPressed: () {
-            Navigator.pop(context);
+            // Navigator.pop(context);
+            Get.defaultDialog(
+              title: "ប្រមូលប្រាក់",
+              titleStyle: TextStyles.moul(context,
+                  fontSize: smallFontSize, color: TheColors.warningColor),
+              backgroundColor: TheColors.bgColor, // important
+              content: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: TheColors.bgColor,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(
+                      color: TheColors.gray,
+                      width: 1.2,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.15),
+                        blurRadius: 12,
+                        offset: const Offset(0, 6),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        "អតិថិជ​ន :${loan.clientName}",
+                        style: TextStyles.siemreap(context),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 10),
+                      CustomTextField(
+                          controller: totalcontroller,
+                          hintText: "បញ្ចូលប្រាក់"),
+                      const SizedBox(height: 20),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: OutlinedButton(
+                              onPressed: () => Get.back(),
+                              style: OutlinedButton.styleFrom(
+                                side: const BorderSide(color: TheColors.red),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              child: Text("ចាកចេញ",
+                                  style: TextStyles.siemreap(context,
+                                      fontSize: smallFontSize,
+                                      color: TheColors.white)),
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Obx(() {
+                              return ElevatedButton(
+                                onPressed: controller.isLoading.value
+                                    ? null
+                                    : () async {
+                                        final total =
+                                            int.tryParse(totalcontroller.text);
+                                        await controller.createreciept(
+                                            id: loan.id!, total: total!);
+                                        Get.back();
+                                      },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: TheColors.green,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                                child: controller.isLoading.value
+                                    ? const SizedBox(
+                                        width: 20,
+                                        height: 20,
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 2,
+                                          color: TheColors.cutecolo,
+                                        ),
+                                      )
+                                    : Text(
+                                        "បង់ប្រាក់",
+                                        style: TextStyles.siemreap(
+                                          context,
+                                          fontSize: smallFontSize,
+                                          color: TheColors.white,
+                                        ),
+                                      ),
+                              );
+                            }),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            );
           },
           text: "បង់ប្រាក់",
         ),

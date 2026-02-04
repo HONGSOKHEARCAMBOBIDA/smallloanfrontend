@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:loanfrontend/module/auth/binding/authbinding.dart';
 import 'package:loanfrontend/module/auth/view/loginview.dart';
 import 'package:loanfrontend/module/cashiersession/binding/cashiersessionbinding.dart';
+import 'package:loanfrontend/module/cashiersession/view/cashiersessionview.dart';
 import 'package:loanfrontend/module/cashiersession/view/createcashiersessionview.dart';
 import 'package:loanfrontend/module/client/clientbinding/clientbinding.dart';
 import 'package:loanfrontend/module/client/clientview/clientview.dart';
@@ -65,6 +66,10 @@ class AppPage {
     GetPage(
         name: '/creatsession',
         page: () => const Createcashiersessionview(),
+        binding: Cashiersessionbinding()),
+    GetPage(
+        name: '/rollbackcashiersession',
+        page: () => const Cashiersessionview(),
         binding: Cashiersessionbinding())
   ];
 }

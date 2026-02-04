@@ -28,6 +28,22 @@ class Cashiersessionservice {
     }
   }
 
+  Future<List<Data>> getcashiersessionforrollback() async {
+    try {
+      final res =
+          await apiProvider.get(ApiEndpoint.viewcashiersessionforrollback);
+      if (res.statusCode == 200) {
+        final json = res.data;
+        final model = CashierSessionModel.fromJson(json);
+        return model.data ?? [];
+      } else {
+        throw Exception("Failed ${res.statusCode}");
+      }
+    } catch (e) {
+      throw Exception("Failed ${e.toString()}");
+    }
+  }
+
   Future<bool> verify(int id) async {
     try {
       final verify =
@@ -40,7 +56,9 @@ class Cashiersessionservice {
 
   Future<bool> rollbackverify(int id) async {
     try {
-      final rollback = await apiProvider.put(ApiEndpoint.RollbackVerify(id), 1);
+      final rollback = await apiProvider.delete(
+        ApiEndpoint.RollbackVerify(id),
+      );
       return rollback.statusCode == 200 || rollback.statusCode == 201;
     } catch (e) {
       throw Exception("Unexpected error: $e");

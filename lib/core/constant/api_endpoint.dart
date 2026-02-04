@@ -10,6 +10,8 @@ class ApiEndpoint {
   static const String getloanforapprove = "viewloanforapprove";
   static const String addcashiersession = "addcashiersession";
   static const String viewcashiersession = "viewcashiersession";
+  static const String viewcashiersessionforrollback = "GetforRollback";
+  static String addreciept(int id) => "addreceipt/$id";
   static checkloan(int id) => "checkloan/$id";
   static approveloan(int id) => "approveloan/$id";
   static const String viewloan = "viewloan";

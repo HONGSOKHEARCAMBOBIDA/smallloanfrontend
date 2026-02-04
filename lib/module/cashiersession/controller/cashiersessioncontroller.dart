@@ -1,4 +1,3 @@
-import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:confetti/confetti.dart';
 import 'package:loanfrontend/core/constant/api_endpoint.dart';
@@ -10,6 +9,7 @@ class Cashiersessioncontroller extends GetxController {
   final Cashiersessionservice service = Cashiersessionservice();
 
   var session = <Data>[].obs;
+  var sessionforrollback = <Data>[].obs;
   var isLoading = false.obs;
 
   late ConfettiController confettiController;
@@ -20,6 +20,7 @@ class Cashiersessioncontroller extends GetxController {
     confettiController =
         ConfettiController(duration: const Duration(seconds: 2));
     getcashiersession();
+    getcashiersessionforrollback();
   }
 
   @override
@@ -62,6 +63,21 @@ class Cashiersessioncontroller extends GetxController {
     }
   }
 
+  Future<void> getcashiersessionforrollback() async {
+    try {
+      isLoading.value = true;
+      final result = await service.getcashiersessionforrollback();
+      sessionforrollback.assignAll(result);
+    } catch (e) {
+      CustomSnackbar.error(
+        title: Message.Error,
+        message: e.toString(),
+      );
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
   Future<void> verify(int id) async {
     try {
       isLoading.value = true;
@@ -70,6 +86,22 @@ class Cashiersessioncontroller extends GetxController {
         await getcashiersession();
         CustomSnackbar.success(
             title: Message.Success, message: Message.Verifysuccess);
+      }
+    } catch (e) {
+      CustomSnackbar.error(title: Message.Error, message: e.toString());
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> rollbackverify(int id) async {
+    try {
+      isLoading.value = true;
+      final success = await service.rollbackverify(id);
+      if (success) {
+        await getcashiersessionforrollback();
+        CustomSnackbar.success(
+            title: Message.Success, message: Message.UpdateSuccess);
       }
     } catch (e) {
       CustomSnackbar.error(title: Message.Error, message: e.toString());
