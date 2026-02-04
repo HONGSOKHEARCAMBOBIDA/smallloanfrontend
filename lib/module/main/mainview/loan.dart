@@ -79,8 +79,10 @@ class Loan extends StatelessWidget {
                 _buildDrawerItem(Icons.list_alt, "បញ្ជីកម្ចីទាំងអស់", () {
                   Get.toNamed('/viewloan');
                 }),
-                _buildDrawerItem(
-                    Icons.request_quote, "បញ្ជីកម្ចីត្រូវប្រមូល", () {}),
+                _buildDrawerItem(Icons.request_quote, "បញ្ជីកម្ចីត្រូវប្រមូល",
+                    () {
+                  Get.toNamed('/viewreciept');
+                }),
                 _buildDrawerItem(Icons.attach_money, "លទ្ធផលប្រមូលបាន", () {}),
                 _buildDrawerItem(
                     Icons.account_balance_wallet, "ផ្ទៀងលុយ", () {}),

@@ -49,7 +49,7 @@ class _PaymentScheduleViewState extends State<PaymentScheduleView> {
       body: Obx(() {
         final paymentData = controller.paymentschedule.value;
 
-        if (paymentData == null) {
+        if (paymentData == null || controller.isLoading.value) {
           return const Center(child: CustomLoading());
         }
 

@@ -22,7 +22,7 @@ class Loanview extends StatefulWidget {
 
 class _LoanviewState extends State<Loanview> {
   final loancontroller = Get.find<LoanController>();
-  final recieptController = Get.find<Recieptcontroller>(); // Get the controller
+  final recieptController = Get.put(Recieptcontroller());
   final TextEditingController searchQuery = TextEditingController();
   final ScrollController _scrollController = ScrollController();
 

@@ -20,6 +20,8 @@ import 'package:loanfrontend/module/main/binding/mainbinding.dart';
 import 'package:loanfrontend/module/main/mainmiddleware/mainmiddleware.dart';
 import 'package:loanfrontend/module/main/mainview/mainview.dart';
 import 'package:loanfrontend/module/province/provincebinding/provincebinding.dart';
+import 'package:loanfrontend/module/reciept/binding/recieptbinding.dart';
+import 'package:loanfrontend/module/reciept/view/recieptview.dart';
 import 'package:loanfrontend/module/village/villagebinding/villagebinding.dart';
 
 class AppPage {
@@ -70,6 +72,10 @@ class AppPage {
     GetPage(
         name: '/rollbackcashiersession',
         page: () => const Cashiersessionview(),
-        binding: Cashiersessionbinding())
+        binding: Cashiersessionbinding()),
+    GetPage(
+        name: '/viewreciept',
+        page: () => const Recieptview(),
+        binding: Recieptbinding()),
   ];
 }
