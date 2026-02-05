@@ -22,10 +22,9 @@ class _RecieptviewState extends State<Recieptview> {
   final controller = Get.find<Recieptcontroller>();
   final TextEditingController searchQuery = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-  final totalcontroller = TextEditingController();
+  final TextEditingController totalcontroller = TextEditingController();
   @override
   void initState() {
-    controller.getreciept();
     super.initState();
     _scrollController.addListener(_onScroll);
   }
@@ -66,7 +65,7 @@ class _RecieptviewState extends State<Recieptview> {
     final bool isDesktop = breakpoints.isDesktop;
 
     // grid columns: mobile = 1, tablet = 2, desktop = 3
-    final int gridCount = isDesktop ? 3 : (isTablet ? 2 : 1);
+    final int gridCount = isDesktop ? 4 : (isTablet ? 2 : 1);
 
     final double searchHeight = isMobile ? 50 : (isTablet ? 56 : 64);
     final double refreshIconSize = isMobile ? 30 : (isTablet ? 34 : 38);
@@ -83,13 +82,12 @@ class _RecieptviewState extends State<Recieptview> {
             color: TheColors.warningColor,
             onRefresh: refresh,
             child: Obx(() {
+              if(controller.isLoading.value ){
+                return Center(child: CustomLoading());
+              }
               final filteredReciepts = controller.reciept
                   .where((e) => (e.totalCollect ?? 0) > 0)
                   .toList();
-
-              if (filteredReciepts.isEmpty && !controller.isLoading.value) {
-                return const Center(child: CustomLoading());
-              }
 
               return CustomScrollView(
                 controller: _scrollController,
@@ -285,6 +283,7 @@ class _RecieptviewState extends State<Recieptview> {
                                                                               .id!,
                                                                           total:
                                                                               total!);
+                                                                            totalcontroller.clear();
                                                                     },
                                                           style: ElevatedButton
                                                               .styleFrom(
@@ -335,7 +334,7 @@ class _RecieptviewState extends State<Recieptview> {
                                       );
                                     }));
                           },
-                          childCount: controller.reciept.length,
+                          childCount: filteredReciepts.length,
                         ),
                       )
                     else
@@ -434,6 +433,7 @@ class _RecieptviewState extends State<Recieptview> {
                                                                             .id!,
                                                                         total:
                                                                             total!);
+                                                                        totalcontroller.clear();
                                                                   },
                                                         style: ElevatedButton
                                                             .styleFrom(
@@ -483,14 +483,14 @@ class _RecieptviewState extends State<Recieptview> {
                                     );
                                   });
                             },
-                            childCount: controller.reciept.length,
+                            childCount: filteredReciepts.length,
                           ),
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: gridCount,
                             mainAxisSpacing: 8,
                             crossAxisSpacing: 8,
-                            childAspectRatio: isDesktop ? 1.9 : 2.6,
+                            childAspectRatio: isDesktop ? 1.15 : 2.6,
                           ),
                         ),
                       ),

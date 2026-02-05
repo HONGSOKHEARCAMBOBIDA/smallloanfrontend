@@ -35,6 +35,7 @@ class Data {
   int? id;
   int? clientId;
   String? clientName;
+  String? clientImage;
   int? userId;
   String? userName;
   int? villageId;
@@ -48,6 +49,7 @@ class Data {
       {this.id,
       this.clientId,
       this.clientName,
+      this.clientImage,
       this.userId,
       this.userName,
       this.villageId,
@@ -61,6 +63,7 @@ class Data {
     id = json['id'];
     clientId = json['client_id'];
     clientName = json['client_name'];
+    clientImage = json['client_image'];
     userId = json['user_id'];
     userName = json['user_name'];
     villageId = json['village_id'];
@@ -76,6 +79,7 @@ class Data {
     data['id'] = this.id;
     data['client_id'] = this.clientId;
     data['client_name'] = this.clientName;
+    data['client_image'] = this.clientImage;
     data['user_id'] = this.userId;
     data['user_name'] = this.userName;
     data['village_id'] = this.villageId;

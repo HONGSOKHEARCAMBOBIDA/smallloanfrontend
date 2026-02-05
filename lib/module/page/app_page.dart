@@ -64,7 +64,7 @@ class AppPage {
     GetPage(
         name: '/viewloan',
         page: () => const Loanview(),
-        binding: Loanbinding()),
+        bindings: [Loanbinding()]),
     GetPage(
         name: '/creatsession',
         page: () => const Createcashiersessionview(),

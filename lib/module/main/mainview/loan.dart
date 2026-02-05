@@ -1,12 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:loanfrontend/core/theme/app_color.dart';
 import 'package:loanfrontend/core/theme/text_styles.dart';
+import 'package:loanfrontend/module/reciept/controller/recieptcontroller.dart';
 import 'package:loanfrontend/share/widgets/app_bar.dart';
 import 'package:get/get.dart';
 import 'package:loanfrontend/share/widgets/common_widgets.dart';
 
-class Loan extends StatelessWidget {
+class Loan extends StatefulWidget {
   const Loan({super.key});
+
+  @override
+  State<Loan> createState() => _LoanState();
+}
+
+class _LoanState extends State<Loan> {
+  final controller = Get.put(Recieptcontroller());
+  @override
+  void initState() {
+    controller.getreciept();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < 700;
@@ -79,9 +94,52 @@ class Loan extends StatelessWidget {
                 _buildDrawerItem(Icons.list_alt, "បញ្ជីកម្ចីទាំងអស់", () {
                   Get.toNamed('/viewloan');
                 }),
-                _buildDrawerItem(Icons.request_quote, "បញ្ជីកម្ចីត្រូវប្រមូល",
-                    () {
-                  Get.toNamed('/viewreciept');
+                Obx(() {
+                  final count = controller.reciept
+                      .where((e) => (e.totalCollect ?? 0) > 0)
+                      .toList();
+
+                  if (count.isEmpty) {
+                    return const SizedBox.shrink(); // hide if 0
+                  }
+
+                  return Stack(
+                    children: [
+                      ListTile(
+                        leading: const Icon(Icons.monetization_on_outlined,color: TheColors.checked,),
+                        title: Text(
+                          "បញ្ជីកម្ចីត្រូវប្រមូល",
+                          style: GoogleFonts.siemreap(
+                            color: TheColors.white,
+                            fontSize: CommonWidgets.fontsize15,
+                          ),
+                        ),
+                        onTap: () {
+                          Get.toNamed('/viewreciept');
+                        },
+                        hoverColor: TheColors.errorColor.withOpacity(0.1),
+                      ),
+                      Positioned(
+                        right: 12,
+                        top: 8,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 6),
+                          decoration: BoxDecoration(
+                            color: TheColors.green,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Text(
+                            "${count.length}",
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
                 }),
                 _buildDrawerItem(Icons.attach_money, "លទ្ធផលប្រមូលបាន", () {}),
                 _buildDrawerItem(

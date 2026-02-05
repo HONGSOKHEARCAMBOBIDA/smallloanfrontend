@@ -40,6 +40,7 @@ class Recieptcontroller extends GetxController {
       isLoading.value = true;
       final iscreate = await service.createreciept(total: total, id: id);
       if (iscreate) {
+        await getreciept(isRefresh: true);
         Get.back();
         confettiController.play();
       }
