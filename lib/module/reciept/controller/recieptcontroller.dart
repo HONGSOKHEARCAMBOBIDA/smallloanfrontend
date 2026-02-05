@@ -4,6 +4,7 @@ import 'package:loanfrontend/core/constant/api_endpoint.dart';
 import 'package:loanfrontend/data/models/recieptmodel.dart';
 import 'package:loanfrontend/module/reciept/service/recieptservice.dart';
 import 'package:loanfrontend/share/widgets/snackbar.dart';
+import 'package:loanfrontend/data/models/recieptlistmodel.dart' as model;
 
 class Recieptcontroller extends GetxController {
   final Recieptservice service = Recieptservice();
@@ -12,6 +13,11 @@ class Recieptcontroller extends GetxController {
   var hasMore = true.obs; // Make it observable
   var currentPage = 1.obs; // Make it observable
   var reciept = <Data>[].obs;
+  var recieptlist = <model.Data>[].obs;
+  var isLoadingList = false.obs;
+  var isLoadingMoreList = false.obs;
+  var hasMoreList = true.obs; // Make it observable
+  var currentPageList = 1.obs; // Make it observable
   late ConfettiController confettiController;
   final RxString searchQuery = ''.obs;
   @override
@@ -97,11 +103,87 @@ class Recieptcontroller extends GetxController {
     }
   }
 
+Future<void> getrecieptlist({
+  String? client_name,
+  int? co_id,
+  String? start,
+  String? end,
+  bool isRefresh = false,
+  bool loadMore = false,
+  int pageSize = 10,
+}) async {
+  if (loadMore && (!hasMoreList.value || isLoadingMoreList.value)) return; // Fixed: use hasMoreList
+  try {
+    if (loadMore) {
+      isLoadingMoreList.value = true;
+    } else {
+      isLoadingList.value = true; // Fixed: use isLoadingList for initial load
+    }
+    if (isRefresh) {
+      recieptlist.clear();
+      currentPageList.value = 1;
+      hasMoreList.value = true;
+    }
+    final result = await service.listreciept(
+        client_name: client_name,
+        co_id: co_id,
+        start: start,
+        end: end,
+        page: currentPageList.value,
+        pageSize: pageSize);
+   
+    if (loadMore) {
+      recieptlist.addAll(result);
+    } else {
+      recieptlist.assignAll(result);
+    }
+    if (result.length < pageSize) {
+      hasMoreList.value = false;
+    }
+    if (result.isNotEmpty) {
+      currentPageList.value++;
+    }
+  } catch (e) {
+    CustomSnackbar.error(title: Message.Error, message: e.toString());
+  } finally {
+    isLoadingList.value = false; // Fixed: use isLoadingList
+    isLoadingMoreList.value = false;
+  }
+}
+
   Future<void> loadMore() async {
     await getreciept(
       client_name: searchQuery.value.isEmpty ? null : searchQuery.value,
       village_name: searchQuery.value.isEmpty ? null : searchQuery.value,
       loadMore: true,
     );
+  }
+
+  Future<void> loadMorelist({
+    String? client_name,
+    int? co_id,
+    String? start,
+    String? end,
+  }) async {
+    await getrecieptlist(
+        client_name: client_name,
+        co_id: co_id,
+        start: start,
+        end: end,
+        loadMore: true);
+  }
+
+  Future<void> delete({required int id}) async {
+    try {
+      isLoading.value = true;
+      final isdelete = await service.delete(id: id);
+      if(isdelete){
+           Get.back();           
+      }
+    }catch(e){
+       CustomSnackbar.error(title: Message.Error, message: e.toString());
+    }finally{
+      isLoading.value= false;
+    }
   }
 }

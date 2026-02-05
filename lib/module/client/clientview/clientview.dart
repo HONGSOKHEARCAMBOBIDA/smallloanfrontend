@@ -190,7 +190,7 @@ class _ClientviewState extends State<Clientview> {
                         final client = clientcontroller.client[index];
                         return Padding(
                           padding: const EdgeInsets.only(
-                              right: 10, left: 10, bottom: 8),
+                              right: 10, left: 10, bottom: 8,top: 8),
                           child: Clientcard(
                             name: client.name ?? '',
                             gender: client.gender ?? 0,

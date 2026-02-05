@@ -106,7 +106,10 @@ class _LoanState extends State<Loan> {
                   return Stack(
                     children: [
                       ListTile(
-                        leading: const Icon(Icons.monetization_on_outlined,color: TheColors.checked,),
+                        leading: const Icon(
+                          Icons.monetization_on_outlined,
+                          color: TheColors.checked,
+                        ),
                         title: Text(
                           "បញ្ជីកម្ចីត្រូវប្រមូល",
                           style: GoogleFonts.siemreap(
@@ -125,15 +128,18 @@ class _LoanState extends State<Loan> {
                         child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 6),
                           decoration: BoxDecoration(
-                            color: TheColors.green,
+                            color: TheColors.red,
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          child: Text(
-                            "${count.length}",
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
+                          child: Padding(
+                            padding: const EdgeInsets.all(2.0),
+                            child: Text(
+                              "${count.length}",
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),

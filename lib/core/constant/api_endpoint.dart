@@ -11,6 +11,7 @@ class ApiEndpoint {
   static const String addcashiersession = "addcashiersession";
   static const String viewcashiersession = "viewcashiersession";
   static const String viewcashiersessionforrollback = "GetforRollback";
+  static const String viewlistreceipt = "viewlistreceipt";
   static String addreciept(int id) => "addreceipt/$id";
   static checkloan(int id) => "checkloan/$id";
   static approveloan(int id) => "approveloan/$id";
@@ -27,6 +28,7 @@ class ApiEndpoint {
   static String viewschedule(int id) => "viewschedule/${id}";
   static String VerifyCashierSession(int id) => "verifysession/$id";
   static String RollbackVerify(int id) => "rollbackverify/$id";
+  static String deletereceipt(int id) => "deletereceipt/$id";
 }
 
 class Message {

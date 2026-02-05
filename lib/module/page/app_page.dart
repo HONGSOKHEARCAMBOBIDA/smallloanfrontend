@@ -21,6 +21,7 @@ import 'package:loanfrontend/module/main/mainmiddleware/mainmiddleware.dart';
 import 'package:loanfrontend/module/main/mainview/mainview.dart';
 import 'package:loanfrontend/module/province/provincebinding/provincebinding.dart';
 import 'package:loanfrontend/module/reciept/binding/recieptbinding.dart';
+import 'package:loanfrontend/module/reciept/view/recieptlistview.dart';
 import 'package:loanfrontend/module/reciept/view/recieptview.dart';
 import 'package:loanfrontend/module/village/villagebinding/villagebinding.dart';
 
@@ -77,5 +78,9 @@ class AppPage {
         name: '/viewreciept',
         page: () => const Recieptview(),
         binding: Recieptbinding()),
+    GetPage(
+        name: '/viewrecieptlist',
+        page: () => const Recieptlistview(),
+        bindings: [Recieptbinding(), Authbinding()]),
   ];
 }
