@@ -149,7 +149,7 @@ class _LoanState extends State<Loan> {
                 }),
                 _buildDrawerItem(Icons.monetization_on, "កត់ត្រាប្រតិបត្តិការ",
                     () {
-                  Get.toNamed('/createjournal');
+                  Get.toNamed('/journal');
                 }),
                 _buildDrawerItem(Icons.attach_money, "លទ្ធផលប្រមូលបាន", () {}),
                 _buildDrawerItem(

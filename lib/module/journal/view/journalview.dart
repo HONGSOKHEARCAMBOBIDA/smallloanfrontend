@@ -1,0 +1,585 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:loanfrontend/module/journal/controller/journalcontroller.dart';
+import 'package:loanfrontend/share/widgets/datepicker.dart';
+import 'package:loanfrontend/share/widgets/floating_buttom.dart';
+import 'package:responsive_framework/responsive_framework.dart';
+import 'package:loanfrontend/core/theme/app_color.dart';
+import 'package:loanfrontend/core/theme/text_styles.dart';
+import 'package:loanfrontend/share/widgets/app_bar.dart';
+import 'package:loanfrontend/share/widgets/common_widgets.dart';
+import 'package:loanfrontend/share/widgets/loading.dart';
+import 'package:loanfrontend/share/widgets/textfield.dart';
+import 'package:intl/intl.dart'; // Add this import for date formatting
+
+class Journalview extends StatefulWidget {
+  const Journalview({super.key});
+
+  @override
+  State<Journalview> createState() => _JournalviewState();
+}
+
+class _JournalviewState extends State<Journalview> {
+  final controller = Get.find<Journalcontroller>();
+  final TextEditingController searchQuery = TextEditingController();
+  final selectstartdate = Rxn<DateTime>();
+  final selectenddate = Rxn<DateTime>();
+  final ScrollController _scrollController = ScrollController();
+
+  // For DataTable sorting
+  int _sortColumnIndex = 0;
+  bool _sortAscending = true;
+
+  @override
+  void initState() {
+    controller.getjournal();
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    searchQuery.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (_scrollController.position.pixels ==
+            _scrollController.position.maxScrollExtent &&
+        controller.hasMore.value &&
+        !controller.isLoadingMore.value &&
+        !controller.isLoading.value) {
+      _loadMore();
+    }
+  }
+
+  Future<void> _loadMore() async {
+    await controller.loadMore();
+  }
+
+  Future<void> refresh() async {
+    selectstartdate.value = null;
+    selectenddate.value = null;
+    searchQuery.clear();
+    controller.journaldata.clear();
+    await controller.getjournal(isRefresh: true);
+  }
+
+  // Format date
+  String _formatDate(String? dateString) {
+    if (dateString == null) return '';
+    try {
+      final date = DateTime.parse(dateString);
+      return DateFormat('dd/MM/yyyy').format(date);
+    } catch (e) {
+      return dateString;
+    }
+  }
+
+  // Format currency
+  String _formatCurrency(int? amount) {
+    if (amount == null) return '0';
+    return NumberFormat('#,##0').format(amount);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final breakpoints = ResponsiveBreakpoints.of(context);
+    final bool isMobile = breakpoints.isMobile;
+
+    return Scaffold(
+      floatingActionButton: CustomFloatingActionButton(onPressed: () {
+        Get.toNamed('/createjournal');
+      }),
+      backgroundColor: TheColors.bgColor,
+      appBar: const CustomAppBar(title: "បញ្ជីប្រតិបត្តិការណ៍"),
+      body: RefreshIndicator(
+        backgroundColor: TheColors.cutecolo,
+        color: TheColors.warningColor,
+        onRefresh: refresh,
+        child: Obx(() {
+          if (controller.isLoading.value) {
+            return const Center(child: CustomLoading());
+          }
+
+          return CustomScrollView(
+            controller: _scrollController,
+            slivers: [
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: isMobile ? 8 : 12,
+                    vertical: 8,
+                  ),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: 8,
+                          right: 8,
+                          top: isMobile ? 0 : 30,
+                        ),
+                        child: Row(
+                          children: [
+                            // Search field - responsive
+                            isMobile
+                                ? Expanded(
+                                    child: ConstrainedBox(
+                                      constraints: BoxConstraints(
+                                        maxWidth:
+                                            MediaQuery.of(context).size.width -
+                                                100,
+                                      ),
+                                      child: SizedBox(
+                                        height: 50,
+                                        child: CustomTextField(
+                                          controller: searchQuery,
+                                          hintText: "ស្វែងរក".tr,
+                                          prefixIcon: Icons.search,
+                                          onChanged: (value) {
+                                            Future.delayed(
+                                              const Duration(milliseconds: 200),
+                                              () async {
+                                                final betweendate = selectstartdate
+                                                                .value !=
+                                                            null &&
+                                                        selectenddate.value !=
+                                                            null
+                                                    ? selectstartdate.value!
+                                                            .toIso8601String() +
+                                                        selectenddate.value!
+                                                            .toIso8601String()
+                                                    : null;
+                                                await controller.getjournal(
+                                                  reference_code: value.isEmpty
+                                                      ? null
+                                                      : value,
+                                                  between: betweendate,
+                                                  isRefresh: true,
+                                                );
+                                              },
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                : Expanded(
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: SizedBox(
+                                          height: 56,
+                                          width: 200,
+                                          child: CustomTextField(
+                                            controller: searchQuery,
+                                            hintText:
+                                                "ស្វែងរកកូដយោង, ឈ្មោះគណនី, ពណ៌នា"
+                                                    .tr,
+                                            prefixIcon: Icons.search,
+                                            onChanged: (value) {
+                                              Future.delayed(
+                                                const Duration(
+                                                    milliseconds: 200),
+                                                () async {
+                                                  final betweendate = selectstartdate
+                                                                  .value !=
+                                                              null &&
+                                                          selectenddate
+                                                                  .value !=
+                                                              null
+                                                      ? selectstartdate.value!
+                                                              .toIso8601String() +
+                                                          selectenddate.value!
+                                                              .toIso8601String()
+                                                      : null;
+                                                  await controller.getjournal(
+                                                    reference_code:
+                                                        value.isEmpty
+                                                            ? null
+                                                            : value,
+                                                    between: betweendate,
+                                                    isRefresh: true,
+                                                  );
+                                                },
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 10,bottom: 10),
+                                        child: CustomDatePickerField(
+                                          label: "",
+                                          selectedDate: selectstartdate,
+                                          onDateSelected: (date) async {
+                                            final betweendate = selectstartdate
+                                                            .value !=
+                                                        null &&
+                                                    selectenddate.value !=
+                                                        null
+                                                ? selectstartdate.value!
+                                                        .toIso8601String() +
+                                                    selectenddate.value!
+                                                        .toIso8601String()
+                                                : null;
+                                            selectstartdate.value = date;
+                                            await controller.getjournal(
+                                              reference_code:
+                                                  searchQuery.text.isEmpty
+                                                      ? null
+                                                      : searchQuery.text,
+                                              between: betweendate,
+                                              isRefresh: true,
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Padding(
+                                         padding: const EdgeInsets.only(top: 10,bottom: 10),
+                                        child: CustomDatePickerField(
+                                          label: "",
+                                          selectedDate: selectenddate,
+                                          onDateSelected: (date) async {
+                                            final betweendate = selectstartdate
+                                                            .value !=
+                                                        null &&
+                                                    selectenddate.value !=
+                                                        null
+                                                ? selectstartdate.value!
+                                                        .toIso8601String() +
+                                                    selectenddate.value!
+                                                        .toIso8601String()
+                                                : null;
+                                            selectenddate.value = date;
+                                            await controller.getjournal(
+                                              reference_code:
+                                                  searchQuery.text.isEmpty
+                                                      ? null
+                                                      : searchQuery.text,
+                                              between: betweendate,
+                                              isRefresh: true,
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                            // Refresh button
+                            Padding(
+                              padding: EdgeInsets.only(
+                                left: 8,
+                                bottom: isMobile ? 0.0 : 15,
+                                top: isMobile ? 0.0 : 10
+                              ),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: TheColors.cutecolo,
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(3.0),
+                                  child: InkWell(
+                                    onTap: refresh,
+                                    child: Icon(
+                                      Icons.refresh_outlined,
+                                      color: TheColors.white,
+                                      size: isMobile ? 30 : 34,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      CommonWidgets.SizeBox8,
+                    ],
+                  ),
+                ),
+              ),
+
+              // Empty state
+              if (controller.journaldata.isEmpty && !controller.isLoading.value)
+                SliverFillRemaining(
+                  child: Center(
+                    child: Text(
+                      'អត់ទាន់មានទិន្ន័យ',
+                      style: TextStyles.siemreap(context, fontSize: 16),
+                    ),
+                  ),
+                ),
+
+              // DataTable for journal entries
+              if (controller.journaldata.isNotEmpty)
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: isMobile ? 8 : 12,
+                      vertical: 8,
+                    ),
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Container(
+                        width: isMobile
+                            ? 1200
+                            : MediaQuery.of(context).size.width - 24,
+                        decoration: BoxDecoration(
+                          color: TheColors.bgColor,
+                          borderRadius: BorderRadius.circular(8),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 4,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: DataTable(
+                         
+                          columnSpacing: 16,
+                          horizontalMargin: 12,
+                          dividerThickness: 0.5,
+                          dataRowHeight: 52,
+                          headingRowHeight: 60,
+                          sortColumnIndex: _sortColumnIndex,
+                          sortAscending: _sortAscending,
+                          columns: [
+                            DataColumn(
+                              
+                              label: Text(
+                                'ល.រ',
+                                style: TextStyles.siemreap(
+                                  context,
+                                  fontSize: 14,
+                                  fontweight: FontWeight.bold,
+                                  color: TheColors.white,
+                                ),
+                              ),
+                            ),
+                            DataColumn(
+                              label: Text(
+                                'កាលបរិច្ឆេទ',
+                                style: TextStyles.siemreap(
+                                  context,
+                                  fontSize: 14,
+                                   fontweight: FontWeight.bold,
+                                  color: TheColors.white,
+                                ),
+                              ),
+                              onSort: (columnIndex, ascending) {
+                                setState(() {
+                                  _sortColumnIndex = columnIndex;
+                                  _sortAscending = ascending;
+                                  // You can implement sorting logic here
+                                });
+                              },
+                            ),
+                            DataColumn(
+                              label: Text(
+                                'កូដគណនី',
+                                style: TextStyles.siemreap(
+                                  context,
+                                  fontSize: 14,
+                                   fontweight: FontWeight.bold,
+                                  color: TheColors.white,
+                                ),
+                              ),
+                            ),
+                            DataColumn(
+                              label: Text(
+                                'ឈ្មោះគណនី',
+                                style: TextStyles.siemreap(
+                                  context,
+                                  fontSize: 14,
+                                   fontweight: FontWeight.bold,
+                                  color: TheColors.white,
+                                ),
+                              ),
+                            ),
+                            DataColumn(
+                              label: Text(
+                                'ចំនួនលុយ(ចូល)',
+                                style: TextStyles.siemreap(
+                                  context,
+                                  fontSize: 14,
+                                   fontweight: FontWeight.bold,
+                                  color: TheColors.white,
+                                ),
+                              ),
+                              numeric: true,
+                            ),
+                            DataColumn(
+                              label: Text(
+                                'ចំនួនលុយ(ចេញ)',
+                                style: TextStyles.siemreap(
+                                  context,
+                                  fontSize: 14,
+                                   fontweight: FontWeight.bold,
+                                  color: TheColors.white,
+                                ),
+                              ),
+                              numeric: true,
+                            ),
+                            DataColumn(
+                              label: Text(
+                                'បរិយាយ',
+                                style: TextStyles.siemreap(
+                                  context,
+                                  fontSize: 14,
+                                   fontweight: FontWeight.bold,
+                                  color: TheColors.white,
+                                ),
+                              ),
+                            ),
+                            DataColumn(
+                              label: Text(
+                                'កូដយោង',
+                                style: TextStyles.siemreap(
+                                  context,
+                                  fontSize: 14,
+                                  color: TheColors.white,
+                                ),
+                              ),
+                            ),
+                            DataColumn(
+                              label: Text(
+                                'បង្កើតដោយ',
+                                style: TextStyles.siemreap(
+                                  context,
+                                  fontSize: 14,
+                                   fontweight: FontWeight.bold,
+                                  color: TheColors.white,
+                                ),
+                              ),
+                            ),
+                          ],
+                          rows: controller.journaldata
+                              .asMap()
+                              .entries
+                              .map((entry) {
+                            final index = entry.key;
+                            final journal = entry.value;
+
+                            return DataRow(
+                              cells: [
+                                DataCell(
+                                  Text(
+                                    '${index + 1}',
+                                    style: TextStyles.siemreap(
+                                      context,
+                                      fontSize: 13,
+                                    ),
+                                  ),
+                                ),
+                                DataCell(
+                                  Text(
+                                    _formatDate(journal.transactionDate),
+                                    style: TextStyles.siemreap(
+                                      context,
+                                      fontSize: 13,
+                                    ),
+                                  ),
+                                ),
+                                DataCell(
+                                  Text(
+                                    journal.chartAccountCode ?? '-',
+                                    style: TextStyles.siemreap(
+                                      context,
+                                      fontSize: 13,
+                                    ),
+                                  ),
+                                ),
+                                DataCell(
+                                  Text(
+                                    journal.chartAccountName ?? '-',
+                                    style: TextStyles.siemreap(
+                                      context,
+                                      fontSize: 13,
+                                    ),
+                                  ),
+                                ),
+                                DataCell(
+                                  Text(
+                                    "${journal.debitAmount} ៛",
+                                    style: TextStyles.siemreap(
+                                      context,
+                                      fontSize: 16,
+                                      fontweight: FontWeight.bold,
+                                      color: TheColors.successColor,
+                                    ),
+                                  ),
+                                ),
+                                DataCell(
+                                  Text(
+                                    "${journal.creditAmount} ៛",
+                                    style: TextStyles.siemreap(
+                                      context,
+                                      fontSize: 16,
+                                      fontweight: FontWeight.bold,
+                                      color: TheColors.red,
+                                    ),
+                                  ),
+                                ),
+                                DataCell(
+                                  Container(
+                                    constraints: BoxConstraints(maxWidth: 200),
+                                    child: Text(
+                                      journal.description ?? '-',
+                                      style: TextStyles.siemreap(
+                                        context,
+                                        fontSize: 13,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ),
+                                DataCell(
+                                  Text(
+                                    journal.referenceCode ?? '-',
+                                    style: TextStyles.siemreap(
+                                      context,
+                                      fontSize: 13,
+                                    ),
+                                  ),
+                                ),
+                                DataCell(
+                                  Text(
+                                    journal.createdByName ?? '-',
+                                    style: TextStyles.siemreap(
+                                      context,
+                                      fontSize: 13,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+
+              // Loading more indicator
+              if (controller.isLoadingMore.value)
+                const SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Center(
+                      child: CustomLoading(),
+                    ),
+                  ),
+                ),
+                
+            ],
+          );
+        }),
+      ),
+    );
+  }
+}

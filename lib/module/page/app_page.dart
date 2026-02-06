@@ -13,6 +13,7 @@ import 'package:loanfrontend/module/district/districtbinding/districtbinding.dar
 import 'package:loanfrontend/module/documenttype/bindng/documenttypebinding.dart';
 import 'package:loanfrontend/module/journal/binding/journalbinding.dart';
 import 'package:loanfrontend/module/journal/view/createjournalview.dart';
+import 'package:loanfrontend/module/journal/view/journalview.dart';
 import 'package:loanfrontend/module/loan/binding/loanbinding.dart';
 import 'package:loanfrontend/module/loan/view/createloanview.dart';
 import 'package:loanfrontend/module/loan/view/loanforapprove.dart';
@@ -85,9 +86,13 @@ class AppPage {
         name: '/viewrecieptlist',
         page: () => const Recieptlistview(),
         bindings: [Recieptbinding(), Authbinding()]),
-        GetPage(
+    GetPage(
         name: '/createjournal',
         page: () => const Createjournalview(),
-        bindings: [Journalbinding(),Chartaccountbinding()]),
+        bindings: [Journalbinding(), Chartaccountbinding()]),
+    GetPage(
+        name: '/journal',
+        page: () => const Journalview(),
+        bindings: [Journalbinding()]),
   ];
 }

@@ -107,7 +107,7 @@ class Journalcontroller extends GetxController {
   Future<void> getjournal(
       {String? reference_code,
       String? between,
-      int pageSize = 10,
+      int pageSize = 15,
       bool isRefresh = false,
       bool loadMore = false}) async {
     if (loadMore && (!hasMore.value || isLoadingMore.value)) return;
