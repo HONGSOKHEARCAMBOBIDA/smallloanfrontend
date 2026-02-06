@@ -92,8 +92,8 @@ class Journalcontroller extends GetxController {
       isLoading.value = true;
       final isdelete = await service.deletejournal(id: id);
       if (isdelete) {
-        CustomSnackbar.success(
-            title: Message.Success, message: Message.DeleteSuccess);
+        Get.back();
+        await getjournal(isRefresh: true);
       } else {
         CustomSnackbar.error(title: Message.Error, message: Message.Error);
       }

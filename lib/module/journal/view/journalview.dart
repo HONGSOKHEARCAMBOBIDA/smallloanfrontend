@@ -11,6 +11,7 @@ import 'package:loanfrontend/share/widgets/common_widgets.dart';
 import 'package:loanfrontend/share/widgets/loading.dart';
 import 'package:loanfrontend/share/widgets/textfield.dart';
 import 'package:intl/intl.dart'; // Add this import for date formatting
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 
 class Journalview extends StatefulWidget {
   const Journalview({super.key});
@@ -35,10 +36,12 @@ class _JournalviewState extends State<Journalview> {
     controller.getjournal();
     super.initState();
     _scrollController.addListener(_onScroll);
+    FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
   }
 
   @override
   void dispose() {
+    FlutterWindowManager.clearFlags(FlutterWindowManager.FLAG_SECURE);
     searchQuery.dispose();
     _scrollController.dispose();
     super.dispose();
@@ -62,6 +65,7 @@ class _JournalviewState extends State<Journalview> {
     selectstartdate.value = null;
     selectenddate.value = null;
     searchQuery.clear();
+
     controller.journaldata.clear();
     await controller.getjournal(isRefresh: true);
   }
@@ -77,17 +81,24 @@ class _JournalviewState extends State<Journalview> {
     }
   }
 
-  // Format currency
-  String _formatCurrency(int? amount) {
-    if (amount == null) return '0';
-    return NumberFormat('#,##0').format(amount);
+  String? buildBetweenDate() {
+    if (selectstartdate.value == null || selectenddate.value == null) {
+      return null;
+    }
+
+    final formatter = DateFormat('yyyy-MM-dd');
+
+    final start = formatter.format(selectstartdate.value!);
+    final end = formatter.format(selectenddate.value!);
+
+    return "$start,$end";
   }
 
   @override
   Widget build(BuildContext context) {
     final breakpoints = ResponsiveBreakpoints.of(context);
     final bool isMobile = breakpoints.isMobile;
-
+    final between = buildBetweenDate();
     return Scaffold(
       floatingActionButton: CustomFloatingActionButton(onPressed: () {
         Get.toNamed('/createjournal');
@@ -99,10 +110,6 @@ class _JournalviewState extends State<Journalview> {
         color: TheColors.warningColor,
         onRefresh: refresh,
         child: Obx(() {
-          if (controller.isLoading.value) {
-            return const Center(child: CustomLoading());
-          }
-
           return CustomScrollView(
             controller: _scrollController,
             slivers: [
@@ -141,21 +148,11 @@ class _JournalviewState extends State<Journalview> {
                                             Future.delayed(
                                               const Duration(milliseconds: 200),
                                               () async {
-                                                final betweendate = selectstartdate
-                                                                .value !=
-                                                            null &&
-                                                        selectenddate.value !=
-                                                            null
-                                                    ? selectstartdate.value!
-                                                            .toIso8601String() +
-                                                        selectenddate.value!
-                                                            .toIso8601String()
-                                                    : null;
                                                 await controller.getjournal(
                                                   reference_code: value.isEmpty
                                                       ? null
                                                       : value,
-                                                  between: betweendate,
+                                                  between: between,
                                                   isRefresh: true,
                                                 );
                                               },
@@ -166,127 +163,81 @@ class _JournalviewState extends State<Journalview> {
                                     ),
                                   )
                                 : Expanded(
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: SizedBox(
-                                          height: 56,
-                                          width: 200,
-                                          child: CustomTextField(
-                                            controller: searchQuery,
-                                            hintText:
-                                                "ស្វែងរកកូដយោង, ឈ្មោះគណនី, ពណ៌នា"
-                                                    .tr,
-                                            prefixIcon: Icons.search,
-                                            onChanged: (value) {
-                                              Future.delayed(
-                                                const Duration(
-                                                    milliseconds: 200),
-                                                () async {
-                                                  final betweendate = selectstartdate
-                                                                  .value !=
-                                                              null &&
-                                                          selectenddate
-                                                                  .value !=
-                                                              null
-                                                      ? selectstartdate.value!
-                                                              .toIso8601String() +
-                                                          selectenddate.value!
-                                                              .toIso8601String()
-                                                      : null;
-                                                  await controller.getjournal(
-                                                    reference_code:
-                                                        value.isEmpty
-                                                            ? null
-                                                            : value,
-                                                    between: betweendate,
-                                                    isRefresh: true,
-                                                  );
-                                                },
-                                              );
-                                            },
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: SizedBox(
+                                            height: 56,
+                                            width: 200,
+                                            child: CustomTextField(
+                                              controller: searchQuery,
+                                              hintText: "ស្វែងរកកូដយោង...".tr,
+                                              prefixIcon: Icons.search,
+                                              onChanged: (value) {
+                                                Future.delayed(
+                                                  const Duration(
+                                                      milliseconds: 200),
+                                                  () async {
+                                                    await controller.getjournal(
+                                                      reference_code:
+                                                          value.isEmpty
+                                                              ? null
+                                                              : value,
+                                                      between: between,
+                                                      isRefresh: true,
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      const SizedBox(width: 8),
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 10,bottom: 10),
-                                        child: CustomDatePickerField(
-                                          label: "",
-                                          selectedDate: selectstartdate,
-                                          onDateSelected: (date) async {
-                                            final betweendate = selectstartdate
-                                                            .value !=
-                                                        null &&
-                                                    selectenddate.value !=
-                                                        null
-                                                ? selectstartdate.value!
-                                                        .toIso8601String() +
-                                                    selectenddate.value!
-                                                        .toIso8601String()
-                                                : null;
-                                            selectstartdate.value = date;
-                                            await controller.getjournal(
-                                              reference_code:
-                                                  searchQuery.text.isEmpty
-                                                      ? null
-                                                      : searchQuery.text,
-                                              between: betweendate,
-                                              isRefresh: true,
-                                            );
-                                          },
+                                        const SizedBox(width: 8),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 10, bottom: 10),
+                                          child: CustomDatePickerField(
+                                            label: "",
+                                            selectedDate: selectstartdate,
+                                          ),
                                         ),
-                                      ),
-                                      const SizedBox(width: 8),
-                                      Padding(
-                                         padding: const EdgeInsets.only(top: 10,bottom: 10),
-                                        child: CustomDatePickerField(
-                                          label: "",
-                                          selectedDate: selectenddate,
-                                          onDateSelected: (date) async {
-                                            final betweendate = selectstartdate
-                                                            .value !=
-                                                        null &&
-                                                    selectenddate.value !=
-                                                        null
-                                                ? selectstartdate.value!
-                                                        .toIso8601String() +
-                                                    selectenddate.value!
-                                                        .toIso8601String()
-                                                : null;
-                                            selectenddate.value = date;
-                                            await controller.getjournal(
-                                              reference_code:
-                                                  searchQuery.text.isEmpty
-                                                      ? null
-                                                      : searchQuery.text,
-                                              between: betweendate,
-                                              isRefresh: true,
-                                            );
-                                          },
+                                        const SizedBox(width: 8),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 10, bottom: 10),
+                                          child: CustomDatePickerField(
+                                            label: "",
+                                            selectedDate: selectenddate,
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ),
                             // Refresh button
                             Padding(
                               padding: EdgeInsets.only(
-                                left: 8,
-                                bottom: isMobile ? 0.0 : 15,
-                                top: isMobile ? 0.0 : 10
-                              ),
+                                  left: 8,
+                                  bottom: isMobile ? 0.0 : 15,
+                                  top: isMobile ? 0.0 : 10),
                               child: Container(
                                 decoration: BoxDecoration(
                                   color: TheColors.cutecolo,
                                   borderRadius: BorderRadius.circular(50),
                                 ),
                                 child: Padding(
-                                  padding: const EdgeInsets.all(3.0),
+                                  padding: EdgeInsets.all(3.0),
                                   child: InkWell(
-                                    onTap: refresh,
+                                    onTap: () async {
+                                      await controller.getjournal(
+                                        reference_code: searchQuery.text.isEmpty
+                                            ? null
+                                            : searchQuery.text,
+                                        between: buildBetweenDate(),
+                                        isRefresh: true,
+                                      );
+                                    },
                                     child: Icon(
-                                      Icons.refresh_outlined,
+                                      Icons.search,
                                       color: TheColors.white,
                                       size: isMobile ? 30 : 34,
                                     ),
@@ -319,8 +270,8 @@ class _JournalviewState extends State<Journalview> {
                 SliverToBoxAdapter(
                   child: Padding(
                     padding: EdgeInsets.symmetric(
-                      horizontal: isMobile ? 8 : 12,
-                      vertical: 8,
+                      horizontal: isMobile ? 8 : 22,
+                      vertical: isMobile ? 8 : 14,
                     ),
                     child: SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
@@ -340,17 +291,17 @@ class _JournalviewState extends State<Journalview> {
                           ],
                         ),
                         child: DataTable(
-                         
+                          headingRowColor: MaterialStateProperty.all(
+                              TheColors.checked.withOpacity(0.3)),
                           columnSpacing: 16,
                           horizontalMargin: 12,
                           dividerThickness: 0.5,
-                          dataRowHeight: 52,
-                          headingRowHeight: 60,
+                          dataRowHeight: 50,
+                          headingRowHeight: 40,
                           sortColumnIndex: _sortColumnIndex,
                           sortAscending: _sortAscending,
                           columns: [
                             DataColumn(
-                              
                               label: Text(
                                 'ល.រ',
                                 style: TextStyles.siemreap(
@@ -367,7 +318,7 @@ class _JournalviewState extends State<Journalview> {
                                 style: TextStyles.siemreap(
                                   context,
                                   fontSize: 14,
-                                   fontweight: FontWeight.bold,
+                                  fontweight: FontWeight.bold,
                                   color: TheColors.white,
                                 ),
                               ),
@@ -385,7 +336,7 @@ class _JournalviewState extends State<Journalview> {
                                 style: TextStyles.siemreap(
                                   context,
                                   fontSize: 14,
-                                   fontweight: FontWeight.bold,
+                                  fontweight: FontWeight.bold,
                                   color: TheColors.white,
                                 ),
                               ),
@@ -396,7 +347,7 @@ class _JournalviewState extends State<Journalview> {
                                 style: TextStyles.siemreap(
                                   context,
                                   fontSize: 14,
-                                   fontweight: FontWeight.bold,
+                                  fontweight: FontWeight.bold,
                                   color: TheColors.white,
                                 ),
                               ),
@@ -407,7 +358,7 @@ class _JournalviewState extends State<Journalview> {
                                 style: TextStyles.siemreap(
                                   context,
                                   fontSize: 14,
-                                   fontweight: FontWeight.bold,
+                                  fontweight: FontWeight.bold,
                                   color: TheColors.white,
                                 ),
                               ),
@@ -419,7 +370,7 @@ class _JournalviewState extends State<Journalview> {
                                 style: TextStyles.siemreap(
                                   context,
                                   fontSize: 14,
-                                   fontweight: FontWeight.bold,
+                                  fontweight: FontWeight.bold,
                                   color: TheColors.white,
                                 ),
                               ),
@@ -431,7 +382,7 @@ class _JournalviewState extends State<Journalview> {
                                 style: TextStyles.siemreap(
                                   context,
                                   fontSize: 14,
-                                   fontweight: FontWeight.bold,
+                                  fontweight: FontWeight.bold,
                                   color: TheColors.white,
                                 ),
                               ),
@@ -452,7 +403,18 @@ class _JournalviewState extends State<Journalview> {
                                 style: TextStyles.siemreap(
                                   context,
                                   fontSize: 14,
-                                   fontweight: FontWeight.bold,
+                                  fontweight: FontWeight.bold,
+                                  color: TheColors.white,
+                                ),
+                              ),
+                            ),
+                            DataColumn(
+                              label: Text(
+                                'សកម្មភាព',
+                                style: TextStyles.siemreap(
+                                  context,
+                                  fontSize: 14,
+                                  fontweight: FontWeight.bold,
                                   color: TheColors.white,
                                 ),
                               ),
@@ -539,7 +501,7 @@ class _JournalviewState extends State<Journalview> {
                                   ),
                                 ),
                                 DataCell(
-                                  Text(
+                                  SelectableText(
                                     journal.referenceCode ?? '-',
                                     style: TextStyles.siemreap(
                                       context,
@@ -556,6 +518,131 @@ class _JournalviewState extends State<Journalview> {
                                     ),
                                   ),
                                 ),
+                                DataCell(Row(
+                                  children: [
+                                    Icon(
+                                      Icons.edit_outlined,
+                                      color: TheColors.warningColor,
+                                    ),
+                                    CommonWidgets.SizeBoxwidh5,
+                                    InkWell(
+                                      onTap: () {
+                                        Get.defaultDialog(
+                                          title: "លុបប្រតិបត្តិការណ៍",
+                                          titleStyle: TextStyles.moul(context,
+                                              fontSize: 16,
+                                              color: TheColors.warningColor),
+                                          backgroundColor:
+                                              TheColors.bgColor, // important
+                                          content: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Container(
+                                              padding: const EdgeInsets.all(16),
+                                              decoration: BoxDecoration(
+                                                color: TheColors.bgColor,
+                                                borderRadius:
+                                                    BorderRadius.circular(16),
+                                                border: Border.all(
+                                                  color: TheColors.gray,
+                                                  width: 1.2,
+                                                ),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.black
+                                                        .withOpacity(0.15),
+                                                    blurRadius: 12,
+                                                    offset: const Offset(0, 6),
+                                                  ),
+                                                ],
+                                              ),
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  const SizedBox(height: 10),
+                                                  Row(
+                                                    children: [
+                                                      Expanded(
+                                                        child: OutlinedButton(
+                                                          onPressed: () =>
+                                                              Get.back(),
+                                                          style: OutlinedButton
+                                                              .styleFrom(
+                                                            side: const BorderSide(
+                                                                color: TheColors
+                                                                    .red),
+                                                            shape:
+                                                                RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10),
+                                                            ),
+                                                          ),
+                                                          child: Text("ចាកចេញ",
+                                                              style: TextStyles
+                                                                  .siemreap(
+                                                                      context,
+                                                                      fontSize:
+                                                                          15,
+                                                                      color: TheColors
+                                                                          .white)),
+                                                        ),
+                                                      ),
+                                                      const SizedBox(width: 12),
+                                                      Expanded(
+                                                        child: Obx(() {
+                                                          return ElevatedButton(
+                                                            onPressed: controller
+                                                                    .isLoading
+                                                                    .value
+                                                                ? null
+                                                                : () async {
+                                                                    await controller
+                                                                        .deletejournal(
+                                                                            id: journal.id!);
+                                                                  },
+                                                            style:
+                                                                ElevatedButton
+                                                                    .styleFrom(
+                                                              backgroundColor:
+                                                                  TheColors
+                                                                      .green,
+                                                              shape:
+                                                                  RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            10),
+                                                              ),
+                                                            ),
+                                                            child: Text(
+                                                              "លុបការបង់ប្រាក់",
+                                                              style: TextStyles
+                                                                  .siemreap(
+                                                                context,
+                                                                fontSize: 16,
+                                                                color: TheColors
+                                                                    .white,
+                                                              ),
+                                                            ),
+                                                          );
+                                                        }),
+                                                      ),
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      child: Icon(
+                                        Icons.delete,
+                                        color: TheColors.red,
+                                      ),
+                                    )
+                                  ],
+                                )),
                               ],
                             );
                           }).toList(),
@@ -575,7 +662,6 @@ class _JournalviewState extends State<Journalview> {
                     ),
                   ),
                 ),
-                
             ],
           );
         }),
