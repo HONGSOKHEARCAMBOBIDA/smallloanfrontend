@@ -12,6 +12,11 @@ class ApiEndpoint {
   static const String viewcashiersession = "viewcashiersession";
   static const String viewcashiersessionforrollback = "GetforRollback";
   static const String viewlistreceipt = "viewlistreceipt";
+  static const String viewjournal = "viewjournal";
+  static const String addjournal = "addjournal";
+  static String editjournal(int id) => "editjournal/$id";
+  static String deletejournal(int id) => "deletejournal/$id";
+  static const String viewchartaccount = "viewchartaccount";
   static String addreciept(int id) => "addreceipt/$id";
   static checkloan(int id) => "checkloan/$id";
   static approveloan(int id) => "approveloan/$id";
@@ -35,6 +40,7 @@ class Message {
   static const String CreateSuccess = "បង្កេីតបានជោគជ័យ";
   static const String CreateError = "បង្កេីតមិនបាន";
   static const String UpdateSuccess = "កែប្រែបានជោគជ័យ";
+  static const String DeleteSuccess = "លុបបានជោគជ័យ";
   static const String UpdateError = "កែប្រែមិនបាន";
   static const String Success = "ជោគជ័យ";
   static const String Error = "បរាជ័យ";

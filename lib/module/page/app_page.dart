@@ -4,12 +4,15 @@ import 'package:loanfrontend/module/auth/view/loginview.dart';
 import 'package:loanfrontend/module/cashiersession/binding/cashiersessionbinding.dart';
 import 'package:loanfrontend/module/cashiersession/view/cashiersessionview.dart';
 import 'package:loanfrontend/module/cashiersession/view/createcashiersessionview.dart';
+import 'package:loanfrontend/module/chartaccount/binding/chartaccountbinding.dart';
 import 'package:loanfrontend/module/client/clientbinding/clientbinding.dart';
 import 'package:loanfrontend/module/client/clientview/clientview.dart';
 import 'package:loanfrontend/module/client/clientview/createclientview.dart';
 import 'package:loanfrontend/module/communce/communcebinding/communcebinding.dart';
 import 'package:loanfrontend/module/district/districtbinding/districtbinding.dart';
 import 'package:loanfrontend/module/documenttype/bindng/documenttypebinding.dart';
+import 'package:loanfrontend/module/journal/binding/journalbinding.dart';
+import 'package:loanfrontend/module/journal/view/createjournalview.dart';
 import 'package:loanfrontend/module/loan/binding/loanbinding.dart';
 import 'package:loanfrontend/module/loan/view/createloanview.dart';
 import 'package:loanfrontend/module/loan/view/loanforapprove.dart';
@@ -82,5 +85,9 @@ class AppPage {
         name: '/viewrecieptlist',
         page: () => const Recieptlistview(),
         bindings: [Recieptbinding(), Authbinding()]),
+        GetPage(
+        name: '/createjournal',
+        page: () => const Createjournalview(),
+        bindings: [Journalbinding(),Chartaccountbinding()]),
   ];
 }
