@@ -1,4 +1,5 @@
 import 'package:loanfrontend/core/constant/api_endpoint.dart';
+import 'package:loanfrontend/data/models/balanchsheetmodel.dart' as model;
 import 'package:loanfrontend/data/models/journalmodel.dart';
 import 'package:loanfrontend/data/providers/api_provider.dart';
 
@@ -27,20 +28,20 @@ class Journalservice {
 
   Future<bool> updatejournal(
       {required int id,
-      required String date,
-      required int debit_account_id,
-      required int credit_account_id,
-      required double amount,
+      required String transaction_date,
+      required int chart_account_id,
+      required double debit_amount,
+      required double credit_amount,
       required String description}) async {
     try {
       final body = {
-        'transaction_date': date,
-        'debit_account_id': debit_account_id,
-        'credit_account_id': credit_account_id,
-        'amount': amount,
+        'transaction_date': transaction_date,
+        'chart_account_id': chart_account_id,
+        'debit_amount': debit_amount,
+        'credit_amount': credit_amount,
         'description': description
       };
-      final res = await apiProvider.post(ApiEndpoint.editjournal(id), body);
+      final res = await apiProvider.put(ApiEndpoint.editjournal(id), body);
       return res.statusCode == 200 || res.statusCode == 201;
     } catch (e) {
       throw Exception("update journal failed: $e");
@@ -79,6 +80,29 @@ class Journalservice {
       return isdelete.statusCode == 200 || isdelete.statusCode == 201;
     } catch (e) {
       throw Exception("Failed ${e.toString()}");
+    }
+  }
+
+  Future<model.BalanchsheetModel?> getBalanceSheet(
+      {required String? enddate}) async {
+    try {
+      final params = <String, dynamic>{};
+      if (enddate != null && enddate.isNotEmpty) {
+        params['end'] = enddate;
+      }
+      final res = await apiProvider.get(
+        ApiEndpoint.viewbalancesheetperiod, // Add this endpoint
+        queryParameters: params.isNotEmpty ? params : null,
+      );
+      if (res.statusCode == 200) {
+        final json = res.data;
+        final balanceSheet = model.BalanchsheetModel.fromJson(json);
+        return balanceSheet;
+      } else {
+        throw Exception("Failed to fetch balance sheet: ${res.statusCode}");
+      }
+    } catch (e) {
+      throw Exception("Failed to fetch balance sheet: ${e.toString()}");
     }
   }
 }

@@ -39,7 +39,7 @@ class _PaymentScheduleViewState extends State<PaymentScheduleView> {
     final bool isTablet = breakpoints.isTablet;
     final bool isDesktop = breakpoints.isDesktop;
 
-    final int gridCount = isDesktop ? 3 : (isTablet ? 2 : 1);
+    final int gridCount = isDesktop ? 4 : (isTablet ? 2 : 1);
 
     return Scaffold(
       backgroundColor: TheColors.bgColor,
@@ -106,7 +106,7 @@ class _PaymentScheduleViewState extends State<PaymentScheduleView> {
                       crossAxisCount: gridCount,
                       mainAxisSpacing: 8,
                       crossAxisSpacing: 8,
-                      childAspectRatio: isDesktop ? 2.3 : 2.6,
+                      childAspectRatio: isDesktop ? 2.3 : 1.4,
                     ),
                     itemBuilder: (context, index) {
                       return ScheduleCard(

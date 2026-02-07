@@ -1,8 +1,11 @@
+import 'dart:math';
+
 import 'package:get/get.dart';
 import 'package:loanfrontend/core/constant/api_endpoint.dart';
 import 'package:loanfrontend/data/models/journalmodel.dart';
 import 'package:loanfrontend/module/journal/service/journalservice.dart';
 import 'package:loanfrontend/share/widgets/snackbar.dart';
+import 'package:loanfrontend/data/models/balanchsheetmodel.dart' as model;
 
 class Journalcontroller extends GetxController {
   final Journalservice service = Journalservice();
@@ -13,9 +16,16 @@ class Journalcontroller extends GetxController {
   var isLoadingMore = false.obs;
   var hasMore = true.obs;
   var currentPage = 1.obs;
+  var balanceSheetData = Rxn<model.BalanchsheetModel>();
+  var selectedDate = ''.obs;
+  var errorMessage = ''.obs;
 
   @override
   void onInit() {
+    final now = DateTime.now();
+    selectedDate.value =
+        '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}';
+    getBalanceSheet(endate: selectedDate.value);
     debounce(searchQuery, (_) {
       currentPage.value = 1;
       hasMore.value = true;
@@ -42,9 +52,7 @@ class Journalcontroller extends GetxController {
           amount: amount,
           description: description);
       if (iscreated) {
-        Get.back();
-        CustomSnackbar.success(
-            title: Message.Success, message: Message.CreateSuccess);
+        await getjournal(isRefresh: true);
       } else {
         CustomSnackbar.error(
             title: Message.Error, message: Message.CreateError);
@@ -58,21 +66,22 @@ class Journalcontroller extends GetxController {
 
   Future<void> updatejournal(
       {required int id,
-      required String date,
-      required int debit_account_id,
-      required int credit_account_id,
-      required double amount,
+      required String transaction_date,
+      required int chart_account_id,
+      required double debit_amount,
+      required double credit_amount,
       required String description}) async {
     try {
       isLoading.value = true;
       final isupdate = await service.updatejournal(
           id: id,
-          date: date,
-          debit_account_id: debit_account_id,
-          credit_account_id: credit_account_id,
-          amount: amount,
+          transaction_date: transaction_date,
+          chart_account_id: chart_account_id,
+          debit_amount: debit_amount,
+          credit_amount: credit_amount,
           description: description);
       if (isupdate) {
+        await getjournal(isRefresh: true);
         Get.back();
         CustomSnackbar.success(
             title: Message.Success, message: Message.UpdateSuccess);
@@ -83,7 +92,7 @@ class Journalcontroller extends GetxController {
     } catch (e) {
       CustomSnackbar.error(title: Message.Error, message: e.toString());
     } finally {
-      isLoading.value = true;
+      isLoading.value = false;
     }
   }
 
@@ -92,8 +101,10 @@ class Journalcontroller extends GetxController {
       isLoading.value = true;
       final isdelete = await service.deletejournal(id: id);
       if (isdelete) {
+        journaldata.removeWhere((item) => item.id == id);
         Get.back();
-        await getjournal(isRefresh: true);
+        CustomSnackbar.success(
+            title: Message.Success, message: Message.DeleteSuccess);
       } else {
         CustomSnackbar.error(title: Message.Error, message: Message.Error);
       }
@@ -152,4 +163,33 @@ class Journalcontroller extends GetxController {
         between: between.value.isEmpty ? null : between.value,
         loadMore: true);
   }
+
+  Future<void> getBalanceSheet({required String endate}) async {
+    try {
+      isLoading.value = true;
+      errorMessage.value = '';
+
+      final result = await service.getBalanceSheet(enddate: endate);
+
+      if (result != null) {
+        balanceSheetData.value = result;
+        selectedDate.value = endate;
+      } else {
+        errorMessage.value =
+            'No balance sheet data found for the selected date';
+      }
+    } catch (e) {
+      errorMessage.value = 'Failed to fetch balance sheet: ${e.toString()}';
+      CustomSnackbar.error(title: 'Error', message: e.toString());
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  int get totalAssets => balanceSheetData.value?.data?.totals?.totalAssets ?? 0;
+  int get totalLiabilities =>
+      balanceSheetData.value?.data?.totals?.totalLiabilities ?? 0;
+  int get totalEquity => balanceSheetData.value?.data?.totals?.totalEquity ?? 0;
+  bool get isBalanced =>
+      balanceSheetData.value?.data?.totals?.isBalanced ?? false;
 }

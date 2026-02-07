@@ -25,7 +25,7 @@ class ApiEndpoint {
   static String editClient(int id) => "editclient/$id";
   static String changeStatusClient(String id) => "changestatusclient/$id";
   static const String viewreciept = "viewreceipt";
-
+  static const String viewbalancesheetperiod = "viewbalancesheetperiod";
   static const String viewProvince = "viewprovince";
   static String viewDistrict(int provinceId) => "viewdistrict/${provinceId}";
   static String viewCommunce(int districtId) => "viewcommunce/$districtId";

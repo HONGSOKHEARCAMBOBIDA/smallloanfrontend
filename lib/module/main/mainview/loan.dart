@@ -152,6 +152,9 @@ class _LoanState extends State<Loan> {
                   Get.toNamed('/journal');
                 }),
                 _buildDrawerItem(Icons.attach_money, "លទ្ធផលប្រមូលបាន", () {}),
+                _buildDrawerItem(Icons.attach_money, "របាយការណ៍ សមតុល្យ", () {
+                  Get.toNamed('/balanchsheet');
+                }),
                 _buildDrawerItem(
                     Icons.account_balance_wallet, "ផ្ទៀងលុយ", () {}),
                 _buildDrawerItem(Icons.settings, "ការកំណត់", () {}),

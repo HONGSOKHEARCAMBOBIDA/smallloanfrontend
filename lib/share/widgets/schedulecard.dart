@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:loanfrontend/core/theme/app_color.dart';
 import 'package:loanfrontend/core/theme/text_styles.dart';
 import 'package:loanfrontend/data/models/paymentschedule.dart';
-import 'package:loanfrontend/share/widgets/elevated_button.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 class ScheduleCard extends StatefulWidget {
@@ -118,7 +117,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
                       ],
                     ),
                   ),
-          
+
                   // Status Badge
                   Container(
                     padding:
@@ -141,9 +140,9 @@ class _ScheduleCardState extends State<ScheduleCard> {
                   ),
                 ],
               ),
-          
+
               const SizedBox(height: 16),
-          
+
               // Due Date with optional overdue indicator
               Row(
                 children: [
@@ -165,36 +164,40 @@ class _ScheduleCardState extends State<ScheduleCard> {
                   ),
                   if (isOverdue)
                     Container(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 2),
                       decoration: BoxDecoration(
                         color: Colors.red.shade50,
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      child: const Row(
-                        children: [
-                          Icon(
-                            Icons.warning_amber,
-                            size: 14,
-                            color: Colors.red,
-                          ),
-                          SizedBox(width: 4),
-                          Text(
-                            'Overdue',
-                            style: TextStyle(
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.warning_amber,
+                              size: 14,
                               color: Colors.red,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
                             ),
-                          ),
-                        ],
+                            SizedBox(width: 4),
+                            Text(
+                              'យឺត',
+                              style: TextStyles.siemreap(
+                                context,
+                                color: Colors.red,
+                                fontSize: 12,
+                                fontweight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                 ],
               ),
-          
+
               const SizedBox(height: 12),
-          
+
               // Progress Bar
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -222,9 +225,9 @@ class _ScheduleCardState extends State<ScheduleCard> {
                   )
                 ],
               ),
-          
+
               const SizedBox(height: 16),
-          
+
               // Expand/Collapse Button
               InkWell(
                 onTap: () {
@@ -256,7 +259,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
                   ),
                 ),
               ),
-          
+
               // Expanded Details Section
               if (_isExpanded) ...[
                 const Divider(
@@ -264,7 +267,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
                   height: 0.5,
                 ),
                 const SizedBox(height: 12),
-          
+
                 // Amount Breakdown Table
                 Column(
                   children: [
@@ -314,7 +317,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
                     ),
                   ],
                 ),
-          
+
                 const SizedBox(height: 16),
               ] else ...[
                 // Summary view when collapsed

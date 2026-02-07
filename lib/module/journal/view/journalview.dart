@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:loanfrontend/module/journal/binding/updatejournalbinding.dart';
 import 'package:loanfrontend/module/journal/controller/journalcontroller.dart';
+import 'package:loanfrontend/module/journal/view/updatejournalview.dart';
 import 'package:loanfrontend/share/widgets/datepicker.dart';
 import 'package:loanfrontend/share/widgets/floating_buttom.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -520,9 +522,18 @@ class _JournalviewState extends State<Journalview> {
                                 ),
                                 DataCell(Row(
                                   children: [
-                                    Icon(
-                                      Icons.edit_outlined,
-                                      color: TheColors.warningColor,
+                                    InkWell(
+                                      onTap: () {
+                                        Get.to(
+                                            () => Updatejournalview(
+                                                journal: journal),
+                                            binding: Updatejournalbinding(),
+                                            transition: Transition.rightToLeft);
+                                      },
+                                      child: Icon(
+                                        Icons.edit_outlined,
+                                        color: TheColors.warningColor,
+                                      ),
                                     ),
                                     CommonWidgets.SizeBoxwidh5,
                                     InkWell(
@@ -563,8 +574,17 @@ class _JournalviewState extends State<Journalview> {
                                                     children: [
                                                       Expanded(
                                                         child: OutlinedButton(
-                                                          onPressed: () =>
-                                                              Get.back(),
+                                                          onPressed: () {
+                                                            Get.to(
+                                                                () => Updatejournalview(
+                                                                    journal:
+                                                                        journal),
+                                                                binding:
+                                                                    Updatejournalbinding(),
+                                                                transition:
+                                                                    Transition
+                                                                        .rightToLeft);
+                                                          },
                                                           style: OutlinedButton
                                                               .styleFrom(
                                                             side: const BorderSide(
@@ -578,7 +598,7 @@ class _JournalviewState extends State<Journalview> {
                                                                           10),
                                                             ),
                                                           ),
-                                                          child: Text("ចាកចេញ",
+                                                          child: Text("កែប្រែ",
                                                               style: TextStyles
                                                                   .siemreap(
                                                                       context,
@@ -590,44 +610,37 @@ class _JournalviewState extends State<Journalview> {
                                                       ),
                                                       const SizedBox(width: 12),
                                                       Expanded(
-                                                        child: Obx(() {
-                                                          return ElevatedButton(
-                                                            onPressed: controller
-                                                                    .isLoading
-                                                                    .value
-                                                                ? null
-                                                                : () async {
-                                                                    await controller
-                                                                        .deletejournal(
-                                                                            id: journal.id!);
-                                                                  },
-                                                            style:
-                                                                ElevatedButton
-                                                                    .styleFrom(
-                                                              backgroundColor:
-                                                                  TheColors
-                                                                      .green,
-                                                              shape:
-                                                                  RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10),
-                                                              ),
-                                                            ),
-                                                            child: Text(
-                                                              "លុបការបង់ប្រាក់",
-                                                              style: TextStyles
-                                                                  .siemreap(
-                                                                context,
-                                                                fontSize: 16,
-                                                                color: TheColors
-                                                                    .white,
-                                                              ),
-                                                            ),
-                                                          );
-                                                        }),
-                                                      ),
+                                                          child: ElevatedButton(
+                                                        onPressed: () async {
+                                                          await controller
+                                                              .deletejournal(
+                                                                  id: journal
+                                                                      .id!);
+                                                          Get.back();
+                                                        },
+                                                        style: ElevatedButton
+                                                            .styleFrom(
+                                                          backgroundColor:
+                                                              TheColors.green,
+                                                          shape:
+                                                              RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10),
+                                                          ),
+                                                        ),
+                                                        child: Text(
+                                                          "លុប",
+                                                          style: TextStyles
+                                                              .siemreap(
+                                                            context,
+                                                            fontSize: 16,
+                                                            color:
+                                                                TheColors.white,
+                                                          ),
+                                                        ),
+                                                      )),
                                                     ],
                                                   )
                                                 ],
