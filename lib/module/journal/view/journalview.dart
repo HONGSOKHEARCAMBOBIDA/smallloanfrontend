@@ -12,8 +12,7 @@ import 'package:loanfrontend/share/widgets/app_bar.dart';
 import 'package:loanfrontend/share/widgets/common_widgets.dart';
 import 'package:loanfrontend/share/widgets/loading.dart';
 import 'package:loanfrontend/share/widgets/textfield.dart';
-import 'package:intl/intl.dart'; // Add this import for date formatting
-import 'package:flutter_windowmanager/flutter_windowmanager.dart';
+import 'package:intl/intl.dart';
 
 class Journalview extends StatefulWidget {
   const Journalview({super.key});
@@ -38,12 +37,10 @@ class _JournalviewState extends State<Journalview> {
     controller.getjournal();
     super.initState();
     _scrollController.addListener(_onScroll);
-    FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
   }
 
   @override
   void dispose() {
-    FlutterWindowManager.clearFlags(FlutterWindowManager.FLAG_SECURE);
     searchQuery.dispose();
     _scrollController.dispose();
     super.dispose();
@@ -112,6 +109,11 @@ class _JournalviewState extends State<Journalview> {
         color: TheColors.warningColor,
         onRefresh: refresh,
         child: Obx(() {
+          if (controller.isLoading.value) {
+            return Center(
+              child: CustomLoading(),
+            );
+          }
           return CustomScrollView(
             controller: _scrollController,
             slivers: [

@@ -47,13 +47,16 @@ class LoanproductSelector extends StatelessWidget {
                 children: loanproduct.map((loanproduct) {
                   final isSelected = loanproduct.id == selectedloanproductId;
                   return ChoiceChip(
-                    label: Text(
-                        "${loanproduct.name} រយ:ពេល: ${loanproduct.termDays}ថ្ងៃ ការប្រាក់: ${loanproduct.interestRate}% សេវាកម្ចី: ${loanproduct.processFeeRate}% ${loanproduct.paymentFrequency} យឺតពិន័យ: ${loanproduct.latePenaltyFixed}៛",
-                        style: TextStyles.siemreap(context,
-                            fontSize: smallFontSize,
-                            color: isSelected
-                                ? TheColors.bgColor
-                                : TheColors.black)),
+                    label: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Text(
+                          "${loanproduct.name} រយ:ពេល: ${loanproduct.termDays}ថ្ងៃ ការប្រាក់: ${loanproduct.interestRate}% សេវាកម្ចី: ${loanproduct.processFeeRate}% ${loanproduct.paymentFrequency} យឺតពិន័យ: ${loanproduct.latePenaltyFixed}៛",
+                          style: TextStyles.siemreap(context,
+                              fontSize: smallFontSize,
+                              color: isSelected
+                                  ? TheColors.bgColor
+                                  : TheColors.black)),
+                    ),
                     selected: isSelected,
                     backgroundColor: TheColors.cutecolo,
                     selectedColor: TheColors.orange,

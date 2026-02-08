@@ -117,7 +117,7 @@ class BalanceSheetView extends GetView<Journalcontroller> {
                 Expanded(
                   child: _buildSummaryItem(
                     context: context,
-                    label: 'ទ្រព្យ (Asset)',
+                    label: 'ទ្រព្យ',
                     value: totals.totalAssets ?? 0,
                     color: Colors.green,
                   ),
@@ -126,7 +126,7 @@ class BalanceSheetView extends GetView<Journalcontroller> {
                 Expanded(
                   child: _buildSummaryItem(
                     context: context,
-                    label: 'បំណុល (Liabilities)',
+                    label: 'បំណុល',
                     value: totals.totalLiabilities ?? 0,
                     color: Colors.orange,
                   ),
@@ -139,7 +139,7 @@ class BalanceSheetView extends GetView<Journalcontroller> {
                 Expanded(
                   child: _buildSummaryItem(
                     context: context,
-                    label: 'ដើមទុន (Equity)',
+                    label: 'ដើមទុន',
                     value: totals.totalEquity ?? 0,
                     color: Colors.purple,
                   ),

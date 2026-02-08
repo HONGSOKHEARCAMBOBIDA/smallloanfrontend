@@ -109,38 +109,43 @@ class _RecieptlistviewState extends State<Recieptlistview> {
                         child: Row(
                           children: [
                             isMobile
-                                ? Expanded(
-                                    child: ConstrainedBox(
-                                      constraints: BoxConstraints(
-                                        maxWidth:
-                                            MediaQuery.of(context).size.width -
-                                                100,
-                                      ),
-                                      child: SizedBox(
-                                        height: searchHeight,
-                                        child: CustomTextField(
-                                          controller: searchQuery,
-                                          hintText: "ស្វែងរក".tr,
-                                          prefixIcon: Icons.search,
-                                          onChanged: (value) {
-                                            // Your existing code
-                                            Future.delayed(
-                                                const Duration(
-                                                    milliseconds: 200),
-                                                () async {
-                                              await controller.getrecieptlist(
-                                                client_name: value.isEmpty
-                                                    ? null
-                                                    : value,
-                                                co_id: selectcoid.value,
-                                                start: selectstartdate.value
-                                                    ?.toIso8601String(),
-                                                end: selectenddate.value
-                                                    ?.toIso8601String(),
-                                                isRefresh: true,
-                                              );
-                                            });
-                                          },
+                                ? Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 8, right: 8),
+                                    child: Expanded(
+                                      child: ConstrainedBox(
+                                        constraints: BoxConstraints(
+                                          maxWidth: MediaQuery.of(context)
+                                                  .size
+                                                  .width -
+                                              100,
+                                        ),
+                                        child: SizedBox(
+                                          height: searchHeight,
+                                          child: CustomTextField(
+                                            controller: searchQuery,
+                                            hintText: "ស្វែងរក".tr,
+                                            prefixIcon: Icons.search,
+                                            onChanged: (value) {
+                                              // Your existing code
+                                              Future.delayed(
+                                                  const Duration(
+                                                      milliseconds: 200),
+                                                  () async {
+                                                await controller.getrecieptlist(
+                                                  client_name: value.isEmpty
+                                                      ? null
+                                                      : value,
+                                                  co_id: selectcoid.value,
+                                                  start: selectstartdate.value
+                                                      ?.toIso8601String(),
+                                                  end: selectenddate.value
+                                                      ?.toIso8601String(),
+                                                  isRefresh: true,
+                                                );
+                                              });
+                                            },
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -469,7 +474,7 @@ class _RecieptlistviewState extends State<Recieptlistview> {
                                                             ),
                                                           )
                                                         : Text(
-                                                            "លុបការបង់ប្រាក់",
+                                                            "លុប",
                                                             style: TextStyles
                                                                 .siemreap(
                                                               context,

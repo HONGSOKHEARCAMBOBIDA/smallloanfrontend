@@ -126,7 +126,7 @@ class _CreateloanviewState extends State<Createloanview> {
       });
     }
     selectedGuarantors.clear();
-    
+
     selectGuarantorName.value = 'ជ្រើសអ្នកធានា';
   }
 
@@ -289,10 +289,18 @@ class _CreateloanviewState extends State<Createloanview> {
                         selectedloanprouctId: selectloanproduct.value,
                         onSelected: (id) {
                           selectloanproduct.value = id;
-                          selectLoanProductName.value = loanproductcontroller
+
+                          final selectedProduct = loanproductcontroller
                               .loanproduct
-                              .firstWhere((p) => p.id == id)
-                              .name!;
+                              .firstWhere((p) => p.id == id);
+
+                          // Combine all text like in LoanproductSelector
+                          selectLoanProductName.value =
+                              "${selectedProduct.name} រយ:ពេល: ${selectedProduct.termDays}ថ្ងៃ "
+                              "ការប្រាក់: ${selectedProduct.interestRate}% "
+                              "សេវាកម្ចី: ${selectedProduct.processFeeRate}% "
+                              "${selectedProduct.paymentFrequency} "
+                              "យឺតពិន័យ: ${selectedProduct.latePenaltyFixed}៛";
                         },
                       );
                     },
@@ -344,7 +352,7 @@ class _CreateloanviewState extends State<Createloanview> {
                     () => CustomOutlinedButton(
                       text: selectCheckName.value,
                       onPressed: () {
-                      //final filteredUsers = authcontroller.user.where((u) => u.id != selectapproveby.value).toList();
+                        //final filteredUsers = authcontroller.user.where((u) => u.id != selectapproveby.value).toList();
                         showUserSelectorsheet(
                           context: context,
                           user: authcontroller.user,
@@ -374,7 +382,7 @@ class _CreateloanviewState extends State<Createloanview> {
                     () => CustomOutlinedButton(
                       text: selectApproveName.value,
                       onPressed: () {
-                     // final filteredUsers = authcontroller.user.where((u) => u.id != selectcheckby.value).toList();
+                        // final filteredUsers = authcontroller.user.where((u) => u.id != selectcheckby.value).toList();
                         showUserSelectorsheet(
                           context: context,
                           user: authcontroller.user,

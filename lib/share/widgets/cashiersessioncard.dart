@@ -161,8 +161,9 @@ class CashierSessionCard extends StatelessWidget {
               style: TextStyles.siemreap(context,
                   color: TheColors.white, fontSize: 12)),
           const SizedBox(height: 4),
-          Text("${value ?? 0}",
-              style: TextStyles.siemreap(context, color: TheColors.white))
+          Text("${value ?? 0} ៛",
+              style: TextStyles.siemreap(context,
+                  color: TheColors.white, fontSize: 18))
         ],
       ),
     );

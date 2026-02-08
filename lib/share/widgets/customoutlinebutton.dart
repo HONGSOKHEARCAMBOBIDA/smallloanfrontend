@@ -42,18 +42,22 @@ class CustomOutlinedButton extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
         ),
         onPressed: onPressed,
-        child: Row(
-          mainAxisAlignment: alignment,
-          children: [
-            if (icon != null) ...[
-              Icon(icon, color: textColor, size: 20),
-              const SizedBox(width: 8),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            mainAxisAlignment: alignment,
+            children: [
+              if (icon != null) ...[
+                Icon(icon, color: textColor, size: 20),
+                const SizedBox(width: 8),
+              ],
+              Text(
+                text,
+                style:
+                    GoogleFonts.siemreap(fontSize: fontSize, color: textColor),
+              ),
             ],
-            Text(
-              text,
-              style: GoogleFonts.siemreap(fontSize: fontSize, color: textColor),
-            ),
-          ],
+          ),
         ),
       ),
     );

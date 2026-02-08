@@ -117,19 +117,75 @@ class _CreateclientviewState extends State<Createclientview> {
 
   Widget mobile() {
     return SingleChildScrollView(
-      child: Form(
-        key: _formkey,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Form(
+          key: _formkey,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                _buildProfileImageSection(),
+                CommonWidgets.SizeBoxh15,
+                _buildClientInfoSection(),
+                CommonWidgets.SizeBoxh15,
+                _buildLocationSection(),
+                CommonWidgets.SizeBoxh15,
+                _buildSubmitButton(),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget web() {
+    return Form(
+      key: _formkey,
+      child: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(24.0),
           child: Column(
             children: [
-              _buildProfileImageSection(),
-              CommonWidgets.SizeBoxh15,
-              _buildClientInfoSection(),
-              CommonWidgets.SizeBoxh15,
-              _buildLocationSection(),
-              CommonWidgets.SizeBoxh15,
-              _buildSubmitButton(),
+              // Profile image at the top
+              _buildProfileImageSection(radius: 120),
+              const SizedBox(height: 32),
+
+              // Main content area
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Left side - Client Info
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 20.0),
+                      child: _buildClientInfoSection(),
+                    ),
+                  ),
+
+                  const SizedBox(
+                      width: 40), // Consistent spacing between columns
+
+                  // Right side - Location Info
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 20.0),
+                      child: _buildLocationSection(),
+                    ),
+                  ),
+                ],
+              ),
+
+              // Submit button at the bottom
+              const SizedBox(height: 32),
+              SizedBox(
+                width: 300,
+                child: _buildSubmitButton(),
+              ),
+              const SizedBox(height: 20),
             ],
           ),
         ),
@@ -137,55 +193,6 @@ class _CreateclientviewState extends State<Createclientview> {
     );
   }
 
-Widget web() {
-  return Form(
-    key: _formkey,
-    child: SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: Column(
-          children: [
-            // Profile image at the top
-            _buildProfileImageSection(radius: 120),
-            const SizedBox(height: 32),
-            
-            // Main content area
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Left side - Client Info
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-                    child: _buildClientInfoSection(),
-                  ),
-                ),
-                
-                const SizedBox(width: 40), // Consistent spacing between columns
-                
-                // Right side - Location Info
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-                    child: _buildLocationSection(),
-                  ),
-                ),
-              ],
-            ),
-            
-            // Submit button at the bottom
-            const SizedBox(height: 32),
-            SizedBox(
-              width: 300,
-              child: _buildSubmitButton(),
-            ),
-            const SizedBox(height: 20),
-          ],
-        ),
-      ),
-    ),
-  );
-}
   Widget _buildProfileImageSection({double radius = 50}) {
     return Center(
       child: Column(
@@ -270,16 +277,14 @@ Widget web() {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CommonWidgets.buildHeader(
-                context, "ព័ត៌មានអតិថិជន", Icons.person),
+            CommonWidgets.buildHeader(context, "ព័ត៌មានអតិថិជន", Icons.person),
             const SizedBox(height: 16),
             _buildTextField("ឈ្មោះ", namecontroller, "ហុង សុខហ៊ា​"),
             _buildGenderDropdown(),
-            _buildTextField(
-                "ស្ថានភាពគ្រួសារ", maritalStatus, "នៅលីវ"),
+            _buildTextField("ស្ថានភាពគ្រួសារ", maritalStatus, "នៅលីវ"),
             _buildTextField("មុខរបរ", occupationcontroller, "កសិករ"),
-            _buildTextField("លេខអត្តសញ្ញាណប័ណ្ណ", idCardNumbercontroller,
-                "12035478"),
+            _buildTextField(
+                "លេខអត្តសញ្ញាណប័ណ្ណ", idCardNumbercontroller, "12035478"),
             _buildTextField("លេខទូរសព្", phonecontroller, "02145235"),
             _buildDatePicker(),
           ],

@@ -92,7 +92,7 @@ class BalanceSheetCard extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           decoration: BoxDecoration(
             color: TheColors.warningColor,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(10),
           ),
           child: Text(
             'របាយការណ៍គណនេយ្យ',
@@ -117,7 +117,7 @@ class BalanceSheetCard extends StatelessWidget {
         Expanded(
           child: _buildStatCard(
             context: context,
-            title: 'ទ្រព្យ (Asset)',
+            title: 'ទ្រព្យ',
             amount: totals.totalAssets ?? 0,
             color: TheColors.green,
             icon: Icons.account_balance_wallet,
@@ -129,7 +129,7 @@ class BalanceSheetCard extends StatelessWidget {
         Expanded(
           child: _buildStatCard(
             context: context,
-            title: 'បំណុល (Liabilities)',
+            title: 'បំណុល',
             amount: totals.totalLiabilities ?? 0,
             color: TheColors.warningColor,
             icon: Icons.money_off,
@@ -141,7 +141,7 @@ class BalanceSheetCard extends StatelessWidget {
         Expanded(
           child: _buildStatCard(
             context: context,
-            title: 'ដើមទុន (Equity)',
+            title: 'ដើមទុន',
             amount: totals.totalEquity ?? 0,
             color: TheColors.cutecolo,
             icon: Icons.business,
@@ -447,7 +447,6 @@ class BalanceSheetCard extends StatelessWidget {
               text: "មេីលលំអិត",
             ),
           ),
-        if (onViewDetails != null && onRefresh != null) SizedBox(width: 12),
       ],
     );
   }

@@ -162,7 +162,7 @@ class _UpdateclientviewState extends State<Updateclientview> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: TheColors.bgColor,
-      appBar:const CustomAppBar(title: "កែប្រែអតិថិជន"),
+      appBar: const CustomAppBar(title: "កែប្រែអតិថិជន"),
       body: Responsive(
         mobile: mobile(),
         web: web(),
@@ -172,20 +172,23 @@ class _UpdateclientviewState extends State<Updateclientview> {
 
   Widget mobile() {
     return SingleChildScrollView(
-      child: Form(
-        key: _formkey,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              _buildProfileImageSection(),
-              CommonWidgets.SizeBoxh15,
-              _buildClientInfoSection(),
-              CommonWidgets.SizeBoxh15,
-              _buildLocationSection(),
-              CommonWidgets.SizeBoxh15,
-              _buildSubmitButton(),
-            ],
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Form(
+          key: _formkey,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                _buildProfileImageSection(),
+                CommonWidgets.SizeBoxh15,
+                _buildClientInfoSection(),
+                CommonWidgets.SizeBoxh15,
+                _buildLocationSection(),
+                CommonWidgets.SizeBoxh15,
+                _buildSubmitButton(),
+              ],
+            ),
           ),
         ),
       ),
@@ -245,80 +248,82 @@ class _UpdateclientviewState extends State<Updateclientview> {
     );
   }
 
-Widget _buildProfileImageSection({double radius = 50}) {
-  return Center(
-    child: Column(
-      children: [
-        Obx(() {
-          // Check if we have a new image or an existing URL
-          bool hasNewImage = clientImage.value != null;
-          bool hasExistingImage = clientImageUrl != null && clientImageUrl!.isNotEmpty;
-          
-          return Container(
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: TheColors.warningColor,
-                width: 0.9,
+  Widget _buildProfileImageSection({double radius = 50}) {
+    return Center(
+      child: Column(
+        children: [
+          Obx(() {
+            // Check if we have a new image or an existing URL
+            bool hasNewImage = clientImage.value != null;
+            bool hasExistingImage =
+                clientImageUrl != null && clientImageUrl!.isNotEmpty;
+
+            return Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: TheColors.warningColor,
+                  width: 0.9,
+                ),
+                borderRadius: BorderRadius.circular(radius),
               ),
-              borderRadius: BorderRadius.circular(radius),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(2.0),
-              child: CircleAvatar(
-                radius: radius,
-                backgroundColor: TheColors.bgColor,
-                backgroundImage: hasNewImage
-                    ? kIsWeb
-                        ? NetworkImage(clientImage.value!.path)
-                        : FileImage(File(clientImage.value!.path)) as ImageProvider
-                    : hasExistingImage
-                        ? NetworkImage(clientImageUrl!) as ImageProvider
-                        : null,
-                child: !hasNewImage && !hasExistingImage
-                    ? Icon(
-                        Icons.person,
-                        size: radius * 0.8,
-                        color: const Color.fromARGB(255, 4, 5, 6),
-                      )
-                    : null,
+              child: Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: CircleAvatar(
+                  radius: radius,
+                  backgroundColor: TheColors.bgColor,
+                  backgroundImage: hasNewImage
+                      ? kIsWeb
+                          ? NetworkImage(clientImage.value!.path)
+                          : FileImage(File(clientImage.value!.path))
+                              as ImageProvider
+                      : hasExistingImage
+                          ? NetworkImage(clientImageUrl!) as ImageProvider
+                          : null,
+                  child: !hasNewImage && !hasExistingImage
+                      ? Icon(
+                          Icons.person,
+                          size: radius * 0.8,
+                          color: const Color.fromARGB(255, 4, 5, 6),
+                        )
+                      : null,
+                ),
+              ),
+            );
+          }),
+          const SizedBox(height: 12),
+          OutlinedButton(
+            style: ButtonStyle(
+              side: MaterialStateProperty.all(
+                BorderSide(
+                  color: TheColors.warningColor,
+                  width: 1,
+                ),
+              ),
+              shape: MaterialStateProperty.all(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(9),
+                ),
               ),
             ),
-          );
-        }),
-        const SizedBox(height: 12),
-        OutlinedButton(
-          style: ButtonStyle(
-            side: MaterialStateProperty.all(
-              BorderSide(
-                color: TheColors.warningColor,
-                width: 1,
-              ),
-            ),
-            shape: MaterialStateProperty.all(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(9),
+            onPressed: () async {
+              final image = await clientcontroller.pickImage();
+              if (image != null) {
+                clientImage.value = image;
+              }
+            },
+            child: Text(
+              "ជ្រើសរើសរូបភាព",
+              style: TextStyles.siemreap(
+                context,
+                color: TheColors.orange,
+                fontSize: 12,
               ),
             ),
           ),
-          onPressed: () async {
-            final image = await clientcontroller.pickImage();
-            if (image != null) {
-              clientImage.value = image;
-            }
-          },
-          child: Text(
-            "ជ្រើសរើសរូបភាព",
-            style: TextStyles.siemreap(
-              context,
-              color: TheColors.orange,
-              fontSize: 12,
-            ),
-          ),
-        ),
-      ],
-    ),
-  );
-}
+        ],
+      ),
+    );
+  }
 
   Widget _buildClientInfoSection() {
     return Container(
@@ -609,11 +614,10 @@ Widget _buildProfileImageSection({double radius = 50}) {
   }
 
   Widget _buildSubmitButton() {
-    return Obx((){
+    return Obx(() {
       return CustomElevatedButton(
-      text: clientcontroller.isLoading.value ? "កំពុងកែប្រែ..." : "កែប្រែ",
-      onPressed: updateclient
-    );
+          text: clientcontroller.isLoading.value ? "កំពុងកែប្រែ..." : "កែប្រែ",
+          onPressed: updateclient);
     });
   }
 }

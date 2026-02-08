@@ -184,7 +184,7 @@ class _LoanState extends State<Loan> {
         leading: Icon(icon, color: color ?? TheColors.errorColor),
         title: Text(
           title,
-          style: TextStyles.kantomruy(
+          style: TextStyles.siemreap(
             context,
             fontSize: CommonWidgets.fontsize15,
             color: color ?? TheColors.white,

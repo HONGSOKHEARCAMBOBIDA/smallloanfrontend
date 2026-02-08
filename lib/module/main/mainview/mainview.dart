@@ -14,10 +14,10 @@ class MainView extends GetView<MainController> {
       backgroundColor: TheColors.bgColor,
       body: Responsive(
         mobile: _mobileLayout(),
-        web: _webLayout(),
+        web: _webLayout(context),
       ),
       bottomNavigationBar: Responsive(
-        mobile: _bottomNav(),
+        mobile: _bottomNav(context),
         web: SizedBox(
           height: 0.1,
         ),
@@ -38,7 +38,7 @@ class MainView extends GetView<MainController> {
     );
   }
 
-  Widget _bottomNav() {
+  Widget _bottomNav(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: TheColors.bgColor,
@@ -60,14 +60,14 @@ class MainView extends GetView<MainController> {
                 color: TheColors.warningColor,
                 backgroundColor: Colors.transparent,
                 activeColor: Colors.white,
-                tabBackgroundColor: TheColors.errorColor,
+                tabBackgroundColor: TheColors.checked,
                 tabBorderRadius: 12,
                 gap: 8,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 selectedIndex: controller.selectedIndex,
                 onTabChange: controller.onItemTapped,
-                tabs: controller.getTabs(),
+                tabs: controller.getTabs(context),
               );
             },
           ),
@@ -76,7 +76,7 @@ class MainView extends GetView<MainController> {
     );
   }
 
-  Widget _webLayout() {
+  Widget _webLayout(BuildContext context) {
     return Row(
       children: [
         Container(
@@ -91,7 +91,7 @@ class MainView extends GetView<MainController> {
                 selectedIndex: controller.selectedIndex,
                 onDestinationSelected: controller.onItemTapped,
                 labelType: NavigationRailLabelType.all,
-                destinations: controller.getTabs().map((tab) {
+                destinations: controller.getTabs(context).map((tab) {
                   return NavigationRailDestination(
                     icon: Icon(
                       tab.icon,

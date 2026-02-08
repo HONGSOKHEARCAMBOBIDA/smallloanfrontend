@@ -64,7 +64,7 @@ class AppPage {
       name: '/listclient',
       page: () => const Clientview(),
       binding: Clientbinding(),
-      transition: Transition.rightToLeft,
+      transition: Transition.fadeIn,
     ),
     GetPage(
       name: '/creatloan',
@@ -130,7 +130,7 @@ class AppPage {
       name: '/journal',
       page: () => const Journalview(),
       bindings: [Journalbinding()],
-      transition: Transition.rightToLeft,
+      transition: Transition.fadeIn,
     ),
     GetPage(
       name: '/balanchsheet',
