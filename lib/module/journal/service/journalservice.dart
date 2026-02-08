@@ -1,5 +1,7 @@
 import 'package:loanfrontend/core/constant/api_endpoint.dart';
 import 'package:loanfrontend/data/models/balanchsheetmodel.dart' as model;
+import 'package:loanfrontend/data/models/incomestatementmodel.dart'
+    as incomestatementmodel;
 import 'package:loanfrontend/data/models/journalmodel.dart';
 import 'package:loanfrontend/data/providers/api_provider.dart';
 
@@ -103,6 +105,28 @@ class Journalservice {
       }
     } catch (e) {
       throw Exception("Failed to fetch balance sheet: ${e.toString()}");
+    }
+  }
+
+  Future<incomestatementmodel.Data?> getincomestatement(
+      {required String? enddate}) async {
+    try {
+      final param = <String, dynamic>{};
+      if (enddate != null && enddate.isNotEmpty) {
+        param['end'] = enddate;
+      }
+      final res = await apiProvider.get(ApiEndpoint.incomestatement,
+          queryParameters: param.isNotEmpty ? param : null);
+      if (res.statusCode == 200) {
+        final json = res.data;
+        final incomestatement =
+            incomestatementmodel.IncomeStateMenModel.fromJson(json);
+        return incomestatement.data;
+      } else {
+        throw Exception("Faild to get incomestaement");
+      }
+    } catch (e) {
+      throw Exception(e.toString());
     }
   }
 }

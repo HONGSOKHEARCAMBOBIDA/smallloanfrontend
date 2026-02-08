@@ -1,11 +1,11 @@
-import 'dart:math';
-
 import 'package:get/get.dart';
 import 'package:loanfrontend/core/constant/api_endpoint.dart';
 import 'package:loanfrontend/data/models/journalmodel.dart';
 import 'package:loanfrontend/module/journal/service/journalservice.dart';
 import 'package:loanfrontend/share/widgets/snackbar.dart';
 import 'package:loanfrontend/data/models/balanchsheetmodel.dart' as model;
+import 'package:loanfrontend/data/models/incomestatementmodel.dart'
+    as incomestatementmodel;
 
 class Journalcontroller extends GetxController {
   final Journalservice service = Journalservice();
@@ -17,6 +17,7 @@ class Journalcontroller extends GetxController {
   var hasMore = true.obs;
   var currentPage = 1.obs;
   var balanceSheetData = Rxn<model.BalanchsheetModel>();
+  var incomestaement = incomestatementmodel.Data().obs;
   var selectedDate = ''.obs;
   var errorMessage = ''.obs;
 
@@ -26,6 +27,7 @@ class Journalcontroller extends GetxController {
     selectedDate.value =
         '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}';
     getBalanceSheet(endate: selectedDate.value);
+    getincomestatement(endate: selectedDate.value);
     debounce(searchQuery, (_) {
       currentPage.value = 1;
       hasMore.value = true;
@@ -192,4 +194,29 @@ class Journalcontroller extends GetxController {
   int get totalEquity => balanceSheetData.value?.data?.totals?.totalEquity ?? 0;
   bool get isBalanced =>
       balanceSheetData.value?.data?.totals?.isBalanced ?? false;
+
+  Future<void> getincomestatement({required String endate}) async {
+    try {
+      isLoading.value = true;
+
+      final result = await service.getincomestatement(enddate: endate);
+
+      if (result != null) {
+        incomestaement.value = result; // ✅ correct
+        selectedDate.value = endate;
+      } else {
+        CustomSnackbar.error(
+          title: Message.Error,
+          message: Message.BadRequest,
+        );
+      }
+    } catch (e) {
+      CustomSnackbar.error(
+        title: Message.Error,
+        message: e.toString(),
+      );
+    } finally {
+      isLoading.value = false;
+    }
+  }
 }

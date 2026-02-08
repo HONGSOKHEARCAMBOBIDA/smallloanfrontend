@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:loanfrontend/core/theme/app_color.dart';
 import 'package:loanfrontend/core/theme/text_styles.dart';
 import 'package:loanfrontend/data/models/balanchsheetmodel.dart';
+import 'package:loanfrontend/share/widgets/elevated_button.dart';
 
 class BalanceSheetCard extends StatelessWidget {
   final BalanchsheetModel balanceSheet;
@@ -378,7 +379,7 @@ class BalanceSheetCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: isBalanced ? Colors.green[50] : Colors.red[50],
+        color: isBalanced ? TheColors.bgColor : TheColors.red,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           color: isBalanced ? TheColors.green : TheColors.red,
@@ -441,38 +442,12 @@ class BalanceSheetCard extends StatelessWidget {
       children: [
         if (onViewDetails != null)
           Expanded(
-            child: ElevatedButton(
+            child: CustomElevatedButton(
               onPressed: onViewDetails,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue[600],
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                padding: EdgeInsets.symmetric(vertical: 12),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.list_alt, size: 18),
-                  SizedBox(width: 8),
-                  Text('View Details'),
-                ],
-              ),
+              text: "មេីលលំអិត",
             ),
           ),
         if (onViewDetails != null && onRefresh != null) SizedBox(width: 12),
-        if (onRefresh != null)
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.grey[100],
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: IconButton(
-              onPressed: onRefresh,
-              icon: Icon(Icons.refresh, color: Colors.grey[700]),
-              tooltip: 'Refresh',
-            ),
-          ),
       ],
     );
   }

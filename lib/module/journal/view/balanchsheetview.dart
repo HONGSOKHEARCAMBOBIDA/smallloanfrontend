@@ -7,68 +7,77 @@ import 'package:loanfrontend/module/journal/controller/journalcontroller.dart';
 import 'package:loanfrontend/share/widgets/app_bar.dart';
 import 'package:loanfrontend/share/widgets/balanchsheetcard.dart';
 import 'package:loanfrontend/share/widgets/loading.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class BalanceSheetView extends GetView<Journalcontroller> {
   const BalanceSheetView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final breakpoint = ResponsiveBreakpoints.of(context);
+    final isMobile = breakpoint.isMobile;
     return Scaffold(
       backgroundColor: TheColors.bgColor,
       appBar: const CustomAppBar(title: "របាយការណ៍ សមតុល្យ"),
-      body: Obx(() {
-        if (controller.isLoading.value) {
-          return const Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CustomLoading(),
-                SizedBox(height: 16),
-                Text(
-                  'Loading Balance Sheet...',
-                  style: TextStyle(color: Colors.grey),
-                ),
-              ],
+      body: Padding(
+        padding: EdgeInsets.only(
+            left: isMobile ? 8 : 600,
+            right: isMobile ? 8 : 600,
+            top: isMobile ? 8 : 10),
+        child: Obx(() {
+          if (controller.isLoading.value) {
+            return const Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CustomLoading(),
+                  SizedBox(height: 16),
+                  Text(
+                    'Loading Balance Sheet...',
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                ],
+              ),
+            );
+          }
+
+          final balanceSheet = controller.balanceSheetData.value;
+
+          if (balanceSheet == null) {
+            return const Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [Center(child: Text("No Data"))],
+              ),
+            );
+          }
+
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  // Date Selection Card
+
+                  SizedBox(height: 16),
+
+                  // Main Balance Sheet Card
+                  BalanceSheetCard(
+                    balanceSheet: balanceSheet,
+                    onViewDetails: () => _navigateToDetailedView(balanceSheet),
+                    onRefresh: () {},
+                  ),
+                  SizedBox(height: 16),
+
+                  // Additional Stats Card
+                  if (balanceSheet.data?.totals != null)
+                    _buildAdditionalStats(balanceSheet.data!.totals!, context),
+                ],
+              ),
             ),
           );
-        }
-
-        final balanceSheet = controller.balanceSheetData.value;
-
-        if (balanceSheet == null) {
-          return const Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [Center(child: Text("No Data"))],
-            ),
-          );
-        }
-
-        return SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                // Date Selection Card
-
-                SizedBox(height: 16),
-
-                // Main Balance Sheet Card
-                BalanceSheetCard(
-                  balanceSheet: balanceSheet,
-                  onViewDetails: () => _navigateToDetailedView(balanceSheet),
-                  onRefresh: () {},
-                ),
-                SizedBox(height: 16),
-
-                // Additional Stats Card
-                if (balanceSheet.data?.totals != null)
-                  _buildAdditionalStats(balanceSheet.data!.totals!, context),
-              ],
-            ),
-          ),
-        );
-      }),
+        }),
+      ),
     );
   }
 
@@ -310,61 +319,86 @@ class BalanceSheetDetailedView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final breakpoint = ResponsiveBreakpoints.of(context);
+    final isMobile = breakpoint.isMobile;
+    final smallfont = isMobile ? 14.0 : 23.0;
     final data = balanceSheet.data;
     if (data == null) return Container();
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Balance Sheet Details'),
-      ),
-      body: ListView(
-        padding: EdgeInsets.all(16),
-        children: [
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    data.reportTitle ?? 'Balance Sheet',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 4),
-                  Text(
-                    'As of ${data.reportDate ?? 'N/A'}',
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                ],
+      backgroundColor: TheColors.bgColor,
+      appBar: const CustomAppBar(title: "ប្រតិបិត្តការណ៍លំអិត"),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListView(
+          padding: EdgeInsets.only(
+              left: isMobile ? 8 : 600,
+              right: isMobile ? 8 : 600,
+              top: isMobile ? 8 : 10),
+          children: [
+            Card(
+              color: TheColors.bgColor,
+              borderOnForeground: true,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20), // optional
+                side: const BorderSide(
+                  color: TheColors.gray, // 👈 your border color
+                  width: 1, // optional
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('បាយការណ៍ សមតុល្យ',
+                        style: TextStyles.siemreap(context,
+                            color: TheColors.white, fontSize: smallfont)),
+                    SizedBox(height: 4),
+                    Text('គិតត្រឹមថ្ងៃទី ${data.reportDate ?? 'N/A'}',
+                        style: TextStyles.siemreap(context,
+                            color: TheColors.white)),
+                  ],
+                ),
               ),
             ),
-          ),
-          SizedBox(height: 16),
+            SizedBox(height: 16),
 
-          // Assets Section
-          if (data.assets != null)
-            _buildDetailedSection(data.assets!, 'Assets'),
-          SizedBox(height: 16),
+            // Assets Section
+            if (data.assets != null)
+              _buildDetailedSection(data.assets!, 'ទ្រព្យ', context),
+            SizedBox(height: 16),
 
-          // Liabilities Section
-          if (data.liabilities != null)
-            _buildDetailedLiabilities(data.liabilities!),
-          SizedBox(height: 16),
+            // Liabilities Section
+            if (data.liabilities != null)
+              _buildDetailedLiabilities(data.liabilities!, context),
+            SizedBox(height: 16),
 
-          // Equity Section
-          if (data.equity != null)
-            _buildDetailedSection(data.equity!, 'Equity'),
-          SizedBox(height: 16),
+            // Equity Section
+            if (data.equity != null)
+              _buildDetailedSection(data.equity!, 'ដើមទុន', context),
+            SizedBox(height: 16),
 
-          // Totals Section
-          if (data.totals != null) _buildTotalsSection(data.totals!),
-        ],
+            // Totals Section
+            if (data.totals != null) _buildTotalsSection(data.totals!, context),
+          ],
+        ),
       ),
     );
   }
 
-  Widget _buildDetailedSection(Assets assets, String title) {
+  Widget _buildDetailedSection(
+      Assets assets, String title, BuildContext context) {
     return Card(
+      color: TheColors.bgColor,
+      borderOnForeground: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20), // optional
+        side: const BorderSide(
+          color: TheColors.gray, // 👈 your border color
+          width: 1, // optional
+        ),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -372,22 +406,44 @@ class BalanceSheetDetailedView extends StatelessWidget {
           children: [
             Text(
               title,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyles.siemreap(context,
+                  fontSize: 18,
+                  fontweight: FontWeight.bold,
+                  color: TheColors.warningColor),
             ),
             SizedBox(height: 12),
             ...assets.accounts?.map((account) => ListTile(
-                      title: Text(account.accountName ?? ''),
-                      subtitle: Text(account.accountCode ?? ''),
-                      trailing: Text('Rs. ${account.balance ?? 0}'),
+                      title: Text(
+                        account.accountName ?? '',
+                        style: TextStyles.siemreap(context,
+                            color: TheColors.white),
+                      ),
+                      subtitle: Text(
+                        account.accountCode ?? '',
+                        style: TextStyles.siemreap(context,
+                            color: TheColors.white),
+                      ),
+                      trailing: Text(
+                        '${account.balance ?? 0} ៛',
+                        style: TextStyles.siemreap(
+                          context,
+                          color: TheColors.white,
+                        ),
+                      ),
                       contentPadding: EdgeInsets.zero,
                     )) ??
                 [],
-            Divider(),
+            Divider(
+              height: 0.5,
+              color: TheColors.gray,
+            ),
             ListTile(
-              title: Text('Total $title',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-              trailing: Text('Rs. ${assets.total ?? 0}',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
+              title: Text('សរុប $title',
+                  style: TextStyles.siemreap(context,
+                      fontweight: FontWeight.bold, color: TheColors.white)),
+              trailing: Text('${assets.total ?? 0} ៛',
+                  style: TextStyles.siemreap(context,
+                      fontweight: FontWeight.bold, color: TheColors.green)),
               contentPadding: EdgeInsets.zero,
             ),
           ],
@@ -396,21 +452,40 @@ class BalanceSheetDetailedView extends StatelessWidget {
     );
   }
 
-  Widget _buildDetailedLiabilities(Liabilities liabilities) {
+  Widget _buildDetailedLiabilities(
+      Liabilities liabilities, BuildContext context) {
     return Card(
+      color: TheColors.bgColor,
+      borderOnForeground: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20), // optional
+        side: const BorderSide(
+          color: TheColors.gray, // 👈 your border color
+          width: 1, // optional
+        ),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Liabilities',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              'បំណុល',
+              style: TextStyles.siemreap(context,
+                  fontSize: 18,
+                  fontweight: FontWeight.bold,
+                  color: TheColors.white),
             ),
             SizedBox(height: 12),
             ListTile(
-              title: Text('Total Liabilities'),
-              trailing: Text('Rs. ${liabilities.total ?? 0}'),
+              title: Text(
+                'បំណុល សរុប',
+                style: TextStyles.siemreap(context, color: TheColors.white),
+              ),
+              trailing: Text(
+                '${liabilities.total ?? 0} ៛',
+                style: TextStyles.siemreap(context, color: TheColors.white),
+              ),
               contentPadding: EdgeInsets.zero,
             ),
           ],
@@ -419,33 +494,50 @@ class BalanceSheetDetailedView extends StatelessWidget {
     );
   }
 
-  Widget _buildTotalsSection(Totals totals) {
+  Widget _buildTotalsSection(Totals totals, BuildContext context) {
     return Card(
-      color: Colors.grey[50],
+      color: TheColors.bgColor,
+      borderOnForeground: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20), // optional
+        side: const BorderSide(
+          color: TheColors.gray, // 👈 your border color
+          width: 1, // optional
+        ),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Summary',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              'សង្ខែប',
+              style: TextStyles.siemreap(context,
+                  fontSize: 18,
+                  fontweight: FontWeight.bold,
+                  color: TheColors.white),
             ),
             SizedBox(height: 12),
-            _buildTotalRow('Total Assets', totals.totalAssets ?? 0),
-            _buildTotalRow('Total Liabilities', totals.totalLiabilities ?? 0),
-            _buildTotalRow('Total Equity', totals.totalEquity ?? 0),
-            Divider(thickness: 2),
-            _buildTotalRow('Total Liabilities & Equity',
-                totals.totalLiabilitiesEquity ?? 0,
+            _buildTotalRow('ទ្រព្យសរុប', totals.totalAssets ?? 0, context,
                 isBold: true),
+            _buildTotalRow('បំណុលសរុប', totals.totalLiabilities ?? 0, context,
+                isBold: true),
+            _buildTotalRow('ដេីមទុនសរុប', totals.totalEquity ?? 0, context,
+                isBold: true),
+            Divider(thickness: 2),
+            _buildTotalRow(
+              'សរុបបំណុលនិងដេីមទុន',
+              totals.totalLiabilitiesEquity ?? 0,
+              isBold: true,
+              context,
+            ),
             SizedBox(height: 12),
             Container(
               padding: EdgeInsets.all(12),
               decoration: BoxDecoration(
                 color: (totals.isBalanced ?? false)
-                    ? Colors.green[100]
-                    : Colors.red[100],
+                    ? TheColors.bgColor
+                    : TheColors.red,
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Row(
@@ -491,16 +583,27 @@ class BalanceSheetDetailedView extends StatelessWidget {
     );
   }
 
-  Widget _buildTotalRow(String label, int amount, {bool isBold = false}) {
+  Widget _buildTotalRow(
+    String label,
+    int amount,
+    BuildContext context, {
+    bool isBold = false,
+  }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(label,
-              style: isBold ? TextStyle(fontWeight: FontWeight.bold) : null),
-          Text('Rs. $amount',
-              style: isBold ? TextStyle(fontWeight: FontWeight.bold) : null),
+              style: isBold
+                  ? TextStyles.siemreap(context,
+                      fontweight: FontWeight.bold, color: TheColors.white)
+                  : null),
+          Text('$amount ៛',
+              style: isBold
+                  ? TextStyles.siemreap(context,
+                      fontweight: FontWeight.bold, color: TheColors.white)
+                  : null),
         ],
       ),
     );

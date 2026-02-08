@@ -86,13 +86,17 @@ class MainView extends GetView<MainController> {
             id: 'bottom_navigation_bar',
             builder: (controller) {
               return NavigationRail(
+                indicatorColor: TheColors.bgColor,
                 backgroundColor: TheColors.bgColor,
                 selectedIndex: controller.selectedIndex,
                 onDestinationSelected: controller.onItemTapped,
                 labelType: NavigationRailLabelType.all,
                 destinations: controller.getTabs().map((tab) {
                   return NavigationRailDestination(
-                    icon: Icon(tab.icon),
+                    icon: Icon(
+                      tab.icon,
+                      color: TheColors.warningColor,
+                    ),
                     label: Text(tab.text ?? ""),
                   );
                 }).toList(),

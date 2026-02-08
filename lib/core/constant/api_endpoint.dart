@@ -14,6 +14,7 @@ class ApiEndpoint {
   static const String viewlistreceipt = "viewlistreceipt";
   static const String viewjournal = "viewjournal";
   static const String addjournal = "addjournal";
+  static const String incomestatement = "incomestatement";
   static String editjournal(int id) => "editjournal/$id";
   static String deletejournal(int id) => "deletejournal/$id";
   static const String viewchartaccount = "viewchartaccount";

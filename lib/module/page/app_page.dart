@@ -14,6 +14,7 @@ import 'package:loanfrontend/module/documenttype/bindng/documenttypebinding.dart
 import 'package:loanfrontend/module/journal/binding/journalbinding.dart';
 import 'package:loanfrontend/module/journal/view/balanchsheetview.dart';
 import 'package:loanfrontend/module/journal/view/createjournalview.dart';
+import 'package:loanfrontend/module/journal/view/incomestatementview.dart';
 import 'package:loanfrontend/module/journal/view/journalview.dart';
 import 'package:loanfrontend/module/journal/view/updatejournalview.dart';
 import 'package:loanfrontend/module/loan/binding/loanbinding.dart';
@@ -35,70 +36,113 @@ class AppPage {
   static const INITIAL = '/main';
   static final routes = [
     GetPage(
-        name: '/main',
-        middlewares: [MainMiddleware()],
-        page: () => MainView(),
-        bindings: [
-          MainBinding(),
-        ]),
-    GetPage(name: '/login', page: () => LoginView(), binding: Authbinding()),
-    GetPage(name: '/createclient', page: () => Createclientview(), bindings: [
-      Clientbinding(),
-      Provincebinding(),
-      Districtbinding(),
-      Communcebinding(),
-      Villagebinding(),
-    ]),
+      name: '/main',
+      middlewares: [MainMiddleware()],
+      page: () => MainView(),
+      bindings: [MainBinding()],
+      transition: Transition.fadeIn,
+    ),
     GetPage(
-        name: '/listclient',
-        page: () => const Clientview(),
-        binding: Clientbinding()),
-    GetPage(name: '/creatloan', page: () => Createloanview(), bindings: [
-      Loanbinding(),
-      Loanproductbinding(),
-      Clientbinding(),
-      Documenttypebinding(),
-      Authbinding()
-    ]),
+      name: '/login',
+      page: () => LoginView(),
+      binding: Authbinding(),
+      transition: Transition.fadeIn,
+    ),
     GetPage(
-        name: '/checkloan',
-        page: () => const Loanforcheck(),
-        binding: Loanbinding()),
+      name: '/createclient',
+      page: () => Createclientview(),
+      bindings: [
+        Clientbinding(),
+        Provincebinding(),
+        Districtbinding(),
+        Communcebinding(),
+        Villagebinding(),
+      ],
+      transition: Transition.downToUp,
+    ),
     GetPage(
-        name: '/approveloan',
-        page: () => const Loanforapprove(),
-        binding: Loanbinding()),
+      name: '/listclient',
+      page: () => const Clientview(),
+      binding: Clientbinding(),
+      transition: Transition.rightToLeft,
+    ),
     GetPage(
-        name: '/viewloan',
-        page: () => const Loanview(),
-        bindings: [Loanbinding()]),
+      name: '/creatloan',
+      page: () => Createloanview(),
+      bindings: [
+        Loanbinding(),
+        Loanproductbinding(),
+        Clientbinding(),
+        Documenttypebinding(),
+        Authbinding(),
+      ],
+      transition: Transition.downToUp,
+    ),
     GetPage(
-        name: '/creatsession',
-        page: () => const Createcashiersessionview(),
-        binding: Cashiersessionbinding()),
+      name: '/checkloan',
+      page: () => const Loanforcheck(),
+      binding: Loanbinding(),
+      transition: Transition.rightToLeft,
+    ),
     GetPage(
-        name: '/rollbackcashiersession',
-        page: () => const Cashiersessionview(),
-        binding: Cashiersessionbinding()),
+      name: '/approveloan',
+      page: () => const Loanforapprove(),
+      binding: Loanbinding(),
+      transition: Transition.rightToLeft,
+    ),
     GetPage(
-        name: '/viewreciept',
-        page: () => const Recieptview(),
-        binding: Recieptbinding()),
+      name: '/viewloan',
+      page: () => const Loanview(),
+      bindings: [Loanbinding()],
+      transition: Transition.rightToLeft,
+    ),
     GetPage(
-        name: '/viewrecieptlist',
-        page: () => const Recieptlistview(),
-        bindings: [Recieptbinding(), Authbinding()]),
+      name: '/creatsession',
+      page: () => const Createcashiersessionview(),
+      binding: Cashiersessionbinding(),
+      transition: Transition.downToUp,
+    ),
     GetPage(
-        name: '/createjournal',
-        page: () => const Createjournalview(),
-        bindings: [Journalbinding(), Chartaccountbinding()]),
+      name: '/rollbackcashiersession',
+      page: () => const Cashiersessionview(),
+      binding: Cashiersessionbinding(),
+      transition: Transition.rightToLeft,
+    ),
     GetPage(
-        name: '/journal',
-        page: () => const Journalview(),
-        bindings: [Journalbinding()]),
+      name: '/viewreciept',
+      page: () => const Recieptview(),
+      binding: Recieptbinding(),
+      transition: Transition.rightToLeft,
+    ),
     GetPage(
-        name: '/balanchsheet',
-        page: () => const BalanceSheetView(),
-        bindings: [Journalbinding()]),
+      name: '/viewrecieptlist',
+      page: () => const Recieptlistview(),
+      bindings: [Recieptbinding(), Authbinding()],
+      transition: Transition.fade,
+    ),
+    GetPage(
+      name: '/createjournal',
+      page: () => const Createjournalview(),
+      bindings: [Journalbinding(), Chartaccountbinding()],
+      transition: Transition.downToUp,
+    ),
+    GetPage(
+      name: '/journal',
+      page: () => const Journalview(),
+      bindings: [Journalbinding()],
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: '/balanchsheet',
+      page: () => const BalanceSheetView(),
+      bindings: [Journalbinding()],
+      transition: Transition.fadeIn,
+    ),
+    GetPage(
+      name: '/incomestament',
+      page: () => Incomestatementview(),
+      binding: Journalbinding(),
+      transition: Transition.rightToLeft,
+    ),
   ];
 }

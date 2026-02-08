@@ -18,7 +18,7 @@ class LoanproductSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-        final breakpoint = ResponsiveBreakpoints.of(context);
+    final breakpoint = ResponsiveBreakpoints.of(context);
     final bool isMobile = breakpoint.isMobile;
     final double smallFontSize = isMobile ? 12 : 15;
     return Padding(
@@ -29,7 +29,9 @@ class LoanproductSelector extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('ជ្រើសរើសប្រភេទកម្ចី', style: TextStyles.siemreap(context,color: TheColors.white,fontSize: smallFontSize)),
+              Text('ជ្រើសរើសប្រភេទកម្ចី',
+                  style: TextStyles.siemreap(context,
+                      color: TheColors.white, fontSize: smallFontSize)),
               IconButton(
                 icon: const Icon(Icons.close, color: TheColors.errorColor),
                 onPressed: () => Navigator.pop(context),
@@ -45,7 +47,8 @@ class LoanproductSelector extends StatelessWidget {
                 children: loanproduct.map((loanproduct) {
                   final isSelected = loanproduct.id == selectedloanproductId;
                   return ChoiceChip(
-                    label: Text(loanproduct.name ?? '',
+                    label: Text(
+                        "${loanproduct.name} រយ:ពេល: ${loanproduct.termDays}ថ្ងៃ ការប្រាក់: ${loanproduct.interestRate}% សេវាកម្ចី: ${loanproduct.processFeeRate}% ${loanproduct.paymentFrequency} យឺតពិន័យ: ${loanproduct.latePenaltyFixed}៛",
                         style: TextStyles.siemreap(context,
                             fontSize: smallFontSize,
                             color: isSelected
@@ -54,7 +57,8 @@ class LoanproductSelector extends StatelessWidget {
                     selected: isSelected,
                     backgroundColor: TheColors.cutecolo,
                     selectedColor: TheColors.orange,
-                    side: const BorderSide(color: TheColors.cutecolo, width: 0.3),
+                    side:
+                        const BorderSide(color: TheColors.cutecolo, width: 0.3),
                     onSelected: (_) {
                       onSelected(loanproduct.id!);
                       Navigator.pop(context);
