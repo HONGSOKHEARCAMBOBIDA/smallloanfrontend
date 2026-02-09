@@ -3,9 +3,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:loanfrontend/core/constant/constants.dart';
 import 'package:loanfrontend/core/theme/app_color.dart';
 import 'package:loanfrontend/core/theme/text_styles.dart';
+import 'package:loanfrontend/module/client/clientcontroller/clientcontroller.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:get/get.dart';
 
 class Clientcard extends StatelessWidget {
+  final int id;
   final String name;
   final int gender;
   final String maritalStatus;
@@ -17,7 +21,7 @@ class Clientcard extends StatelessWidget {
   final double longitude;
   final String imagePath;
   final String notes;
-  final bool isActive;
+  final isActive;
   final int createdBy;
   final String createByName;
   final int provinceId;
@@ -34,6 +38,7 @@ class Clientcard extends StatelessWidget {
 
   const Clientcard({
     Key? key,
+    required this.id,
     required this.name,
     required this.gender,
     required this.maritalStatus,
@@ -93,12 +98,18 @@ class Clientcard extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(18.0),
-      child: Container(
-        margin:
-            EdgeInsets.symmetric(horizontal: isMobile ? 8 : 18, vertical: 1),
+      child: AnimatedContainer(
+        duration: const Duration(seconds: 1),
+        margin: EdgeInsets.symmetric(
+          horizontal: isMobile ? 8 : 18,
+          vertical: 1,
+        ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: TheColors.orange, width: 0.5),
+          border: Border.all(
+            color: isActive ? TheColors.gray : TheColors.red,
+            width: 0.5,
+          ),
         ),
         child: Padding(
           padding: EdgeInsets.all(cardPadding),
@@ -107,32 +118,37 @@ class Clientcard extends StatelessWidget {
             children: [
               Stack(
                 children: [
-                  Container(
+                  AnimatedContainer(
+                    duration: const Duration(seconds: 1),
                     decoration: BoxDecoration(
                       border: Border.all(
-                        color: TheColors.warningColor,
-                        width: 0.9,
+                        color: isActive ? TheColors.checked : TheColors.red,
+                        width: 2,
                       ),
-                      borderRadius: BorderRadius.circular(isMobile ? 50 : 60),
+                      shape: BoxShape.circle,
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: CircleAvatar(
-                        radius: avatarRadius,
-                        backgroundColor: TheColors.bgColor,
-                        backgroundImage: imagePath.isNotEmpty
-                            ? NetworkImage(
-                                "${Appconstants.baseUrl}/clientimage/$imagePath")
-                            : const NetworkImage(
-                                'https://cdn-icons-png.flaticon.com/512/17634/17634775.png',
-                              ) as ImageProvider,
+                    padding: const EdgeInsets.all(2),
+                    child: ClipOval(
+                      child: CachedNetworkImage(
+                        imageUrl:
+                            "${Appconstants.baseUrl}/clientimage/$imagePath",
+                        width: avatarRadius * 2,
+                        height: avatarRadius * 2,
+                        fit: BoxFit.cover,
+                        placeholder: (_, __) =>
+                            const CircularProgressIndicator(),
+                        errorWidget: (_, __, ___) => Image.network(
+                          'https://cdn-icons-png.flaticon.com/512/17634/17634775.png',
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),
                   Positioned(
                     bottom: 2,
                     right: 2,
-                    child: Container(
+                    child: AnimatedContainer(
+                      duration: const Duration(seconds: 1),
                       width: isMobile ? 12 : 14,
                       height: isMobile ? 12 : 14,
                       decoration: BoxDecoration(
@@ -148,6 +164,7 @@ class Clientcard extends StatelessWidget {
                   ),
                 ],
               ),
+
               SizedBox(width: isMobile ? 12 : 25),
               // Client info
               Expanded(
@@ -161,14 +178,13 @@ class Clientcard extends StatelessWidget {
                         scrollDirection: Axis.horizontal,
                         child: Row(
                           children: [
-                            Text(
+                            SelectableText(
                               name,
                               style: TextStyles.siemreap(context,
                                   fontSize: nameFontSize,
                                   fontweight: FontWeight.bold,
                                   color: TheColors.white),
                               maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
                             ),
                           ],
                         ),
@@ -235,8 +251,7 @@ class Clientcard extends StatelessWidget {
                         child: Row(
                           children: [
                             Icon(Icons.phone,
-                                size: iconSize,
-                                color: TheColors.lightOrage),
+                                size: iconSize, color: TheColors.lightOrage),
                             SizedBox(width: 6),
                             Text(
                               phone,
@@ -279,8 +294,7 @@ class Clientcard extends StatelessWidget {
                         child: Row(
                           children: [
                             Icon(Icons.location_on,
-                                size: iconSize,
-                                color: TheColors.lightOrage),
+                                size: iconSize, color: TheColors.lightOrage),
                             const SizedBox(width: 6),
                             Text(
                               "$villageName, $communceName, $districtName, $provinceName",
@@ -309,6 +323,7 @@ class Clientcard extends StatelessWidget {
     final breakpoints = ResponsiveBreakpoints.of(context);
     final bool isMobile = breakpoints.isMobile;
     final double iconSize = isMobile ? 18 : 30;
+    final controller = Get.find<ClientController>();
 
     return PopupMenuButton<String>(
       icon: Icon(
@@ -341,19 +356,26 @@ class Clientcard extends StatelessWidget {
         ),
         PopupMenuItem(
           value: 'delete',
-          child: Row(
-            children: [
-              Icon(
-                isActive ? Icons.block : Icons.check_circle,
-                color: isActive ? TheColors.errorColor : TheColors.successColor,
-                size: iconSize,
-              ),
-              const SizedBox(width: 8),
-              Text(
-                isActive ? 'បិទ' : 'បើក',
-                style: TextStyles.siemreap(context, fontSize: 12),
-              ),
-            ],
+          child: InkWell(
+            onTap: () async {
+              await controller.changeStatusClient(id: id);
+              Get.back();
+            },
+            child: Row(
+              children: [
+                Icon(
+                  isActive ? Icons.block : Icons.check_circle,
+                  color:
+                      isActive ? TheColors.errorColor : TheColors.successColor,
+                  size: iconSize,
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  isActive ? 'បិទ' : 'បើក',
+                  style: TextStyles.siemreap(context, fontSize: 12),
+                ),
+              ],
+            ),
           ),
         ),
       ],

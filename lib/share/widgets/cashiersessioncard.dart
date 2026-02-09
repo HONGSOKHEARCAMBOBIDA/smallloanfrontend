@@ -15,6 +15,8 @@ class CashierSessionCard extends StatelessWidget {
         return TheColors.green;
       case '1':
         return TheColors.lightOrage;
+      case '0':
+        return TheColors.red;
       default:
         return TheColors.gray;
     }
@@ -57,10 +59,10 @@ class CashierSessionCard extends StatelessWidget {
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 7, vertical: 2),
+                          horizontal: 5, vertical: 2),
                       decoration: BoxDecoration(
                         color: _statusColor(session.status).withOpacity(0.15),
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(2.0),
@@ -115,7 +117,10 @@ class CashierSessionCard extends StatelessWidget {
                 ],
               ),
 
-              const Divider(height: 24),
+              const Divider(
+                height: 24,
+                color: TheColors.gray,
+              ),
 
               /// MONEY SECTION
               SingleChildScrollView(
@@ -142,7 +147,10 @@ class CashierSessionCard extends StatelessWidget {
                 ),
               ),
 
-              const Divider(height: 24),
+              const Divider(
+                height: 24,
+                color: TheColors.gray,
+              ),
             ],
           ),
         ),

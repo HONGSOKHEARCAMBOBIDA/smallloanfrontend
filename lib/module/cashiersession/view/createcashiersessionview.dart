@@ -32,7 +32,7 @@ class _CreatecashiersessionviewState extends State<Createcashiersessionview> {
     final double smallFontSize = isMobile ? 12 : 15;
     return Scaffold(
       backgroundColor: TheColors.bgColor,
-      appBar: CustomAppBar(title: "បេីកប្រអប់ទទួលលុយ"),
+      appBar: const CustomAppBar(title: "បេីកប្រអប់ទទួលលុយ"),
       body: Padding(
         padding: EdgeInsets.only(
             left: isMobile ? 8 : 600,
@@ -70,6 +70,8 @@ class _CreatecashiersessionviewState extends State<Createcashiersessionview> {
                             session: data,
                             onTap: () {
                               Get.defaultDialog(
+                                titlePadding: const EdgeInsets.only(
+                                    top: 20, left: 8, right: 8, bottom: 8),
                                 title: "ផ្ទៀងផ្ទាត់ប្រាក់",
                                 titleStyle: TextStyles.moul(context,
                                     fontSize: smallFontSize,
@@ -83,8 +85,8 @@ class _CreatecashiersessionviewState extends State<Createcashiersessionview> {
                                       color: TheColors.bgColor,
                                       borderRadius: BorderRadius.circular(16),
                                       border: Border.all(
-                                        color: TheColors.gray,
-                                        width: 1.2,
+                                        color: TheColors.checked,
+                                        width: 0.5,
                                       ),
                                       boxShadow: [
                                         BoxShadow(

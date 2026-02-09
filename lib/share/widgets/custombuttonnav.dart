@@ -37,7 +37,7 @@ class CustomBottomNav extends StatelessWidget {
             child: Center(
               child: Text(
                 title,
-                style: TextStyles.siemreap(context, color: TheColors.bgColor),
+                style: TextStyles.siemreap(context, color: TheColors.white),
               ),
             ),
           ),

@@ -9,7 +9,7 @@ class Cashiersessionservice {
       final iscreate = await apiProvider.post(ApiEndpoint.addcashiersession, 1);
       return iscreate.statusCode == 200 || iscreate.statusCode == 201;
     } catch (e) {
-      throw Exception("Unexpected error: $e");
+      throw Exception(e.toString());
     }
   }
 

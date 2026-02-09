@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:loanfrontend/core/constant/api_endpoint.dart';
 import 'package:loanfrontend/core/theme/app_color.dart';
 import 'package:loanfrontend/core/theme/text_styles.dart';
 import 'package:loanfrontend/module/cashiersession/controller/cashiersessioncontroller.dart';
@@ -25,7 +26,6 @@ class _CashiersessionviewState extends State<Cashiersessionview> {
   Widget build(BuildContext context) {
     final breakpoint = ResponsiveBreakpoints.of(context);
     final bool isMobile = breakpoint.isMobile;
-    final double padding = isMobile ? 8 : 200;
     final double smallFontSize = isMobile ? 12 : 15;
     return Scaffold(
       backgroundColor: TheColors.bgColor,
@@ -51,8 +51,9 @@ class _CashiersessionviewState extends State<Cashiersessionview> {
                     SliverFillRemaining(
                       child: Center(
                         child: Text(
-                          'អត់ទាន់មានទិន្ន័យ',
-                          style: TextStyles.kantomruy(context, fontSize: 12),
+                          Message.NoData,
+                          style: TextStyles.kantomruy(context,
+                              fontSize: isMobile ? 12 : 14),
                         ),
                       ),
                     ),
@@ -67,6 +68,8 @@ class _CashiersessionviewState extends State<Cashiersessionview> {
                             session: data,
                             onTap: () {
                               Get.defaultDialog(
+                                titlePadding: const EdgeInsets.only(
+                                    top: 20, left: 8, right: 8, bottom: 8),
                                 title: "លុបផ្ទៀងផ្ទាត់ប្រាក់",
                                 titleStyle: TextStyles.moul(context,
                                     fontSize: smallFontSize,
@@ -80,8 +83,8 @@ class _CashiersessionviewState extends State<Cashiersessionview> {
                                       color: TheColors.bgColor,
                                       borderRadius: BorderRadius.circular(16),
                                       border: Border.all(
-                                        color: TheColors.gray,
-                                        width: 1.2,
+                                        color: TheColors.checked,
+                                        width: 0.5,
                                       ),
                                       boxShadow: [
                                         BoxShadow(
@@ -107,7 +110,7 @@ class _CashiersessionviewState extends State<Cashiersessionview> {
                                                 onPressed: () => Get.back(),
                                                 style: OutlinedButton.styleFrom(
                                                   side: const BorderSide(
-                                                      color: TheColors.red),
+                                                      color: TheColors.green),
                                                   shape: RoundedRectangleBorder(
                                                     borderRadius:
                                                         BorderRadius.circular(
@@ -138,7 +141,7 @@ class _CashiersessionviewState extends State<Cashiersessionview> {
                                                   style:
                                                       ElevatedButton.styleFrom(
                                                     backgroundColor:
-                                                        TheColors.green,
+                                                        TheColors.red,
                                                     shape:
                                                         RoundedRectangleBorder(
                                                       borderRadius:

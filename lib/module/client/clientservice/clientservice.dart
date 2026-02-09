@@ -138,4 +138,14 @@ class ClientService {
       throw Exception("Unexpected error: $e");
     }
   }
+
+  Future<bool> changeStatusClient({required int id}) async {
+    try {
+      final isupdate =
+          await apiProvider.put(ApiEndpoint.changeStatusClient(id), 1);
+      return isupdate.statusCode == 200 || isupdate.statusCode == 201;
+    } catch (e) {
+      throw Exception("Unexpected error: $e");
+    }
+  }
 }

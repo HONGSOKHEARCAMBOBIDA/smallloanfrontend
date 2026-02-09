@@ -152,7 +152,6 @@ class Pagination {
       this.hasNext,
       this.hasPrev});
 
-
   Pagination.fromJson(Map<String, dynamic> json) {
     page = json['page'];
     pageSize = json['pageSize'];

@@ -196,4 +196,24 @@ class ClientController extends GetxController {
       CustomSnackbar.error(title: "មានបញ្ហា", message: e.toString());
     }
   }
+
+  Future<void> changeStatusClient({required int id}) async {
+    try {
+      isLoading.value = true;
+      final isupdate = await clientService.changeStatusClient(id: id);
+      if (isupdate) {
+        final index = client.indexWhere((c) => c.id == id);
+
+        if (index != -1) {
+          // toggle local state
+          client[index].isActive = !(client[index].isActive ?? false);
+
+          // notify GetX that list content changed
+          client.refresh();
+        }
+      }
+    } catch (e) {
+      CustomSnackbar.error(title: Message.Error, message: e.toString());
+    }
+  }
 }

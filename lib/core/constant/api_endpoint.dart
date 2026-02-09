@@ -24,7 +24,7 @@ class ApiEndpoint {
   static const String viewloan = "viewloan";
   // Endpoints with dynamic parameters
   static String editClient(int id) => "editclient/$id";
-  static String changeStatusClient(String id) => "changestatusclient/$id";
+  static String changeStatusClient(int id) => "changestatusclient/$id";
   static const String viewreciept = "viewreceipt";
   static const String viewbalancesheetperiod = "viewbalancesheetperiod";
   static const String viewProvince = "viewprovince";
@@ -52,4 +52,5 @@ class Message {
   static const String Approvesuccess = "អនុម័តកម្ចីបានជោគជ័យ";
   static const String Verifysuccess = "ផ្ទៀងផ្ទាត់បានជោគជ័យ";
   static const String Verifyeerror = "ផ្ទៀងផ្ទាត់មិនបាន";
+  static const String NoData = "អត់ទាន់មានទិន្ន័យ";
 }

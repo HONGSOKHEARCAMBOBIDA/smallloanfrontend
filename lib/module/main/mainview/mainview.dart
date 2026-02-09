@@ -18,7 +18,7 @@ class MainView extends GetView<MainController> {
       ),
       bottomNavigationBar: Responsive(
         mobile: _bottomNav(context),
-        web: SizedBox(
+        web: const SizedBox(
           height: 0.1,
         ),
       ),
