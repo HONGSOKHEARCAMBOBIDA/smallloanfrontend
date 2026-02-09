@@ -114,4 +114,14 @@ class Loanservice {
       throw Exception("Failed ${e.toString()}");
     }
   }
+
+  Future<bool> deleteLoanbeforapprove({required int id}) async {
+    try {
+      final isdelete =
+          await apiProvider.delete(ApiEndpoint.deleteLoanbeforapprove(id));
+      return isdelete.statusCode == 200 || isdelete.statusCode == 201;
+    } catch (e) {
+      throw Exception("Failed ${e.toString()}");
+    }
+  }
 }

@@ -58,7 +58,7 @@ class AppPage {
         Communcebinding(),
         Villagebinding(),
       ],
-      transition: Transition.downToUp,
+      transition: Transition.rightToLeftWithFade,
     ),
     GetPage(
       name: '/listclient',

@@ -6,7 +6,6 @@ import 'package:loanfrontend/module/loan/controller/loancontroller.dart';
 import 'package:loanfrontend/share/widgets/app_bar.dart';
 import 'package:loanfrontend/share/widgets/loading.dart';
 import 'package:loanfrontend/share/widgets/loanapprovecard.dart';
-import 'package:loanfrontend/share/widgets/loancard.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 class Loanforapprove extends StatefulWidget {

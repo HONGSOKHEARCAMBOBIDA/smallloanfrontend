@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:loanfrontend/core/constant/constants.dart';
 import 'package:loanfrontend/core/theme/app_color.dart';
 import 'package:loanfrontend/data/models/loanapprovemodel.dart';
+import 'package:loanfrontend/module/loan/controller/loancontroller.dart';
 import 'package:loanfrontend/share/widgets/common_widgets.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:get/get.dart';
 
 class Loanapprovecard extends StatelessWidget {
   final Data loan;
@@ -31,7 +33,7 @@ class Loanapprovecard extends StatelessWidget {
     switch (status) {
       case "1":
         return TheColors.pending;
-      case "checked":
+      case "2":
         return TheColors.checked;
       case "approved":
         return TheColors.approve;
@@ -51,7 +53,7 @@ class Loanapprovecard extends StatelessWidget {
     final double nameFontSize = isMobile ? 13 : (isTablet ? 14 : 18);
     final double smallFontSize = isMobile ? 12 : 15;
     final double cardPadding = isMobile ? 10 : 12;
-
+    final controller = Get.find<LoanController>();
     final theme = Theme.of(context);
     final isDarkMode = theme.brightness == Brightness.dark;
     return InkWell(
@@ -139,24 +141,39 @@ class Loanapprovecard extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                             ),
                             CommonWidgets.SizeBoxwidh5,
-                            Container(
-                              decoration: BoxDecoration(
-                                  gradient: const LinearGradient(colors: [
-                                    TheColors.cutecolo,
-                                    TheColors.warningColor,
-                                  ]),
-                                  borderRadius: BorderRadius.circular(7)),
-                              child: Padding(
-                                padding: const EdgeInsets.all(7.0),
-                                child: Text(
-                                  "${loan.loanAmount.toString()} ៛",
-                                  style: GoogleFonts.siemreap(
-                                    fontSize: smallFontSize,
-                                    fontWeight: FontWeight.bold,
-                                    color: TheColors.black,
+                            Row(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                      gradient: const LinearGradient(colors: [
+                                        TheColors.cutecolo,
+                                        TheColors.warningColor,
+                                      ]),
+                                      borderRadius: BorderRadius.circular(7)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(7.0),
+                                    child: Text(
+                                      "${loan.loanAmount.toString()} ៛",
+                                      style: GoogleFonts.siemreap(
+                                        fontSize: smallFontSize,
+                                        fontWeight: FontWeight.bold,
+                                        color: TheColors.black,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
+                                CommonWidgets.SizeBoxwidh5,
+                                InkWell(
+                                    onTap: () {
+                                      controller.deleteLoanbeforapprove(
+                                          id: loan.id!);
+                                    },
+                                    child: const Icon(
+                                      Icons.delete_outline_outlined,
+                                      color: TheColors.red,
+                                      size: 35,
+                                    ))
+                              ],
                             ),
                           ],
                         ),

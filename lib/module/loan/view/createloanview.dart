@@ -417,7 +417,8 @@ class _CreateloanviewState extends State<Createloanview> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildTextField("ចំនួនប្រាក់ស្នើសុំ", loanamount, "1000000"),
+            _buildTextFieldLoanAmount(
+                "ចំនួនប្រាក់ស្នើសុំ", loanamount, "1000000"),
             CommonWidgets.SizeBox8,
             _buildTextField("គោលបំណងកម្ចី", purpose, "ពង្រីកមុខរបរ"),
           ],
@@ -571,6 +572,42 @@ class _CreateloanviewState extends State<Createloanview> {
         CustomTextField(
           controller: controller,
           hintText: hintText,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return Message.BadRequest;
+              return null;
+            }
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildTextFieldLoanAmount(
+      String label, TextEditingController controller, String hintText) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        CommonWidgets.buildLabel(context, label),
+        const SizedBox(height: 4),
+        CustomTextField(
+          controller: controller,
+          hintText: hintText,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'ត្រូវបំពេញទំហំកម្ចី!!!';
+            }
+            final amount = int.tryParse(value);
+            if (amount == null) {
+              return 'បំពេញមិនត្រឹមត្រូវ';
+            }
+            if (amount < 100000) {
+              return 'ទំហំកម្ចីត្រូវធំជាង 100000រៀល';
+            }
+            return null;
+          },
+          keyboardType:
+              TextInputType.numberWithOptions(signed: false, decimal: false),
         ),
       ],
     );

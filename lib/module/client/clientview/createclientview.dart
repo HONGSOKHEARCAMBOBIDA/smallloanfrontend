@@ -201,8 +201,8 @@ class _CreateclientviewState extends State<Createclientview> {
             return Container(
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: TheColors.warningColor,
-                  width: 0.9,
+                  color: TheColors.checked,
+                  width: 2,
                 ),
                 borderRadius: BorderRadius.circular(radius),
               ),

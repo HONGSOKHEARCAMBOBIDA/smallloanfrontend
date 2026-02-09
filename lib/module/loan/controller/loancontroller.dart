@@ -180,4 +180,23 @@ class LoanController extends GetxController {
         name: searchQuery.value.isEmpty ? null : searchQuery.value,
         loadMore: true);
   }
+
+  Future<void> deleteLoanbeforapprove({required int id}) async {
+    try {
+      isLoading.value = true;
+      final isdelete = await service.deleteLoanbeforapprove(id: id);
+      if (isdelete) {
+        await getloanforcheck();
+        await getloanforapprove();
+        CustomSnackbar.success(
+            title: Message.Success, message: Message.DeleteSuccess);
+      } else {
+        CustomSnackbar.error(title: Message.Error, message: Message.Error);
+      }
+    } catch (e) {
+      CustomSnackbar.error(title: Message.Error, message: e.toString());
+    } finally {
+      isLoading.value = false;
+    }
+  }
 }

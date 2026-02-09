@@ -229,7 +229,7 @@ class _LoanviewState extends State<Loanview> {
                             crossAxisCount: gridCount,
                             mainAxisSpacing: 8,
                             crossAxisSpacing: 8,
-                            childAspectRatio: isDesktop ? 3.0 : 1.8,
+                            childAspectRatio: isDesktop ? 2.65 : 1.8,
                           ),
                         ),
                       ),

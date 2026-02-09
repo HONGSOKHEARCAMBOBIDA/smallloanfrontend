@@ -20,12 +20,11 @@ class TheColors {
   static const lightOrage = Color(0xFFFF9159);
   static const lightblue = Color(0xFF1C4E9B);
   static const black = Colors.black;
-  static const orange =  Color.fromARGB(255, 252, 252, 252);
+  static const orange = Color.fromARGB(255, 252, 252, 252);
   static const red = Color.fromARGB(255, 255, 13, 0);
   static const green = Color(0xff45b332);
   static const cutecolo = Color(0xffc276f4);
   static const pending = Color.fromARGB(255, 252, 189, 2);
   static const checked = Color.fromARGB(255, 0, 115, 255);
-   static const approve = Color(0xFF4CAF50);
- 
+  static const approve = Color(0xFF4CAF50);
 }

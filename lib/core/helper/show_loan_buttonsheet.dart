@@ -182,17 +182,17 @@ Widget _buildStatusBadge(String? status, context) {
   }
 
   return Container(
-    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
     decoration: BoxDecoration(
       color: color,
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: BorderRadius.circular(10),
     ),
     child: Text(
       text,
       style: TextStyles.siemreap(
         context,
         fontSize: 12,
-        color: Colors.white,
+        color: TheColors.white,
         fontweight: FontWeight.w500,
       ),
     ),
@@ -211,7 +211,6 @@ Widget _buildSectionTitle(String title, BuildContext context) {
       style: TextStyles.siemreap(
         context,
         fontSize: 16,
-        fontweight: FontWeight.bold,
         color: TheColors.white,
       ),
     ),
@@ -222,9 +221,8 @@ Widget _buildLoanInfo(Data loan, BuildContext context) {
   return Container(
     padding: const EdgeInsets.all(16),
     decoration: BoxDecoration(
-      color: TheColors.black,
-      borderRadius: BorderRadius.circular(12),
-    ),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: TheColors.checked, width: 0.5)),
     child: Column(
       children: [
         _buildInfoRow("ប្រភេទកម្ចី", loan.loanProductName, context),
@@ -246,9 +244,8 @@ Widget _buildPaymentInfo(Data loan, BuildContext context) {
   return Container(
     padding: const EdgeInsets.all(16),
     decoration: BoxDecoration(
-      color: Colors.black.withOpacity(0.2),
-      borderRadius: BorderRadius.circular(12),
-    ),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: TheColors.checked, width: 0.5)),
     child: Column(
       children: [
         _buildInfoRow("ប្រាក់បង់ប្រចាំថ្ងៃ",
@@ -266,9 +263,8 @@ Widget _buildStaffInfo(Data loan, BuildContext context) {
   return Container(
     padding: const EdgeInsets.all(16),
     decoration: BoxDecoration(
-      color: Colors.black.withOpacity(0.2),
-      borderRadius: BorderRadius.circular(12),
-    ),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: TheColors.checked, width: 0.5)),
     child: Column(
       children: [
         _buildInfoRow("បុគ្គលិកថែទាំ", loan.coName, context),
@@ -284,9 +280,8 @@ Widget _buildLocationInfo(Data loan, BuildContext context) {
   return Container(
     padding: const EdgeInsets.all(16),
     decoration: BoxDecoration(
-      color: Colors.black.withOpacity(0.2),
-      borderRadius: BorderRadius.circular(12),
-    ),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: TheColors.checked, width: 0.5)),
     child: Column(
       children: [
         _buildInfoRow("ភូមិ", loan.villageName, context),
@@ -348,6 +343,7 @@ Widget _buildActionButtons(BuildContext context, Data loan) {
     children: [
       Expanded(
         child: CustomOutlinedButton(
+          borderColor: TheColors.green,
           onPressed: () {
             // Navigator.pop(context);
             Get.defaultDialog(
@@ -458,6 +454,7 @@ Widget _buildActionButtons(BuildContext context, Data loan) {
       if (loan.status == "3")
         Expanded(
           child: CustomOutlinedButton(
+            borderColor: TheColors.cutecolo,
             onPressed: () {
               // Approve action
               Get.to(() => PaymentScheduleView(loanId: loan.id!),

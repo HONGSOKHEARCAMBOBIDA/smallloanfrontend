@@ -22,6 +22,7 @@ class ApiEndpoint {
   static checkloan(int id) => "checkloan/$id";
   static approveloan(int id) => "approveloan/$id";
   static const String viewloan = "viewloan";
+  static String deleteLoanbeforapprove(int id) => "deleteLoanbeforapprove/$id";
   // Endpoints with dynamic parameters
   static String editClient(int id) => "editclient/$id";
   static String changeStatusClient(int id) => "changestatusclient/$id";

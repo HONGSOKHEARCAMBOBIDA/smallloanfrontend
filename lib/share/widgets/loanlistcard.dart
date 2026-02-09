@@ -81,12 +81,12 @@ class Loanlistcard extends StatelessWidget {
                     decoration: BoxDecoration(
                       border: Border.all(
                         color: TheColors.checked,
-                        width: 3,
+                        width: 2,
                       ),
-                      borderRadius: BorderRadius.circular(isMobile ? 50 : 60),
+                      borderRadius: BorderRadius.circular(isMobile ? 50 : 70),
                     ),
                     child: CircleAvatar(
-                      radius: 24,
+                      radius: 40,
                       backgroundColor: TheColors.bgColor,
                       backgroundImage: loan.clientImage != null &&
                               loan.clientImage!.isNotEmpty
@@ -108,7 +108,7 @@ class Loanlistcard extends StatelessWidget {
                         Row(
                           children: [
                             Expanded(
-                              child: Text(
+                              child: SelectableText(
                                 loan.clientName ?? "អតិថិជនមិនស្គាល់",
                                 style: GoogleFonts.siemreap(
                                   fontSize: nameFontSize,
@@ -116,7 +116,6 @@ class Loanlistcard extends StatelessWidget {
                                   color: TheColors.white,
                                 ),
                                 maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                             Container(
@@ -142,7 +141,11 @@ class Loanlistcard extends StatelessWidget {
                         const SizedBox(height: 4),
                         Row(
                           children: [
-                             Icon(Icons.phone,color: TheColors.lightOrage,size:iconSize,),
+                            Icon(
+                              Icons.phone,
+                              color: TheColors.lightOrage,
+                              size: iconSize,
+                            ),
                             CommonWidgets.SizeBoxwidh5,
                             Text(
                               loan.clientPhone ?? "មិនមានលេខទូរសព្ទ",
