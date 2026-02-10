@@ -149,9 +149,6 @@ class BalanceSheetView extends GetView<Journalcontroller> {
                   child: Container(
                     padding: EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: (totals.isBalanced ?? false)
-                          ? Colors.green[50]
-                          : Colors.red[50],
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(
                         color: (totals.isBalanced ?? false)
@@ -166,7 +163,7 @@ class BalanceSheetView extends GetView<Journalcontroller> {
                           'Balance Status',
                           style: TextStyle(
                             fontSize: 12,
-                            color: TheColors.black,
+                            color: TheColors.white,
                           ),
                         ),
                         SizedBox(height: 4),
@@ -321,7 +318,7 @@ class BalanceSheetDetailedView extends StatelessWidget {
   Widget build(BuildContext context) {
     final breakpoint = ResponsiveBreakpoints.of(context);
     final isMobile = breakpoint.isMobile;
-    final smallfont = isMobile ? 14.0 : 23.0;
+    final smallfont = isMobile ? 14.0 : 18.0;
     final data = balanceSheet.data;
     if (data == null) return Container();
 
@@ -342,7 +339,7 @@ class BalanceSheetDetailedView extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20), // optional
                 side: const BorderSide(
-                  color: TheColors.gray, // 👈 your border color
+                  color: TheColors.checked, // 👈 your border color
                   width: 1, // optional
                 ),
               ),
@@ -354,7 +351,7 @@ class BalanceSheetDetailedView extends StatelessWidget {
                     Text('បាយការណ៍ សមតុល្យ',
                         style: TextStyles.siemreap(context,
                             color: TheColors.white, fontSize: smallfont)),
-                    SizedBox(height: 4),
+                    const SizedBox(height: 4),
                     Text('គិតត្រឹមថ្ងៃទី ${data.reportDate ?? 'N/A'}',
                         style: TextStyles.siemreap(context,
                             color: TheColors.white)),
@@ -395,8 +392,8 @@ class BalanceSheetDetailedView extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20), // optional
         side: const BorderSide(
-          color: TheColors.gray, // 👈 your border color
-          width: 1, // optional
+          color: TheColors.checked, // 👈 your border color
+          width: 0.5, // optional
         ),
       ),
       child: Padding(
@@ -460,8 +457,8 @@ class BalanceSheetDetailedView extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20), // optional
         side: const BorderSide(
-          color: TheColors.gray, // 👈 your border color
-          width: 1, // optional
+          color: TheColors.cutecolo, // 👈 your border color
+          width: 0.5, // optional
         ),
       ),
       child: Padding(
@@ -501,8 +498,8 @@ class BalanceSheetDetailedView extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20), // optional
         side: const BorderSide(
-          color: TheColors.gray, // 👈 your border color
-          width: 1, // optional
+          color: TheColors.lightOrage, // 👈 your border color
+          width: 0.5, // optional
         ),
       ),
       child: Padding(
@@ -524,7 +521,10 @@ class BalanceSheetDetailedView extends StatelessWidget {
                 isBold: true),
             _buildTotalRow('ដេីមទុនសរុប', totals.totalEquity ?? 0, context,
                 isBold: true),
-            Divider(thickness: 2),
+            const Divider(
+              height: 0.5,
+              color: TheColors.gray,
+            ),
             _buildTotalRow(
               'សរុបបំណុលនិងដេីមទុន',
               totals.totalLiabilitiesEquity ?? 0,
@@ -602,7 +602,7 @@ class BalanceSheetDetailedView extends StatelessWidget {
           Text('$amount ៛',
               style: isBold
                   ? TextStyles.siemreap(context,
-                      fontweight: FontWeight.bold, color: TheColors.white)
+                      fontweight: FontWeight.bold, color: TheColors.cutecolo)
                   : null),
         ],
       ),

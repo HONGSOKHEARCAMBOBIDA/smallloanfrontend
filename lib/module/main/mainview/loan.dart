@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:loanfrontend/core/theme/app_color.dart';
 import 'package:loanfrontend/core/theme/text_styles.dart';
+import 'package:loanfrontend/module/main/maincontroller/maincontroller.dart';
 import 'package:loanfrontend/module/reciept/controller/recieptcontroller.dart';
 import 'package:loanfrontend/share/widgets/app_bar.dart';
 import 'package:get/get.dart';
@@ -16,6 +17,7 @@ class Loan extends StatefulWidget {
 
 class _LoanState extends State<Loan> {
   final controller = Get.put(Recieptcontroller());
+  final maincontroller = Get.find<MainController>();
   @override
   void initState() {
     controller.getreciept();
@@ -37,11 +39,11 @@ class _LoanState extends State<Loan> {
     return Row(
       children: [
         Container(
-          width: 200,
+          width: 250,
           color: TheColors.bgColor,
           child: _buildDrawer(permanent: true),
         ),
-        const VerticalDivider(width: 0.5),
+        const VerticalDivider(color: TheColors.gray, width: 0.5),
         Expanded(child: _buildBody(context)),
       ],
     );
@@ -50,7 +52,7 @@ class _LoanState extends State<Loan> {
   Widget _buildDrawer({bool permanent = false}) {
     return Drawer(
       elevation: permanent ? 0 : 12,
-      backgroundColor: TheColors.bgColor,
+      backgroundColor: Colors.transparent,
       child: Column(
         children: [
           Container(
@@ -169,8 +171,9 @@ class _LoanState extends State<Loan> {
           // Logout button at bottom
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: _buildDrawerItem(Icons.logout, "ចាកចេញ", () {},
-                color: Colors.red),
+            child: _buildDrawerItem(Icons.logout, "ចាកចេញ", () {
+              maincontroller.logout();
+            }, color: Colors.red),
           ),
         ],
       ),
