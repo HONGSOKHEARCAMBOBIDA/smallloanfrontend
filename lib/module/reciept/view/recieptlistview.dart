@@ -32,7 +32,7 @@ class _RecieptlistviewState extends State<Recieptlistview> {
   @override
   void initState() {
     usercontroller.getuser();
-    controller.getrecieptlist();
+    controller.getrecieptlist(isRefresh: true);
     super.initState();
     _scrollController.addListener(_onScroll);
   }

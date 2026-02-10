@@ -541,6 +541,8 @@ class _JournalviewState extends State<Journalview> {
                                     InkWell(
                                       onTap: () {
                                         Get.defaultDialog(
+                                          titlePadding:
+                                              EdgeInsets.only(top: 20),
                                           title: "លុបប្រតិបត្តិការណ៍",
                                           titleStyle: TextStyles.moul(context,
                                               fontSize: 16,

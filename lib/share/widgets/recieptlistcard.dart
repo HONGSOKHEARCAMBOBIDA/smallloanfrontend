@@ -235,6 +235,14 @@ class Recieptlistcard extends StatelessWidget {
                         isMobile: isMobile,
                         isPrimary: true,
                       ),
+                      SizedBox(height: 12),
+                      _buildNoteRow(
+                        context,
+                        label: 'សេវាកម្ចី',
+                        notes: reciept.notes!,
+                        isMobile: isMobile,
+                        isPrimary: true,
+                      ),
                     ],
                   ),
                 ),
@@ -344,6 +352,49 @@ class Recieptlistcard extends StatelessWidget {
         SizedBox(width: 8),
         Text(
           '$amount ៛',
+          style: GoogleFonts.siemreap(
+            fontSize: isMobile ? 16 : 18,
+            fontWeight: FontWeight.w600,
+            color: amountColor,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildNoteRow(
+    BuildContext context, {
+    required String label,
+    required String notes,
+    required bool isMobile,
+    bool isPrimary = false,
+    bool isWarning = false,
+    bool isSuccess = false,
+  }) {
+    Color amountColor = isWarning
+        ? TheColors.warningColor
+        : isSuccess
+            ? TheColors.successColor
+            : isPrimary
+                ? TheColors.checked
+                : TheColors.white;
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Flexible(
+          child: Text(
+            label,
+            style: GoogleFonts.siemreap(
+              fontSize: isMobile ? 14 : 15,
+              color: TheColors.white,
+            ),
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+        SizedBox(width: 8),
+        Text(
+          '$notes',
           style: GoogleFonts.siemreap(
             fontSize: isMobile ? 16 : 18,
             fontWeight: FontWeight.w600,

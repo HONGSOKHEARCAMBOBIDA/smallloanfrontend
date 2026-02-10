@@ -100,20 +100,14 @@ class Journalcontroller extends GetxController {
 
   Future<void> deletejournal({required int id}) async {
     try {
-      isLoading.value = true;
       final isdelete = await service.deletejournal(id: id);
       if (isdelete) {
         journaldata.removeWhere((item) => item.id == id);
-        Get.back();
-        CustomSnackbar.success(
-            title: Message.Success, message: Message.DeleteSuccess);
       } else {
         CustomSnackbar.error(title: Message.Error, message: Message.Error);
       }
     } catch (e) {
       CustomSnackbar.error(title: Message.Error, message: e.toString());
-    } finally {
-      isLoading.value = false;
     }
   }
 

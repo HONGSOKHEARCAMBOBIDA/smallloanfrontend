@@ -49,6 +49,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       keyboardType: widget.keyboardType,
       obscureText: _obscureText,
       decoration: InputDecoration(
+        hoverColor: TheColors.approve,
         prefixIcon: Icon(widget.prefixIcon, color: TheColors.white),
         // suffixIcon: Icon(suffixIcon,color: TheColors.errorColor,),
         suffixIcon: widget.obscureText
@@ -82,7 +83,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(
-            color: TheColors.warningColor,
+            color: TheColors.checked,
             width: 0.5,
           ), // Primary Blue
         ),

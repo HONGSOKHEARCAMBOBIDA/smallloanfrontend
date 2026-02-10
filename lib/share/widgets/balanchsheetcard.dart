@@ -271,9 +271,10 @@ class BalanceSheetCard extends StatelessWidget {
           children: [
             Text(
               title,
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                color: color,
+              style: TextStyles.siemreap(
+                context,
+                fontweight: FontWeight.w600,
+                color: TheColors.white,
               ),
             ),
             Text(
@@ -289,7 +290,7 @@ class BalanceSheetCard extends StatelessWidget {
         SizedBox(height: 8),
         ...accounts
             .take(3)
-            .map((account) => _buildAccountItem(account))
+            .map((account) => _buildAccountItem(account, context))
             .toList(),
         if (accounts.length > 3)
           Text(
@@ -337,7 +338,7 @@ class BalanceSheetCard extends StatelessWidget {
     );
   }
 
-  Widget _buildAccountItem(Accounts account) {
+  Widget _buildAccountItem(Accounts account, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Row(
@@ -349,14 +350,16 @@ class BalanceSheetCard extends StatelessWidget {
               children: [
                 Text(
                   account.accountName ?? 'N/A',
-                  style: TextStyle(fontSize: 13),
+                  style: TextStyles.siemreap(context,
+                      fontSize: 13, color: TheColors.white),
                   overflow: TextOverflow.ellipsis,
                 ),
                 Text(
                   account.accountCode ?? '',
-                  style: TextStyle(
+                  style: TextStyles.siemreap(
+                    context,
                     fontSize: 11,
-                    color: Colors.grey[500],
+                    color: TheColors.white,
                   ),
                 ),
               ],
@@ -364,11 +367,11 @@ class BalanceSheetCard extends StatelessWidget {
           ),
           SizedBox(width: 8),
           Text(
-            'Rs. ${_formatNumber(account.balance ?? 0)}',
+            '${_formatNumber(account.balance ?? 0)} ៛',
             style: TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w500,
-            ),
+                fontSize: 13,
+                fontWeight: FontWeight.w500,
+                color: TheColors.white),
           ),
         ],
       ),
