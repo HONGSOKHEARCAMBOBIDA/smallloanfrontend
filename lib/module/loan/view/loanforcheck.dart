@@ -62,11 +62,12 @@ class _LoanforcheckState extends State<Loanforcheck> {
                       (context, index) {
                         final loan = loancontroller.loanforcheck[index];
                         return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          padding: const EdgeInsets.all(10.0),
                           child: Loancard(
                               loan: loan,
                               onTap: () {
                                 Get.defaultDialog(
+                                  titlePadding: const EdgeInsets.only(top: 20),
                                   title: "ត្រួតពិនិត្យកម្ចី",
                                   titleStyle: TextStyles.moul(context,
                                       fontSize: smallFontSize,
@@ -81,8 +82,8 @@ class _LoanforcheckState extends State<Loanforcheck> {
                                         color: TheColors.bgColor,
                                         borderRadius: BorderRadius.circular(16),
                                         border: Border.all(
-                                          color: TheColors.gray,
-                                          width: 1.2,
+                                          color: TheColors.checked,
+                                          width: 0.5,
                                         ),
                                         boxShadow: [
                                           BoxShadow(
@@ -203,6 +204,7 @@ class _LoanforcheckState extends State<Loanforcheck> {
                               loan: loan,
                               onTap: () {
                                 Get.defaultDialog(
+                                  titlePadding: const EdgeInsets.only(top: 20),
                                   title: "ត្រួតពិនិត្យកម្ចី",
                                   titleStyle: TextStyles.moul(context,
                                       fontSize: smallFontSize,
@@ -217,8 +219,8 @@ class _LoanforcheckState extends State<Loanforcheck> {
                                         color: TheColors.bgColor,
                                         borderRadius: BorderRadius.circular(16),
                                         border: Border.all(
-                                          color: TheColors.gray,
-                                          width: 1.2,
+                                          color: TheColors.checked,
+                                          width: 0.5,
                                         ),
                                         boxShadow: [
                                           BoxShadow(

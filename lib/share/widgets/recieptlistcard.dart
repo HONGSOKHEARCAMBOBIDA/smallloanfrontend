@@ -4,7 +4,6 @@ import 'package:loanfrontend/core/constant/constants.dart';
 import 'package:loanfrontend/core/theme/app_color.dart';
 import 'package:loanfrontend/core/theme/text_styles.dart';
 import 'package:loanfrontend/data/models/recieptlistmodel.dart';
-import 'package:loanfrontend/share/widgets/common_widgets.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:intl/intl.dart';
 
@@ -26,10 +25,11 @@ class Recieptlistcard extends StatelessWidget {
     final double cardPadding = isMobile ? 16 : 20;
     final double iconSize = isMobile ? 16 : 20;
     final double smallFontSize = isMobile ? 12 : 15;
-    
+
     // Fix: Add null safety for nullable properties
     final penaltyAmount = reciept.penaltyAmount ?? 0;
-    final statusColor = penaltyAmount > 0 ? TheColors.red : TheColors.successColor;
+    final statusColor =
+        penaltyAmount > 0 ? TheColors.red : TheColors.successColor;
     final statusText = penaltyAmount > 0 ? 'មានពិន័យ' : 'ធម្មតា';
     final clientName = reciept.clientName ?? 'អតិថិជន';
     final receiveByName = reciept.receiveByName ?? 'មិនមាន';
@@ -53,7 +53,6 @@ class Recieptlistcard extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.all(cardPadding),
           child: SingleChildScrollView(
-            
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -69,7 +68,8 @@ class Recieptlistcard extends StatelessWidget {
                               color: TheColors.checked,
                               width: 1.5,
                             ),
-                            borderRadius: BorderRadius.circular(isMobile ? 50 : 60),
+                            borderRadius:
+                                BorderRadius.circular(isMobile ? 50 : 60),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(2.0),
@@ -104,7 +104,7 @@ class Recieptlistcard extends StatelessWidget {
                       ],
                     ),
                     SizedBox(width: 10),
-            
+
                     // Client name and status
                     Expanded(
                       child: Column(
@@ -182,9 +182,9 @@ class Recieptlistcard extends StatelessWidget {
                     ),
                   ],
                 ),
-            
+
                 SizedBox(height: 20),
-            
+
                 // Amounts section with clean layout
                 Container(
                   padding: EdgeInsets.all(16),
@@ -199,14 +199,14 @@ class Recieptlistcard extends StatelessWidget {
                       // Total to collect
                       _buildAmountRow(
                         context,
-                        label: 'ប្រាក់ត្រូវបង់សរុប',
+                        label: 'ប្រាក់សរុបបានបង់',
                         amount: totalAmount,
                         isMobile: isMobile,
                         isPrimary: true,
                       ),
-            
+
                       SizedBox(height: 12),
-            
+
                       // Penalty details if exists
                       if (penaltyAmount > 0) ...[
                         _buildAmountRow(
@@ -218,7 +218,7 @@ class Recieptlistcard extends StatelessWidget {
                         ),
                         SizedBox(height: 12),
                       ],
-            
+
                       // Lump sum payment
                       _buildAmountRow(
                         context,
@@ -238,9 +238,9 @@ class Recieptlistcard extends StatelessWidget {
                     ],
                   ),
                 ),
-            
+
                 SizedBox(height: 16),
-            
+
                 // Footer with action button
                 Row(
                   children: [
@@ -285,7 +285,7 @@ class Recieptlistcard extends StatelessWidget {
                             color: Colors.white,
                           ),
                           label: Text(
-                            'លុបការបង់ប្រាក់',
+                            'លុប',
                             style: GoogleFonts.siemreap(
                               fontSize: 14,
                               fontWeight: FontWeight.w500,

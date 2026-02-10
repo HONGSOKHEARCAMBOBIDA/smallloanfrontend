@@ -64,8 +64,8 @@ class Loancard extends StatelessWidget {
         borderOnForeground: true,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20), // optional
-          side: const BorderSide(
-            color: TheColors.gray, // 👈 your border color
+          side: BorderSide(
+            color: statusColor(loan.status), // 👈 your border color
             width: 0.5, // optional
           ),
         ),
@@ -110,7 +110,6 @@ class Loancard extends StatelessWidget {
                         color: statusColor(loan.status),
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color: isDarkMode ? Colors.grey[850]! : Colors.white,
                           width: 2,
                         ),
                       ),
@@ -273,25 +272,6 @@ class Loancard extends StatelessWidget {
                                   color: TheColors.white,
                                 ),
                               ),
-                              const SizedBox(width: 6),
-                              Text(
-                                "ស្ថានភាពគ្រួសារ:",
-                                style: GoogleFonts.siemreap(
-                                  fontSize: smallFontSize,
-                                  color: TheColors.lightOrage,
-                                ),
-                              ),
-                              const SizedBox(width: 6),
-                              Text(
-                                "( ${loan.clientMaritalStatus} )",
-                                style: GoogleFonts.siemreap(
-                                  fontSize: nameFontSize,
-                                  fontWeight: FontWeight.bold,
-                                  color: TheColors.cutecolo,
-                                ),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
                             ],
                           ),
                         ),
@@ -301,28 +281,57 @@ class Loancard extends StatelessWidget {
                       /// Phone
                       Padding(
                         padding: const EdgeInsets.all(8),
-                        child: Row(
-                          children: [
-                            Row(
-                              children: [
-                                Text(
-                                  "គោលបំណង :",
-                                  style: GoogleFonts.siemreap(
-                                    fontSize: smallFontSize,
-                                    color: TheColors.lightOrage,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    "គោលបំណង :",
+                                    style: GoogleFonts.siemreap(
+                                      fontSize: smallFontSize,
+                                      color: TheColors.lightOrage,
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(width: 6),
-                                Text(
-                                  loan.purpose ?? "",
-                                  style: GoogleFonts.siemreap(
-                                    fontSize: smallFontSize,
-                                    color: TheColors.white,
+                                  const SizedBox(width: 6),
+                                  Text(
+                                    loan.purpose ?? "",
+                                    style: GoogleFonts.siemreap(
+                                      fontSize: smallFontSize,
+                                      color: TheColors.white,
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
+                                ],
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    "ស្ថានភាពគ្រួសារ:",
+                                    style: GoogleFonts.siemreap(
+                                      fontSize: smallFontSize,
+                                      color: TheColors.lightOrage,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 6),
+                                  Text(
+                                    "( ${loan.clientMaritalStatus} )",
+                                    style: GoogleFonts.siemreap(
+                                      fontSize: nameFontSize,
+                                      fontWeight: FontWeight.bold,
+                                      color: TheColors.cutecolo,
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       const SizedBox(height: 6),
@@ -330,49 +339,52 @@ class Loancard extends StatelessWidget {
                       /// Phone
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            Row(
-                              children: [
-                                Text(
-                                  "ត្រួតពិនិត្យដោយ:",
-                                  style: GoogleFonts.siemreap(
-                                    fontSize: smallFontSize,
-                                    color: TheColors.lightOrage,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    "ត្រួតពិនិត្យដោយ:",
+                                    style: GoogleFonts.siemreap(
+                                      fontSize: smallFontSize,
+                                      color: TheColors.lightOrage,
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(width: 6),
-                                Text(
-                                  loan.checkByName ?? "",
-                                  style: GoogleFonts.siemreap(
-                                    fontSize: smallFontSize,
-                                    color: TheColors.white,
+                                  const SizedBox(width: 6),
+                                  Text(
+                                    loan.checkByName ?? "",
+                                    style: GoogleFonts.siemreap(
+                                      fontSize: smallFontSize,
+                                      color: TheColors.white,
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(width: 6),
-                            Row(
-                              children: [
-                                Text(
-                                  "អនុម័តដោយ:",
-                                  style: GoogleFonts.siemreap(
-                                    fontSize: smallFontSize,
-                                    color: TheColors.lightOrage,
+                                ],
+                              ),
+                              const SizedBox(width: 6),
+                              Row(
+                                children: [
+                                  Text(
+                                    "អនុម័តដោយ:",
+                                    style: GoogleFonts.siemreap(
+                                      fontSize: smallFontSize,
+                                      color: TheColors.lightOrage,
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(width: 6),
-                                Text(
-                                  "${loan.approveByName}",
-                                  style: GoogleFonts.siemreap(
-                                    fontSize: smallFontSize,
-                                    fontWeight: FontWeight.bold,
-                                    color: TheColors.white,
+                                  const SizedBox(width: 6),
+                                  Text(
+                                    "${loan.approveByName}",
+                                    style: GoogleFonts.siemreap(
+                                      fontSize: smallFontSize,
+                                      fontWeight: FontWeight.bold,
+                                      color: TheColors.white,
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],

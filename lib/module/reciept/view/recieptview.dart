@@ -82,8 +82,8 @@ class _RecieptviewState extends State<Recieptview> {
             color: TheColors.warningColor,
             onRefresh: refresh,
             child: Obx(() {
-              if(controller.isLoading.value ){
-                return Center(child: CustomLoading());
+              if (controller.isLoading.value) {
+                return const Center(child: CustomLoading());
               }
               final filteredReciepts = controller.reciept
                   .where((e) => (e.totalCollect ?? 0) > 0)
@@ -283,7 +283,8 @@ class _RecieptviewState extends State<Recieptview> {
                                                                               .id!,
                                                                           total:
                                                                               total!);
-                                                                            totalcontroller.clear();
+                                                                      totalcontroller
+                                                                          .clear();
                                                                     },
                                                           style: ElevatedButton
                                                               .styleFrom(
@@ -433,7 +434,8 @@ class _RecieptviewState extends State<Recieptview> {
                                                                             .id!,
                                                                         total:
                                                                             total!);
-                                                                        totalcontroller.clear();
+                                                                    totalcontroller
+                                                                        .clear();
                                                                   },
                                                         style: ElevatedButton
                                                             .styleFrom(

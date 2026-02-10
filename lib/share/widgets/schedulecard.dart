@@ -25,11 +25,11 @@ class _ScheduleCardState extends State<ScheduleCard> {
 
   Color _getStatusColor(String? status) {
     switch (status) {
-      case 'PAID':
+      case 'បានបង់':
         return TheColors.green;
-      case 'OVERDUE':
+      case 'យឺត':
         return TheColors.red;
-      case 'PENDING':
+      case 'មិនទាន់បង់':
         return TheColors.warningColor;
       default:
         return Colors.grey;
@@ -66,7 +66,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
     final statusColor = _getStatusColor(status);
     final progress = _getProgressPercentage();
     final isPaid = status == 'PAID';
-    final isOverdue = status == 'OVERDUE';
+    final isOverdue = status == 'យឺត';
 
     return Card(
       color: TheColors.bgColor,
@@ -130,9 +130,10 @@ class _ScheduleCardState extends State<ScheduleCard> {
                       padding: const EdgeInsets.all(4.0),
                       child: Text(
                         (status ?? 'N/A'),
-                        style: TextStyle(
+                        style: TextStyles.siemreap(
+                          context,
                           color: TheColors.white,
-                          fontWeight: FontWeight.bold,
+                          fontweight: FontWeight.bold,
                           fontSize: 12,
                         ),
                       ),
@@ -272,7 +273,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
                 Column(
                   children: [
                     _buildAmountRow(
-                      label: 'ប្រាក់ត្រូវបង់',
+                      label: 'ប្រាក់ត្រូវបង់មិនគិតពិន័យ',
                       amount: widget.schedule.dueAmount,
                       isOptional: false,
                     ),
@@ -287,8 +288,10 @@ class _ScheduleCardState extends State<ScheduleCard> {
                       ),
                     const Divider(height: 16),
                     _buildAmountRow(
-                      label: 'ប្រាក់ត្រូវបង់សរុប​',
-                      amount: widget.schedule.totalOwe,
+                      label: 'ប្រាក់នៅជំពាក់',
+                      amount: widget.schedule.totalOwe! <= 0
+                          ? 0
+                          : widget.schedule.totalOwe,
                       isOptional: false,
                       isBold: true,
                       textColor: Colors.black,
@@ -302,13 +305,11 @@ class _ScheduleCardState extends State<ScheduleCard> {
                     ),
                     const Divider(height: 16),
                     _buildAmountRow(
-                      label: widget.schedule.totalOwe! > 0
-                          ? 'ប្រាក់ត្រូវបង់សរុប'
-                          : 'បានបង់',
-                      amount: widget.schedule.totalOwe,
+                      label: 'ប្រាក់ពិន័យបានបង់',
+                      amount: widget.schedule.penaltypaid,
                       isOptional: false,
                       isBold: true,
-                      textColor: widget.schedule.totalOwe! > 0
+                      textColor: widget.schedule.penaltypaid! > 0
                           ? Colors.red
                           : Colors.green,
                       icon: widget.schedule.totalOwe! > 0
@@ -337,10 +338,13 @@ class _ScheduleCardState extends State<ScheduleCard> {
                           ),
                         ),
                         Text(
-                          widget.schedule.total.toString(),
+                          (widget.schedule.totalOwe! <= 0
+                                  ? "0 រៀល"
+                                  : "${widget.schedule.totalOwe} រៀល")
+                              .toString(),
                           style: TextStyles.siemreap(
                             context,
-                            fontSize: 16,
+                            fontSize: 14,
                             fontweight: FontWeight.bold,
                           ),
                         ),
@@ -352,7 +356,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
                         Text(
                           widget.schedule.totalOwe! > 0
                               ? 'ប្រាក់ជំពាក់សរុប'
-                              : 'បានបង់',
+                              : 'ស្ថានភាព',
                           style: TextStyles.siemreap(
                             context,
                             fontSize: 12,

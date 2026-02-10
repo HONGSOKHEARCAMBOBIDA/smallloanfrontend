@@ -64,29 +64,34 @@ class BalanceSheetCard extends StatelessWidget {
 
   Widget _buildHeader(Data data, BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "របាយការណ៍ សមតុល្យ",
-              style: TextStyles.siemreap(
-                context,
-                fontSize: 20,
-                color: TheColors.checked,
+        Expanded(
+          child: Row(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "សមតុល្យ",
+                    style: TextStyles.siemreap(
+                      context,
+                      fontSize: 20,
+                      color: TheColors.checked,
+                    ),
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    'គិតត្រឹម ៖ ${data.reportDate ?? 'N/A'}',
+                    style: TextStyles.siemreap(
+                      context,
+                      fontSize: 14,
+                      color: TheColors.white,
+                    ),
+                  ),
+                ],
               ),
-            ),
-            SizedBox(height: 4),
-            Text(
-              'គិតត្រឹម ៖ ${data.reportDate ?? 'N/A'}',
-              style: TextStyles.siemreap(
-                context,
-                fontSize: 14,
-                color: TheColors.white,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
         Container(
           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),

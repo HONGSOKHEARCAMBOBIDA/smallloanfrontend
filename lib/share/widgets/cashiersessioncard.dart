@@ -44,42 +44,41 @@ class CashierSessionCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              /// HEADER
-              SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Text(
                       "លេខសម្គាល់ ${session.sessionNumber}",
-                      style: TextStyles.siemreap(context,
-                          fontSize: 13,
-                          fontweight: FontWeight.bold,
-                          color: TheColors.white),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 5, vertical: 2),
-                      decoration: BoxDecoration(
-                        color: _statusColor(session.status).withOpacity(0.15),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(2.0),
-                        child: Text(
-                          session.status == "1"
-                              ? "កំពុងប្រមូលប្រាក់"
-                              : "បានផ្ទៀងផ្ទាត់",
-                          style: TextStyles.siemreap(
-                            context,
-                            color: _statusColor(session.status),
-                            fontweight: FontWeight.w600,
-                          ),
-                        ),
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyles.siemreap(
+                        context,
+                        fontSize: 13,
+                        fontweight: FontWeight.bold,
+                        color: TheColors.white,
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(width: 8),
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: _statusColor(session.status).withOpacity(0.15),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Text(
+                      session.status == "1"
+                          ? "កំពុងប្រមូលប្រាក់"
+                          : "បានផ្ទៀងផ្ទាត់",
+                      style: TextStyles.siemreap(
+                        context,
+                        color: _statusColor(session.status),
+                        fontweight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ],
               ),
 
               const SizedBox(height: 12),

@@ -1,4 +1,5 @@
 // share/widgets/client_selector.dart
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loanfrontend/core/constant/constants.dart';
@@ -138,13 +139,13 @@ class _ClientSelectorState extends State<ClientSelector> {
                       decoration: BoxDecoration(
                         border: Border.all(
                           color:
-                              isSelected ? TheColors.cutecolo : Colors.transparent,
+                              isSelected ? TheColors.cutecolo : TheColors.gray,
                           width: isSelected ? 1.5 : 0.5,
                         ),
                         borderRadius: BorderRadius.circular(20),
                         color: isSelected
                             ? TheColors.bgColor.withOpacity(0.1)
-                            : Colors.blueGrey,
+                            : TheColors.bgColor,
                       ),
                       child: ListTile(
                         leading: Container(
@@ -156,16 +157,22 @@ class _ClientSelectorState extends State<ClientSelector> {
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(2.0),
-                            child: CircleAvatar(
-                              radius: avatarRadius,
-                              backgroundColor: Colors.transparent,
-                              backgroundImage: (client.imagePath != null &&
-                                      client.imagePath!.isNotEmpty)
-                                  ? NetworkImage(
-                                      "${Appconstants.baseUrl}/clientimage/${client.imagePath}")
-                                  : const NetworkImage(
-                                      'https://cdn-icons-png.flaticon.com/512/17634/17634775.png',
-                                    ) as ImageProvider,
+                            child: ClipOval(
+                              child: CachedNetworkImage(
+                                imageUrl:
+                                    "${Appconstants.baseUrl}/clientimage/${client.imagePath}",
+                                width: avatarRadius * 2,
+                                height: avatarRadius * 2,
+                                fit: BoxFit.cover,
+                                placeholder: (_, __) =>
+                                    const CircularProgressIndicator(
+                                  color: TheColors.warningColor,
+                                ),
+                                errorWidget: (_, __, ___) => Image.network(
+                                  'https://cdn-icons-png.flaticon.com/512/17634/17634775.png',
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
                             ),
                           ),
                         ),
@@ -173,7 +180,8 @@ class _ClientSelectorState extends State<ClientSelector> {
                           "ឈ្មោះ :  ${client.name ?? ""}",
                           style: TextStyles.siemreap(context).copyWith(
                             fontWeight: FontWeight.w500,
-                            color: isSelected ? TheColors.white : Colors.black,
+                            color:
+                                isSelected ? TheColors.green : TheColors.white,
                           ),
                         ),
                         subtitle: Text(
@@ -184,7 +192,7 @@ class _ClientSelectorState extends State<ClientSelector> {
                           style: TextStyles.siemreap(context).copyWith(
                             fontSize: 12,
                             color:
-                                isSelected ? TheColors.white : TheColors.black,
+                                isSelected ? TheColors.green : TheColors.white,
                           ),
                         ),
                         trailing: widget.allowMultiple

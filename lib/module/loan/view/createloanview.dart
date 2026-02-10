@@ -188,8 +188,8 @@ class _CreateloanviewState extends State<Createloanview> {
     final screenHeight = MediaQuery.of(context).size.height;
     return Center(
       child: SizedBox(
-        width: screenWidth * 0.5, // 80% of screen width
-        height: screenHeight * 0.8, // 50% of screen height
+        width: screenWidth * 0.4, // 80% of screen width
+        height: screenHeight * 0.85, // 50% of screen height
         child: Container(
           decoration: BoxDecoration(
             border: Border.all(color: TheColors.gray, width: 0.5),
@@ -489,7 +489,7 @@ class _CreateloanviewState extends State<Createloanview> {
         scrollDirection: Axis.horizontal,
         child: Container(
           decoration: BoxDecoration(
-            border: Border.all(color: TheColors.gray, width: 0.5),
+            border: Border.all(color: TheColors.cutecolo, width: 0.5),
             borderRadius: BorderRadius.circular(15),
           ),
           child: Padding(

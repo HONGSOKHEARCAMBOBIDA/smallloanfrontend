@@ -135,8 +135,9 @@ class Clientcard extends StatelessWidget {
                         width: avatarRadius * 2,
                         height: avatarRadius * 2,
                         fit: BoxFit.cover,
-                        placeholder: (_, __) =>
-                            const CircularProgressIndicator(),
+                        placeholder: (_, __) => const CircularProgressIndicator(
+                          color: TheColors.warningColor,
+                        ),
                         errorWidget: (_, __, ___) => Image.network(
                           'https://cdn-icons-png.flaticon.com/512/17634/17634775.png',
                           fit: BoxFit.cover,

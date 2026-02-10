@@ -32,7 +32,7 @@ class _RecieptlistviewState extends State<Recieptlistview> {
   @override
   void initState() {
     usercontroller.getuser();
-    controller.getrecieptlist(isRefresh: true);
+    controller.getrecieptlist();
     super.initState();
     _scrollController.addListener(_onScroll);
   }
@@ -79,7 +79,7 @@ class _RecieptlistviewState extends State<Recieptlistview> {
     final bool isTablet = breakpoints.isTablet;
     final bool isDesktop = breakpoints.isDesktop;
     final int gridCount = isDesktop ? 4 : (isTablet ? 2 : 1);
-    final double searchHeight = isMobile ? 50 : (isTablet ? 56 : 64);
+    final double searchHeight = isMobile ? 50 : (isTablet ? 66 : 64);
     final double refreshIconSize = isMobile ? 30 : (isTablet ? 34 : 38);
     final EdgeInsetsGeometry pagePadding =
         EdgeInsets.symmetric(horizontal: isMobile ? 8 : 12, vertical: 8);
@@ -109,10 +109,10 @@ class _RecieptlistviewState extends State<Recieptlistview> {
                         child: Row(
                           children: [
                             isMobile
-                                ? Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 8, right: 8),
-                                    child: Expanded(
+                                ? Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8),
                                       child: ConstrainedBox(
                                         constraints: BoxConstraints(
                                           maxWidth: MediaQuery.of(context)
@@ -187,7 +187,7 @@ class _RecieptlistviewState extends State<Recieptlistview> {
                                             ),
                                           ),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           width: 5,
                                         ),
                                         Padding(
@@ -306,7 +306,7 @@ class _RecieptlistviewState extends State<Recieptlistview> {
                                                     );
                                                   },
                                                 ),
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 15,
                                                 )
                                               ],
@@ -376,6 +376,7 @@ class _RecieptlistviewState extends State<Recieptlistview> {
                               reciept: reciept,
                               ontap: () {
                                 Get.defaultDialog(
+                                  titlePadding: const EdgeInsets.only(top: 20),
                                   title: "លុបការប្រមូលប្រាក់",
                                   titleStyle: TextStyles.moul(context,
                                       fontSize: 16,
@@ -383,7 +384,7 @@ class _RecieptlistviewState extends State<Recieptlistview> {
                                   backgroundColor:
                                       TheColors.bgColor, // important
                                   content: Padding(
-                                    padding: const EdgeInsets.all(8.0),
+                                    padding: const EdgeInsets.all(12.0),
                                     child: Container(
                                       padding: const EdgeInsets.all(16),
                                       decoration: BoxDecoration(

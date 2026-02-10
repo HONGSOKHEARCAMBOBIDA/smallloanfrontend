@@ -102,6 +102,7 @@ class Schedule {
   int? paidAmount;
   int? totalOwe;
   String? staus;
+  int? penaltypaid;
 
   Schedule(
       {this.id,
@@ -112,7 +113,8 @@ class Schedule {
       this.total,
       this.paidAmount,
       this.totalOwe,
-      this.staus});
+      this.staus,
+      this.penaltypaid});
 
   Schedule.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -124,6 +126,7 @@ class Schedule {
     paidAmount = json['paid_amount'];
     totalOwe = json['total_owe'];
     staus = json['staus'];
+    penaltypaid = json['penalty_paid'];
   }
 
   Map<String, dynamic> toJson() {

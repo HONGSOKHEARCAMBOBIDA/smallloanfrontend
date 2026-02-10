@@ -64,8 +64,8 @@ class Loanapprovecard extends StatelessWidget {
         borderOnForeground: true,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20), // optional
-          side: const BorderSide(
-            color: TheColors.gray, // 👈 your border color
+          side: BorderSide(
+            color: statusColor(loan.status), // 👈 your border color
             width: 1, // optional
           ),
         ),
@@ -110,7 +110,6 @@ class Loanapprovecard extends StatelessWidget {
                         color: statusColor(loan.status),
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color: isDarkMode ? Colors.grey[850]! : Colors.white,
                           width: 2,
                         ),
                       ),
