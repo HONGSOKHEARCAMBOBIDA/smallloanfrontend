@@ -83,8 +83,9 @@ class Admin extends StatelessWidget {
                   Get.toNamed('/viewrecieptlist');
                 }),
                 _buildDrawerItem(Icons.attach_money, "លទ្ធផលប្រមូលបាន", () {}),
-                _buildDrawerItem(
-                    Icons.account_balance_wallet, "ផ្ទៀងលុយ", () {}),
+                _buildDrawerItem(Icons.person, "អ្នកប្រេីប្រាស់", () {
+                  Get.toNamed('/userview');
+                }),
                 _buildDrawerItem(Icons.settings, "ការកំណត់", () {}),
               ],
             ),
