@@ -20,6 +20,7 @@ class AuthController extends GetxController {
           await authService.login(username: username, password: password);
       if (response.data?.token != null && response.data!.token!.isNotEmpty) {
         await box.write('token', response.data!.token);
+        await box.write('roleid', response.data!.roleId);
 
         CustomSnackbar.success(
           title: "ជោគជ័យ",

@@ -498,7 +498,7 @@ class _CreateloanviewState extends State<Createloanview> {
               children: [
                 Text(
                   "បញ្ជីអ្នកធានា (${guarantors.length}) នាក់",
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: TheColors.white,

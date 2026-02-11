@@ -9,6 +9,7 @@ import 'package:loanfrontend/module/role/view/rolepermissionfordelete.dart';
 import 'package:loanfrontend/share/widgets/app_bar.dart';
 import 'package:loanfrontend/share/widgets/customrolecard.dart';
 import 'package:loanfrontend/share/widgets/loading.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class Roleview extends StatefulWidget {
   Roleview({super.key});
@@ -23,6 +24,9 @@ class _RoleviewState extends State<Roleview> {
 
   @override
   Widget build(BuildContext context) {
+    final breakpoint = ResponsiveBreakpoints.of(context);
+    final bool isMobile = breakpoint.isMobile;
+
     return Scaffold(
       backgroundColor: TheColors.bgColor,
       appBar: const CustomAppBar(title: "តួនាទី"),
@@ -35,7 +39,10 @@ class _RoleviewState extends State<Roleview> {
           roleController.deletepermissionIDs.clear();
         },
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.only(
+              left: isMobile ? 8 : 600,
+              right: isMobile ? 8 : 600,
+              top: isMobile ? 8 : 20),
           child: Column(
             children: [
               Expanded(
@@ -60,38 +67,28 @@ class _RoleviewState extends State<Roleview> {
                       return Center(
                         child: Column(
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8, right: 2),
-                              child: CustomRoleCard(
-                                displayname: role.displayName ?? "អត់មាន",
-                                isActive: role.isActive,
-                                name: role.name ?? "អត់មាន",
-                                onEdit: () {},
-                                onDelete: () {},
-                                onTap: () {
-                                  Get.to(
-                                    () => const Roleassignpermissionview(),
-                                    binding: Rolebinding(),
-                                    arguments: role.id,
-                                    transition: Transition.rightToLeft,
-                                  );
-                                },
-                                deletepermission: () {
-                                  Get.to(
-                                    () => const Rolepermissionfordelete(),
-                                    binding: Rolebinding(),
-                                    transition: Transition.rightToLeft,
-                                    arguments: role.id,
-                                  );
-                                },
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 65),
-                              child: Divider(
-                                color: TheColors.gray,
-                                thickness: 0.3,
-                              ),
+                            CustomRoleCard(
+                              displayname: role.displayName ?? "អត់មាន",
+                              isActive: role.isActive,
+                              name: role.name ?? "អត់មាន",
+                              onEdit: () {},
+                              onDelete: () {},
+                              onTap: () {
+                                Get.to(
+                                  () => const Roleassignpermissionview(),
+                                  binding: Rolebinding(),
+                                  arguments: role.id,
+                                  transition: Transition.rightToLeft,
+                                );
+                              },
+                              deletepermission: () {
+                                Get.to(
+                                  () => const Rolepermissionfordelete(),
+                                  binding: Rolebinding(),
+                                  transition: Transition.rightToLeft,
+                                  arguments: role.id,
+                                );
+                              },
                             ),
                           ],
                         ),

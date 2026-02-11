@@ -61,7 +61,7 @@ class _VillageSelectorState extends State<VillageSelector> {
                                   : TheColors.black)),
                       selected: isSelected,
                       backgroundColor: TheColors.cutecolo,
-                      selectedColor: TheColors.orange,
+                      selectedColor: TheColors.white,
                       side: const BorderSide(
                           color: TheColors.cutecolo, width: 0.3),
                       onSelected: (_) {

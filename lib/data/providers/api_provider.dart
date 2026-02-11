@@ -20,6 +20,7 @@ class ApiProvider {
             _isLoggingOut = true;
 
             _box.remove('token');
+            _box.remove('roleid');
 
             Getv.Get.offAllNamed('/login');
           }

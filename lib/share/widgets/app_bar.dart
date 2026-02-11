@@ -25,7 +25,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       child: AppBar(
         centerTitle: true,
         backgroundColor: backgroundColor,
-        iconTheme: const IconThemeData(color: TheColors.white),
+        iconTheme: IconThemeData(color: TheColors.white),
         title: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -37,20 +37,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 fontSize: 17,
               ),
             ),
-            // const SizedBox(height: 6),
-            // Container(
-            //   width: isMobile ? double.infinity : screenWidth * 0.6,
-            //   height: 4,
-            //   decoration: BoxDecoration(
-            //     borderRadius: BorderRadius.circular(10),
-            //     gradient: const LinearGradient(
-            //       colors: [
-            //         TheColors.cutecolo,
-            //         TheColors.warningColor,
-            //       ],
-            //     ),
-            //   ),
-            // ),
           ],
         ),
       ),

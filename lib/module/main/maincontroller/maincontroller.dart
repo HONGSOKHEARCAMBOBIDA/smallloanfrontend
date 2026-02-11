@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:loanfrontend/core/theme/app_color.dart';
 import 'package:loanfrontend/core/theme/text_styles.dart';
 import 'package:loanfrontend/module/main/mainview/account.dart';
 import 'package:loanfrontend/module/main/mainview/admin.dart';
@@ -24,26 +25,22 @@ class MainController extends GetxController {
   }
 
   List<GButton> getTabs(BuildContext context) {
+    final roleId = box.read('roleid') ?? 0;
     return [
-      GButton(
-        icon: Icons.admin_panel_settings,
-        text: 'អ្នកកាន់ប្រព័ន្ធ',
-        textStyle: TextStyles.siemreap(
-          context,
+      if (roleId == 1)
+        GButton(
+          icon: Icons.admin_panel_settings,
+          text: 'អ្នកកាន់ប្រព័ន្ធ',
+          textStyle: TextStyles.siemreap(context, color: TheColors.white),
         ),
-      ),
       GButton(
           icon: Icons.account_balance,
           text: 'កម្ចី',
-          textStyle: TextStyles.siemreap(
-            context,
-          )),
+          textStyle: TextStyles.siemreap(context, color: TheColors.white)),
       GButton(
           icon: Icons.person,
           text: 'គណនេយ្យ',
-          textStyle: TextStyles.siemreap(
-            context,
-          )),
+          textStyle: TextStyles.siemreap(context, color: TheColors.white)),
     ];
   }
 

@@ -68,7 +68,7 @@ class RolePermissionCard extends StatelessWidget {
                           Text(
                             permission.displayName ?? 'No Name',
                             style: TextStyles.siemreap(context,
-                                fontSize: 12, fontweight: FontWeight.bold),
+                                fontSize: 12, color: TheColors.white),
                           ),
                           SizedBox(
                             width: 5,
@@ -77,7 +77,7 @@ class RolePermissionCard extends StatelessWidget {
                             permission.name ?? 'No Name',
                             style: theme.textTheme.bodyLarge?.copyWith(
                               fontSize: 12,
-                              color: TheColors.errorColor,
+                              color: TheColors.cutecolo,
                             ),
                           ),
                         ],

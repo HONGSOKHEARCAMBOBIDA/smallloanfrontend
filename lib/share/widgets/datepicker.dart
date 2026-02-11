@@ -35,7 +35,7 @@ class CustomDatePickerField extends StatelessWidget {
                   builder: (context, child) {
                     return Theme(
                       data: Theme.of(context).copyWith(
-                        colorScheme: const ColorScheme.light(
+                        colorScheme: ColorScheme.light(
                           primary: TheColors.bgColor, // Header + selected date
                           onPrimary: TheColors.green, // Header text
                           onSurface: TheColors.white, // Normal text
@@ -47,13 +47,18 @@ class CustomDatePickerField extends StatelessWidget {
                         ),
                         datePickerTheme: DatePickerThemeData(
                           dividerColor: TheColors.white,
-                          weekdayStyle: TextStyles.siemreap(context, color: TheColors.white),
-                          dayStyle: TextStyles.siemreap(context, color: TheColors.white),
+                          weekdayStyle: TextStyles.siemreap(context,
+                              color: TheColors.white),
+                          dayStyle: TextStyles.siemreap(context,
+                              color: TheColors.white),
                           headerForegroundColor: TheColors.white,
-                          headerHeadlineStyle: TextStyles.siemreap(context, color: TheColors.white),
+                          headerHeadlineStyle: TextStyles.siemreap(context,
+                              color: TheColors.white),
                           backgroundColor: TheColors.bgColor,
-                          yearStyle: TextStyles.siemreap(context, color: TheColors.white),
-                          todayForegroundColor: MaterialStateProperty.all(TheColors.white),
+                          yearStyle: TextStyles.siemreap(context,
+                              color: TheColors.white),
+                          todayForegroundColor:
+                              MaterialStateProperty.all(TheColors.white),
                         ),
                         textButtonTheme: TextButtonThemeData(
                           style: TextButton.styleFrom(
@@ -86,7 +91,7 @@ class CustomDatePickerField extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: TheColors.orange,
+                    color: TheColors.white,
                     width: isWeb ? 1.5 : 0.5,
                   ),
                   borderRadius: BorderRadius.circular(isWeb ? 12 : 16),

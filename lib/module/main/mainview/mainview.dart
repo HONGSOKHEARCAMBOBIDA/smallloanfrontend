@@ -6,7 +6,7 @@ import 'package:loanfrontend/module/main/maincontroller/maincontroller.dart';
 import 'package:loanfrontend/share/widgets/response.dart';
 
 class MainView extends GetView<MainController> {
-  MainView({super.key});
+  const MainView({super.key});
 
   @override
   Widget build(BuildContext context) {

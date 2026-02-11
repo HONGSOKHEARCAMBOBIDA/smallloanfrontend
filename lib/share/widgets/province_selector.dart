@@ -34,7 +34,8 @@ class _ProvinceSelectorState extends State<ProvinceSelector> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('ជ្រើសរើសខេត្ត', style: TextStyles.siemreap(context,fontSize: smallFontSize)),
+              Text('ជ្រើសរើសខេត្ត',
+                  style: TextStyles.siemreap(context, fontSize: smallFontSize)),
               IconButton(
                 icon: const Icon(Icons.close, color: TheColors.errorColor),
                 onPressed: () => Navigator.pop(context),
@@ -60,9 +61,9 @@ class _ProvinceSelectorState extends State<ProvinceSelector> {
                                   : TheColors.black)),
                       selected: isSelected,
                       backgroundColor: TheColors.cutecolo,
-                      selectedColor: TheColors.orange,
+                      selectedColor: TheColors.white,
                       surfaceTintColor: Colors.transparent,
-                      selectedShadowColor: TheColors.orange,
+                      selectedShadowColor: TheColors.white,
                       side: BorderSide(color: TheColors.cutecolo, width: 0.3),
                       onSelected: (_) {
                         widget.onSelected(province.id!);

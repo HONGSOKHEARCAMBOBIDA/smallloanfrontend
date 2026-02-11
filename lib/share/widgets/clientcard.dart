@@ -108,7 +108,7 @@ class Clientcard extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
             color: isActive ? TheColors.gray : TheColors.red,
-            width: 0.5,
+            width: 1,
           ),
         ),
         child: Padding(
@@ -223,7 +223,7 @@ class Clientcard extends StatelessWidget {
                               gender == 1 ? "ប្រុស" : "ស្រី",
                               style: GoogleFonts.siemreap(
                                 fontSize: smallFontSize,
-                                color: TheColors.orange,
+                                color: TheColors.white,
                               ),
                             ),
                             SizedBox(width: 8),
@@ -239,7 +239,7 @@ class Clientcard extends StatelessWidget {
                               "${calculateAge(dateOfBirth)} ឆ្នាំ",
                               style: GoogleFonts.siemreap(
                                 fontSize: smallFontSize,
-                                color: TheColors.orange,
+                                color: TheColors.white,
                               ),
                             ),
                           ],
@@ -280,7 +280,7 @@ class Clientcard extends StatelessWidget {
                               idCardNumber,
                               style: GoogleFonts.siemreap(
                                 fontSize: smallFontSize,
-                                color: TheColors.orange,
+                                color: TheColors.white,
                               ),
                             ),
                           ],
@@ -349,7 +349,7 @@ class Clientcard extends StatelessWidget {
           value: 'edit',
           child: Row(
             children: [
-              Icon(Icons.edit, color: TheColors.orange, size: iconSize),
+              Icon(Icons.edit, color: TheColors.white, size: iconSize),
               const SizedBox(width: 8),
               Text('កែប្រែ', style: TextStyles.siemreap(context, fontSize: 12)),
             ],

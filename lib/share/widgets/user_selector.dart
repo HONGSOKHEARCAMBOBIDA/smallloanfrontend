@@ -29,7 +29,9 @@ class UserSelector extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('ជ្រើសរើស', style: TextStyles.siemreap(context,color: TheColors.white,fontSize: smallFontSize)),
+              Text('ជ្រើសរើស',
+                  style: TextStyles.siemreap(context,
+                      color: TheColors.white, fontSize: smallFontSize)),
               IconButton(
                 icon: const Icon(Icons.close, color: TheColors.errorColor),
                 onPressed: () => Navigator.pop(context),
@@ -53,8 +55,9 @@ class UserSelector extends StatelessWidget {
                                 : TheColors.black)),
                     selected: isSelected,
                     backgroundColor: TheColors.cutecolo,
-                    selectedColor: TheColors.orange,
-                    side: const BorderSide(color: TheColors.cutecolo, width: 0.3),
+                    selectedColor: TheColors.white,
+                    side:
+                        const BorderSide(color: TheColors.cutecolo, width: 0.3),
                     onSelected: (_) {
                       onSelected(user.id!);
                       Navigator.pop(context);

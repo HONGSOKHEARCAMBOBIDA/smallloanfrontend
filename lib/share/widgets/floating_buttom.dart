@@ -5,8 +5,8 @@ class CustomFloatingActionButton extends StatelessWidget {
   final VoidCallback onPressed;
   final IconData icon;
   final String? label;
-  final Color backgroundColor;
-  final Color iconColor;
+  final Color? backgroundColor;
+  final Color? iconColor;
   final double size;
   final bool isExtended;
   final String heroTag; // ✅ Add heroTag
@@ -17,8 +17,8 @@ class CustomFloatingActionButton extends StatelessWidget {
     this.borderRadius = 28.0,
     this.icon = Icons.add,
     this.label,
-    this.backgroundColor = TheColors.green,
-    this.iconColor = TheColors.white,
+    this.backgroundColor,
+    this.iconColor,
     this.size = 66.0,
     this.isExtended = false,
     this.heroTag = "default_fab", // ✅ Default heroTag
@@ -26,12 +26,14 @@ class CustomFloatingActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bgColor = backgroundColor ?? TheColors.green;
+    final icColor = iconColor ?? TheColors.white;
     return isExtended
         ? FloatingActionButton.extended(
             onPressed: onPressed,
-            backgroundColor: backgroundColor,
+            backgroundColor: bgColor,
             label: Text(label ?? "Action", style: TextStyle(color: iconColor)),
-            icon: Icon(icon, color: iconColor),
+            icon: Icon(icon, color: icColor),
             heroTag: heroTag,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(
@@ -41,8 +43,8 @@ class CustomFloatingActionButton extends StatelessWidget {
           )
         : FloatingActionButton(
             onPressed: onPressed,
-            backgroundColor: backgroundColor,
-            child: Icon(icon, color: iconColor, size: size * 0.5),
+            backgroundColor: bgColor,
+            child: Icon(icon, color: icColor, size: size * 0.5),
             heroTag: heroTag,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(

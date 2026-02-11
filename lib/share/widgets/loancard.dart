@@ -413,7 +413,7 @@ class Loancard extends StatelessWidget {
       text,
       style: GoogleFonts.siemreap(
         fontSize: size,
-        color: TheColors.orange,
+        color: TheColors.white,
       ),
     );
   }

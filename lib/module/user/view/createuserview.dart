@@ -104,7 +104,7 @@ class _CreateuserviewState extends State<Createuserview> {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
-          color: TheColors.orange,
+          color: TheColors.white,
           width: 0.5,
         ),
         borderRadius: BorderRadius.circular(15),

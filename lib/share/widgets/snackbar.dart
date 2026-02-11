@@ -28,9 +28,7 @@ class CustomSnackbar {
       icon: Container(
         padding: const EdgeInsets.all(8),
         decoration: const BoxDecoration(
-         
           shape: BoxShape.circle,
-         
         ),
         child: const Icon(
           Icons.check_circle_rounded,
@@ -61,7 +59,7 @@ class CustomSnackbar {
   static void error({required String title, required String message}) {
     final context = Get.context!;
     final breakpoin = ResponsiveBreakpoints.of(context);
-     final bool isMobile = breakpoin.isMobile;
+    final bool isMobile = breakpoin.isMobile;
     Get.snackbar(
       '',
       '',
@@ -77,10 +75,9 @@ class CustomSnackbar {
       icon: Container(
         padding: const EdgeInsets.all(8),
         decoration: const BoxDecoration(
-         
           shape: BoxShape.circle,
         ),
-        child: const Icon(
+        child: Icon(
           Icons.error_outline_rounded,
           color: TheColors.white,
           size: 22,

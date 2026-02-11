@@ -7,6 +7,7 @@ import 'package:loanfrontend/share/widgets/app_bar.dart';
 import 'package:loanfrontend/share/widgets/custombuttonnav.dart';
 import 'package:loanfrontend/share/widgets/loading.dart';
 import 'package:loanfrontend/share/widgets/textfield.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class Rolepermissionfordelete extends StatefulWidget {
   const Rolepermissionfordelete({super.key});
@@ -29,7 +30,8 @@ class _RolepermissionfordeleteState extends State<Rolepermissionfordelete> {
   @override
   Widget build(BuildContext context) {
     final int roleid = Get.arguments as int;
-
+    final breakpoint = ResponsiveBreakpoints.of(context);
+    final bool isMobile = breakpoint.isMobile;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       controller.fetchroleassignpermission(roleid);
     });
@@ -42,12 +44,15 @@ class _RolepermissionfordeleteState extends State<Rolepermissionfordelete> {
           await controller.fetchroleassignpermission(roleid);
         },
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.only(
+              left: isMobile ? 8 : 600,
+              right: isMobile ? 8 : 600,
+              top: isMobile ? 8 : 20),
           child: Column(
             children: [
               const SizedBox(height: 10),
               Padding(
-                padding: const EdgeInsets.only(left: 15, right: 15),
+                padding: const EdgeInsets.only(left: 5, right: 5),
                 child: SizedBox(
                   height: 50,
                   child: CustomTextField(
@@ -104,7 +109,10 @@ class _RolepermissionfordeleteState extends State<Rolepermissionfordelete> {
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(left: 8, right: 8),
+        padding: EdgeInsets.only(
+            left: isMobile ? 8 : 600,
+            right: isMobile ? 8 : 600,
+            top: isMobile ? 8 : 20),
         child: CustomBottomNav(
           title: "ដក",
           onTap: () async {

@@ -21,8 +21,8 @@ class BalanceSheetView extends GetView<Journalcontroller> {
       appBar: const CustomAppBar(title: "របាយការណ៍ សមតុល្យ"),
       body: Padding(
         padding: EdgeInsets.only(
-            left: isMobile ? 8 : 600,
-            right: isMobile ? 8 : 600,
+            left: isMobile ? 3 : 600,
+            right: isMobile ? 3 : 600,
             top: isMobile ? 8 : 10),
         child: Obx(() {
           if (controller.isLoading.value) {
@@ -128,7 +128,7 @@ class BalanceSheetView extends GetView<Journalcontroller> {
                     context: context,
                     label: 'បំណុល',
                     value: totals.totalLiabilities ?? 0,
-                    color: Colors.orange,
+                    color: Colors.white,
                   ),
                 ),
               ],

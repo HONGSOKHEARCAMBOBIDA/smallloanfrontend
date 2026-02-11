@@ -239,7 +239,7 @@ class BalanceSheetCard extends StatelessWidget {
               context: context,
               title: 'បំណុល',
               amount: data.liabilities!.total!,
-              color: Colors.orange,
+              color: Colors.white,
             ),
 
           // Equity Breakdown

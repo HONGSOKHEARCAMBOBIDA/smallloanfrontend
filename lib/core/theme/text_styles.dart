@@ -9,8 +9,7 @@ class TextStyles {
     double fontSize = 16,
     Color color = TheColors.white,
     FontWeight fontweight = FontWeight.normal,
-  }) 
-  {
+  }) {
     return GoogleFonts.siemreap(
         fontSize: fontSize, color: color, fontWeight: fontweight);
   }

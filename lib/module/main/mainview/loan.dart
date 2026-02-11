@@ -78,7 +78,7 @@ class _LoanState extends State<Loan> {
             child: ListView(
               padding: EdgeInsets.zero,
               children: [
-                _buildDrawerItem(Icons.dashboard, "បេីកប្រអប់", () {
+                _buildDrawerItem(Icons.card_giftcard, "បេីកប្រអប់", () {
                   Get.toNamed('/creatsession');
                 }),
                 _buildDrawerItem(Icons.group, "អតិថិជន", () {
@@ -93,7 +93,7 @@ class _LoanState extends State<Loan> {
                 _buildDrawerItem(Icons.verified, "កម្ចីត្រូវអនុម័ត", () {
                   Get.toNamed('/approveloan');
                 }),
-                _buildDrawerItem(Icons.list_alt, "បញ្ជីកម្ចីទាំងអស់", () {
+                _buildDrawerItem(Icons.receipt_long, "បញ្ជីកម្ចីទាំងអស់", () {
                   Get.toNamed('/viewloan');
                 }),
                 Obx(() {
@@ -149,22 +149,22 @@ class _LoanState extends State<Loan> {
                     ],
                   );
                 }),
-                _buildDrawerItem(Icons.monetization_on, "កត់ត្រាប្រតិបត្តិការ",
-                    () {
-                  Get.toNamed('/journal');
-                }),
+                // _buildDrawerItem(Icons.monetization_on, "កត់ត្រាប្រតិបត្តិការ",
+                //     () {
+                //   Get.toNamed('/journal');
+                // }),
                 _buildDrawerItem(Icons.attach_money, "លទ្ធផលប្រមូលបាន", () {
                   Get.toNamed('/viewrecieptlist');
                 }),
-                _buildDrawerItem(Icons.attach_money, "របាយការណ៍ សមតុល្យ", () {
-                  Get.toNamed('/balanchsheet');
-                }),
-                _buildDrawerItem(Icons.attach_money, "របាយការណ៍ ចំណេញ/ខាត", () {
-                  Get.toNamed('/incomestament');
-                }),
+                // _buildDrawerItem(Icons.attach_money, "របាយការណ៍ សមតុល្យ", () {
+                //   Get.toNamed('/balanchsheet');
+                // }),
+                // _buildDrawerItem(Icons.attach_money, "របាយការណ៍ ចំណេញ/ខាត", () {
+                //   Get.toNamed('/incomestament');
+                // }),
                 _buildDrawerItem(
                     Icons.account_balance_wallet, "ផ្ទៀងលុយ", () {}),
-                _buildDrawerItem(Icons.settings, "ការកំណត់", () {}),
+                // _buildDrawerItem(Icons.settings, "ការកំណត់", () {}),
               ],
             ),
           ),

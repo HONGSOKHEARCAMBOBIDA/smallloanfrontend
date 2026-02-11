@@ -75,7 +75,7 @@ class _CreatejournalviewState extends State<Createjournalview> {
           padding: const EdgeInsets.all(10.0),
           child: Container(
             decoration: BoxDecoration(
-              border: Border.all(color: TheColors.gray, width: 0.5),
+              border: Border.all(color: TheColors.checked, width: 0.5),
               borderRadius: BorderRadius.circular(15),
             ),
             child: SingleChildScrollView(
@@ -102,7 +102,7 @@ class _CreatejournalviewState extends State<Createjournalview> {
   Widget _builbody() {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: TheColors.gray, width: 0.5),
+        border: Border.all(color: TheColors.checked, width: 1),
         borderRadius: BorderRadius.circular(15),
       ),
       child: Padding(
@@ -112,7 +112,6 @@ class _CreatejournalviewState extends State<Createjournalview> {
           children: [
             Obx(
               () => CustomOutlinedButton(
-                
                 text: selectdebitname.value,
                 onPressed: () {
                   showChataccoutSelectorSheet(
@@ -149,33 +148,31 @@ class _CreatejournalviewState extends State<Createjournalview> {
               ),
             ),
             CommonWidgets.SizeBoxh15,
-CustomTextField(
-  controller: amountcontroller,
-  hintText: "បំពេញទឹកប្រាក់",
-  keyboardType: TextInputType.number,
-  validator: (value) {
-    if (value == null || value.trim().isEmpty) {
-      return "សូមបំពេញទឹកប្រាក់";
-    }
-    if (double.tryParse(value) == null) {
-      return "ទឹកប្រាក់មិនត្រឹមត្រូវ";
-    }
-    return null;
-  },
-),
-
+            CustomTextField(
+              controller: amountcontroller,
+              hintText: "បំពេញទឹកប្រាក់",
+              keyboardType: TextInputType.number,
+              validator: (value) {
+                if (value == null || value.trim().isEmpty) {
+                  return "សូមបំពេញទឹកប្រាក់";
+                }
+                if (double.tryParse(value) == null) {
+                  return "ទឹកប្រាក់មិនត្រឹមត្រូវ";
+                }
+                return null;
+              },
+            ),
             CommonWidgets.SizeBoxh15,
-       CustomTextField(
-  controller: descriptioncontroller,
-  hintText: "បរិយាយ",
-  validator: (value) {
-    if (value == null || value.trim().isEmpty) {
-      return "សូមបំពេញបរិយាយ";
-    }
-    return null;
-  },
-),
-
+            CustomTextField(
+              controller: descriptioncontroller,
+              hintText: "បរិយាយ",
+              validator: (value) {
+                if (value == null || value.trim().isEmpty) {
+                  return "សូមបំពេញបរិយាយ";
+                }
+                return null;
+              },
+            ),
             CommonWidgets.SizeBoxh15,
             CustomDatePickerField(label: "", selectedDate: selectdate)
           ],
@@ -183,22 +180,22 @@ CustomTextField(
       ),
     );
   }
-  bool _validateExtraFields() {
-  if (selectdebitchataccountid.value == null) {
-    Get.snackbar("បរាជ័យ", "សូមជ្រើសរើសគណនេយ្យ (ចូល)");
-    return false;
-  }
-  if (selectcreditchataccountid.value == null) {
-    Get.snackbar("បរាជ័យ", "សូមជ្រើសរើសគណនេយ្យ (ចេញ)");
-    return false;
-  }
-  if (selectdate.value == null) {
-    Get.snackbar("បរាជ័យ", "សូមជ្រើសរើសកាលបរិច្ឆេទ");
-    return false;
-  }
-  return true;
-}
 
+  bool _validateExtraFields() {
+    if (selectdebitchataccountid.value == null) {
+      Get.snackbar("បរាជ័យ", "សូមជ្រើសរើសគណនេយ្យ (ចូល)");
+      return false;
+    }
+    if (selectcreditchataccountid.value == null) {
+      Get.snackbar("បរាជ័យ", "សូមជ្រើសរើសគណនេយ្យ (ចេញ)");
+      return false;
+    }
+    if (selectdate.value == null) {
+      Get.snackbar("បរាជ័យ", "សូមជ្រើសរើសកាលបរិច្ឆេទ");
+      return false;
+    }
+    return true;
+  }
 
   Widget _buildsubmit() {
     return Padding(
@@ -208,29 +205,28 @@ CustomTextField(
           Obx(() {
             return Expanded(
               child: ElevatedButton(
-                
-     onPressed: journalcontroller.isLoading.value
-    ? null
-    : () async {
-        if (!_formkey.currentState!.validate()) return;
-        if (!_validateExtraFields()) return;
+                onPressed: journalcontroller.isLoading.value
+                    ? null
+                    : () async {
+                        if (!_formkey.currentState!.validate()) return;
+                        if (!_validateExtraFields()) return;
 
-        final amount = double.parse(amountcontroller.text);
+                        final amount = double.parse(amountcontroller.text);
 
-        await journalcontroller.createjournal(
-          debit_account_id: selectdebitchataccountid.value!,
-          credit_account_id: selectcreditchataccountid.value!,
-          date: selectdate.value!.toIso8601String(),
-          amount: amount,
-          description: descriptioncontroller.text.trim(),
-        );
+                        await journalcontroller.createjournal(
+                          debit_account_id: selectdebitchataccountid.value!,
+                          credit_account_id: selectcreditchataccountid.value!,
+                          date: selectdate.value!.toIso8601String(),
+                          amount: amount,
+                          description: descriptioncontroller.text.trim(),
+                        );
 
-        Get.back();
-      },
-
+                        Get.back();
+                      },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: TheColors.checked,
-                   minimumSize: const Size(double.infinity, 50), // 👈 height here
+                  minimumSize:
+                      const Size(double.infinity, 50), // 👈 height here
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),

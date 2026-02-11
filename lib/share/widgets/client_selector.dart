@@ -77,7 +77,7 @@ class _ClientSelectorState extends State<ClientSelector> {
                     color: TheColors.white),
               ),
               IconButton(
-                  icon: const Icon(Icons.close, color: TheColors.white),
+                  icon: Icon(Icons.close, color: TheColors.white),
                   onPressed: () => Get.back()),
             ],
           ),
@@ -98,13 +98,13 @@ class _ClientSelectorState extends State<ClientSelector> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(Icons.check_circle,
-                          color: TheColors.orange, size: 25),
+                      Icon(Icons.check_circle,
+                          color: TheColors.white, size: 25),
                       const SizedBox(width: 8),
                       Text(
                         'បានជ្រើសរើស: ${tempSelectedIds.length} នាក់',
                         style: TextStyles.siemreap(context,
-                            color: TheColors.orange,
+                            color: TheColors.white,
                             fontweight: FontWeight.w500,
                             fontSize: CommonWidgets.fontsize15),
                       ),

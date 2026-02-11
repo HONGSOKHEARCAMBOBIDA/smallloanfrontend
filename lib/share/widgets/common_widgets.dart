@@ -22,7 +22,7 @@ class CommonWidgets {
       padding: const EdgeInsets.all(2.0),
       child: Row(
         children: [
-          Icon(icon, color: TheColors.orange, size: 18),
+          Icon(icon, color: TheColors.white, size: 18),
           const SizedBox(width: 6),
           Text(
             label,

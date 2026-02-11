@@ -38,7 +38,7 @@ class _LoginViewState extends State<LoginView> {
               child: Container(
                   width: width,
                   decoration: BoxDecoration(
-                    border: Border.all(color: TheColors.checked, width: 0.5),
+                    border: Border.all(color: TheColors.checked, width: 1),
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Padding(

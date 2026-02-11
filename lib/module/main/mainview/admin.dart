@@ -35,7 +35,7 @@ class Admin extends StatelessWidget {
   Widget _buildDrawer({bool permanent = false}) {
     return Drawer(
       elevation: permanent ? 0 : 12,
-      backgroundColor: TheColors.bgColor,
+      backgroundColor: Colors.transparent,
       child: Column(
         children: [
           Container(
@@ -61,7 +61,7 @@ class Admin extends StatelessWidget {
             child: ListView(
               padding: EdgeInsets.zero,
               children: [
-                _buildDrawerItem(Icons.dashboard, "លុបការផ្ទៀងប្រាក់", () {
+                _buildDrawerItem(Icons.card_giftcard, "លុបការផ្ទៀងប្រាក់", () {
                   Get.toNamed('/rollbackcashiersession');
                 }),
                 _buildDrawerItem(Icons.group, "អតិថិជន", () {

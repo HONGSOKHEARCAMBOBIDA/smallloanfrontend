@@ -47,14 +47,13 @@ class CustomDropdown extends StatelessWidget {
             ),
             focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide:
-                    const BorderSide(color: TheColors.orange, width: 0.5))),
+                borderSide: BorderSide(color: TheColors.white, width: 0.5))),
 
         dropdownColor: TheColors.bgColor,
         borderRadius: BorderRadius.circular(12),
-        icon: const Icon(
+        icon: Icon(
           Icons.arrow_drop_down,
-          color: TheColors.orange,
+          color: TheColors.white,
         ),
         iconSize: 20,
         elevation: 2,

@@ -62,9 +62,9 @@ class _ChataccountSelectorState extends State<ChataccountSelector> {
                                   : TheColors.black)),
                       selected: isSelected,
                       backgroundColor: TheColors.cutecolo,
-                      selectedColor: TheColors.orange,
+                      selectedColor: TheColors.white,
                       surfaceTintColor: Colors.transparent,
-                      selectedShadowColor: TheColors.orange,
+                      selectedShadowColor: TheColors.white,
                       side: BorderSide(color: TheColors.cutecolo, width: 0.3),
                       onSelected: (_) {
                         widget.onSelected(chataccount.id!);

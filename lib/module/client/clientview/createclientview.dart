@@ -253,7 +253,7 @@ class _CreateclientviewState extends State<Createclientview> {
               "ជ្រើសរើសរូបភាព",
               style: TextStyles.siemreap(
                 context,
-                color: TheColors.orange,
+                color: TheColors.white,
                 fontSize: 12,
               ),
             ),
@@ -267,7 +267,7 @@ class _CreateclientviewState extends State<Createclientview> {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
-          color: TheColors.orange,
+          color: TheColors.white,
           width: 0.5,
         ),
         borderRadius: BorderRadius.circular(15),
@@ -297,7 +297,7 @@ class _CreateclientviewState extends State<Createclientview> {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
-          color: TheColors.orange,
+          color: TheColors.white,
           width: 0.5,
         ),
         borderRadius: BorderRadius.circular(15),
@@ -482,13 +482,13 @@ class _CreateclientviewState extends State<Createclientview> {
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(CommonWidgets.radius),
                 borderSide: BorderSide(
-                  color: TheColors.orange,
+                  color: TheColors.white,
                   width: CommonWidgets.borderwidth,
                 ),
               ),
               border: OutlineInputBorder(
                 borderSide: BorderSide(
-                  color: TheColors.orange,
+                  color: TheColors.white,
                   width: CommonWidgets.borderwidth,
                 ),
                 borderRadius: BorderRadius.circular(CommonWidgets.radius),
@@ -508,9 +508,9 @@ class _CreateclientviewState extends State<Createclientview> {
             }).toList(),
             dropdownColor: TheColors.bgColor,
             borderRadius: BorderRadius.circular(CommonWidgets.radius),
-            icon: const Icon(
+            icon: Icon(
               Icons.arrow_drop_down,
-              color: TheColors.orange,
+              color: TheColors.white,
             ),
             iconSize: 17,
             elevation: 2,

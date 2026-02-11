@@ -37,79 +37,94 @@ class CustomRoleCard extends StatelessWidget {
       highlightColor: theme.colorScheme.primary.withOpacity(0.05),
       child: Padding(
         padding: const EdgeInsets.all(2),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            // Left side: name + insurance
-            Row(
+        child: Card(
+          color: TheColors.bgColor,
+          borderOnForeground: true,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20), // optional
+            side: const BorderSide(
+              color: TheColors.gray, // 👈 your border color
+              width: 0.5, // optional
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Stack(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(50),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: TheColors.warningColor, // Border color
-                            width: 0.9,
-                          ),
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(2.0),
-                          child: CachedNetworkImage(
-                            imageUrl:
-                                "https://cdn-icons-png.flaticon.com/512/9940/9940338.png",
-                            width: 45,
-                            height: 45,
-                            fit: BoxFit.cover,
-                            memCacheWidth: 100,
-                            memCacheHeight: 100,
-                            maxWidthDiskCache: 200,
-                            maxHeightDiskCache: 200,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: Container(
-                        width: 14,
-                        height: 14,
-                        decoration: BoxDecoration(
-                          color: isActive == true
-                              ? TheColors.successColor
-                              : TheColors.red,
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color:
-                                isDarkMode ? Colors.grey[850]! : Colors.white,
-                            width: 2,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(width: 10),
+                // Left side: name + insurance
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    Stack(
                       children: [
-                        Text(
-                          displayname,
-                          style: GoogleFonts.siemreap(
-                              fontSize: 13, color: TheColors.white),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: TheColors.warningColor, // Border color
+                                width: 0.9,
+                              ),
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(2.0),
+                              child: CachedNetworkImage(
+                                imageUrl:
+                                    "https://cdn-icons-png.flaticon.com/128/9671/9671856.png",
+                                width: 45,
+                                height: 45,
+                                fit: BoxFit.cover,
+                                memCacheWidth: 100,
+                                memCacheHeight: 100,
+                                maxWidthDiskCache: 200,
+                                maxHeightDiskCache: 200,
+                              ),
+                            ),
+                          ),
                         ),
-                        Row(
+                        Positioned(
+                          bottom: 0,
+                          right: 0,
+                          child: Container(
+                            width: 14,
+                            height: 14,
+                            decoration: BoxDecoration(
+                              color: isActive == true
+                                  ? TheColors.successColor
+                                  : TheColors.red,
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: isDarkMode
+                                    ? Colors.grey[850]!
+                                    : Colors.white,
+                                width: 2,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(width: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              name,
-                              style: TextStyles.siemreap(context,
-                                  fontSize: 12, color: TheColors.white),
+                              displayname,
+                              style: GoogleFonts.siemreap(
+                                  fontSize: 13, color: TheColors.white),
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  name,
+                                  style: TextStyles.siemreap(context,
+                                      fontSize: 12, color: TheColors.white),
+                                ),
+                              ],
                             ),
                           ],
                         ),
@@ -117,11 +132,11 @@ class CustomRoleCard extends StatelessWidget {
                     ),
                   ],
                 ),
+                // Right side: actions
+                _buildActionMenu(context),
               ],
             ),
-            // Right side: actions
-            _buildActionMenu(context),
-          ],
+          ),
         ),
       ),
     );

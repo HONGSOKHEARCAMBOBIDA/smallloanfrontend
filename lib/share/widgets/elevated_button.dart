@@ -18,7 +18,7 @@ class CustomElevatedButton extends StatelessWidget {
     required this.text,
     this.onPressed,
     this.backgroundColor = TheColors.errorColor,
-    this.textColor = TheColors.white,
+    this.textColor,
     this.borderRadius = 14,
     this.fontSize = 16.0,
     this.width = double.infinity,
@@ -28,13 +28,14 @@ class CustomElevatedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final white = textColor ?? TheColors.white;
     return SizedBox(
       width: width,
       height: height,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: backgroundColor,
-          foregroundColor: textColor,
+          foregroundColor: white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadius),
           ),
@@ -45,7 +46,7 @@ class CustomElevatedButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (icon != null) ...[
-              Icon(icon, color: textColor, size: 20),
+              Icon(icon, color: white, size: 20),
               const SizedBox(width: 8),
             ],
             Text(
@@ -53,7 +54,7 @@ class CustomElevatedButton extends StatelessWidget {
               style: GoogleFonts.siemreap(
                 fontSize: fontSize,
                 fontWeight: FontWeight.w600,
-                color: textColor,
+                color: white,
               ),
             ),
           ],
