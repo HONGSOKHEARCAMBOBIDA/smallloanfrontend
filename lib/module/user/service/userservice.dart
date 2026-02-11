@@ -59,4 +59,13 @@ class Userservice {
       throw Exception("Failed ${e.toString()}");
     }
   }
+
+  Future<bool> changestatususer({required int id}) async {
+    try {
+      final update = await apiProvider.put(ApiEndpoint.changestatususer(id), 1);
+      return update.statusCode == 200 || update.statusCode == 201;
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
 }

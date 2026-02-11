@@ -76,36 +76,24 @@ class _CreateuserviewState extends State<Createuserview> {
   }
 
   Widget web() {
-    return Form(
-      key: _formkey,
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            children: [
-              // Main content area
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Left side - Client Info
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20.0, vertical: 20.0),
-                      child: _buildClientInfoSection(),
-                    ),
-                  ),
-                ],
-              ),
+    return Padding(
+      padding: const EdgeInsets.only(top: 20),
+      child: Center(
+        child: SizedBox(
+          width: 400,
+          child: Form(
+            key: _formkey,
+            child: Column(
+              children: [
+                // Main content area
+                _buildClientInfoSection(),
 
-              // Submit button at the bottom
-              const SizedBox(height: 32),
-              SizedBox(
-                width: 300,
-                child: _buildSubmitButton(),
-              ),
-              const SizedBox(height: 20),
-            ],
+                // Submit button at the bottom
+                const SizedBox(height: 32),
+                _buildSubmitButton(),
+                const SizedBox(height: 20),
+              ],
+            ),
           ),
         ),
       ),
@@ -172,15 +160,17 @@ class _CreateuserviewState extends State<Createuserview> {
   }
 
   Widget _buildSubmitButton() {
-    return CustomElevatedButton(
-      text: "បង្កេីតថ្មី",
-      onPressed: () async {
-        await controller.register(
-            name: namecontroller.text,
-            password: passwordcontroller.text,
-            roleid: selectroleid.value!,
-            phone: phonecontroller.text);
-      },
-    );
+    return Obx(() {
+      return CustomElevatedButton(
+        text: controller.isLoading.value ? "កំពុងបង្កេីត..." : "បង្កេីតថ្មី",
+        onPressed: () async {
+          await controller.register(
+              name: namecontroller.text,
+              password: passwordcontroller.text,
+              roleid: selectroleid.value!,
+              phone: phonecontroller.text);
+        },
+      );
+    });
   }
 }

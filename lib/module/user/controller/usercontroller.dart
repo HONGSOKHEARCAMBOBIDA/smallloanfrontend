@@ -24,9 +24,10 @@ class Usercontroller extends GetxController {
       final iscreate = await service.register(
           name: name, password: password, roleid: roleid, phone: phone);
       if (iscreate) {
+        Get.back();
+        await getuser();
         CustomSnackbar.success(
             title: Message.Success, message: Message.CreateSuccess);
-        Get.back();
       } else {
         CustomSnackbar.error(
             title: Message.Error, message: Message.CreateError);
@@ -55,6 +56,8 @@ class Usercontroller extends GetxController {
           email: email,
           phone: phone);
       if (isupdate) {
+        Get.back();
+        await getuser();
         CustomSnackbar.success(
             title: Message.Success, message: Message.UpdateSuccess);
       } else {
@@ -73,6 +76,26 @@ class Usercontroller extends GetxController {
       isLoading.value = true;
       final result = await service.getuser();
       data.assignAll(result);
+    } catch (e) {
+      CustomSnackbar.error(title: Message.Error, message: e.toString());
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> changestatususer({required int id}) async {
+    try {
+      isLoading.value = true;
+      final update = await service.changestatususer(id: id);
+      if (update) {
+        Get.back();
+        await getuser();
+        CustomSnackbar.success(
+            title: Message.Success, message: Message.UpdateSuccess);
+      } else {
+        CustomSnackbar.error(
+            title: Message.Error, message: Message.UpdateError);
+      }
     } catch (e) {
       CustomSnackbar.error(title: Message.Error, message: e.toString());
     } finally {

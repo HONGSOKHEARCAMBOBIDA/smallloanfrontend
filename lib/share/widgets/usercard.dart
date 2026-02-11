@@ -66,7 +66,7 @@ class UserCard extends StatelessWidget {
         ? TheColors.green.withOpacity(0.1)
         : TheColors.warningColor.withOpacity(0.1);
     final statusTextColor =
-        user.isActive == true ? TheColors.green : TheColors.warningColor;
+        user.isActive == true ? TheColors.green : TheColors.red;
 
     return Card(
       color: TheColors.bgColor,
@@ -273,7 +273,7 @@ class UserCard extends StatelessWidget {
                           onPressed: onEdit,
                           icon: Icon(Icons.edit_outlined, size: 18),
                           label: Padding(
-                            padding: const EdgeInsets.all(4.0),
+                            padding: const EdgeInsets.all(6.0),
                             child: Text(
                               'កែប្រែ',
                               style: TextStyles.siemreap(context,
@@ -297,9 +297,9 @@ class UserCard extends StatelessWidget {
                           onPressed: onDelete,
                           icon: Icon(Icons.delete_outline, size: 18),
                           label: Padding(
-                            padding: const EdgeInsets.all(4.0),
+                            padding: const EdgeInsets.all(6.0),
                             child: Text(
-                              'លុប',
+                              user.isActive == true ? "លុប" : "បេីកវិញ",
                               style: TextStyles.siemreap(context,
                                   fontweight: FontWeight.w500),
                             ),

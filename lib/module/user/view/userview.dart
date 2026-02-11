@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loanfrontend/data/models/usermodel.dart';
+import 'package:loanfrontend/module/user/binding/updateuserbinding.dart';
 import 'package:loanfrontend/module/user/controller/usercontroller.dart';
+import 'package:loanfrontend/module/user/view/updateuserview.dart';
 import 'package:loanfrontend/share/widgets/textfield.dart';
 import 'package:loanfrontend/share/widgets/usercard.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -197,8 +199,18 @@ class _UserviewState extends State<Userview> {
                                 ),
                                 child: UserCard(
                                   user: data,
-                                  onTap: () {},
-                                  onEdit: () {},
+                                  onTap: () {
+                                    Get.to(
+                                        () => Updateuserview(usermodel: data),
+                                        transition: Transition.rightToLeft,
+                                        binding: Updateuserbinding());
+                                  },
+                                  onEdit: () {
+                                    Get.to(
+                                        () => Updateuserview(usermodel: data),
+                                        transition: Transition.rightToLeft,
+                                        binding: Updateuserbinding());
+                                  },
                                   onDelete: () {
                                     _showDeleteConfirmation(context, data);
                                   },
@@ -218,12 +230,16 @@ class _UserviewState extends State<Userview> {
                                 return UserCard(
                                   user: data,
                                   onTap: () {
-                                    Get.toNamed('/userdetail',
-                                        arguments: data.id);
+                                    Get.to(
+                                        () => Updateuserview(usermodel: data),
+                                        transition: Transition.rightToLeft,
+                                        binding: Updateuserbinding());
                                   },
                                   onEdit: () {
-                                    Get.toNamed('/edituser',
-                                        arguments: data.id);
+                                    Get.to(
+                                        () => Updateuserview(usermodel: data),
+                                        transition: Transition.rightToLeft,
+                                        binding: Updateuserbinding());
                                   },
                                   onDelete: () {
                                     _showDeleteConfirmation(context, data);
@@ -247,12 +263,8 @@ class _UserviewState extends State<Userview> {
                         usercontroller.data.isNotEmpty)
                       const SliverToBoxAdapter(
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 20),
-                          child: Center(
-                            child: CircularProgressIndicator(
-                              color: TheColors.primaryColor,
-                            ),
-                          ),
+                          padding: EdgeInsets.symmetric(vertical: 20),
+                          child: Center(child: CustomLoading()),
                         ),
                       ),
                   ],
@@ -380,15 +392,19 @@ class _UserviewState extends State<Userview> {
   }
 
   void _showDeleteConfirmation(BuildContext context, Data user) {
+    final bool isActive = user.isActive == true;
+
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(
-          'លុបអ្នកប្រើប្រាស់',
+          isActive ? 'លុបអ្នកប្រើប្រាស់' : 'បើកអ្នកប្រើប្រាស់វិញ',
           style: TextStyles.siemreap(context, color: TheColors.black),
         ),
         content: Text(
-          'តើអ្នកប្រាកដថាចង់លុបអ្នកប្រើប្រាស់ "${user.name}"?',
+          isActive
+              ? 'តើអ្នកប្រាកដថាចង់លុបអ្នកប្រើប្រាស់ "${user.name}"?'
+              : 'តើអ្នកប្រាកដថាចង់បើកអ្នកប្រើប្រាស់ "${user.name}" វិញ?',
           style: TextStyles.siemreap(context, color: TheColors.black),
         ),
         actions: [
@@ -402,18 +418,24 @@ class _UserviewState extends State<Userview> {
               ),
             ),
           ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-              // Call delete method from controller
-              //usercontroller.deleteUser(user.id);
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: TheColors.errorColor,
-            ),
-            child: Text('លុប',
-                style: TextStyles.siemreap(context, color: Colors.white)),
-          ),
+          Obx(() {
+            return ElevatedButton(
+              onPressed: usercontroller.isLoading.value
+                  ? null
+                  : () async {
+                      await usercontroller.changestatususer(id: user.id!);
+                    },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: isActive ? TheColors.errorColor : Colors.green,
+              ),
+              child: Text(
+                usercontroller.isLoading.value
+                    ? (isActive ? "កំពុងលុប" : "កំពុងបើក")
+                    : (isActive ? "លុប" : "បើក"),
+                style: TextStyles.siemreap(context, color: Colors.white),
+              ),
+            );
+          }),
         ],
       ),
     );

@@ -31,6 +31,7 @@ import 'package:loanfrontend/module/reciept/binding/recieptbinding.dart';
 import 'package:loanfrontend/module/reciept/view/recieptlistview.dart';
 import 'package:loanfrontend/module/reciept/view/recieptview.dart';
 import 'package:loanfrontend/module/role/binding/rolebinding.dart';
+import 'package:loanfrontend/module/role/view/roleview.dart';
 import 'package:loanfrontend/module/user/binding/userbinding.dart';
 import 'package:loanfrontend/module/user/view/createuserview.dart';
 import 'package:loanfrontend/module/user/view/userview.dart';
@@ -152,6 +153,7 @@ class AppPage {
         name: '/createuser',
         page: () => Createuserview(),
         bindings: [Userbinding(), Rolebinding()]),
-    GetPage(name: '/userview', page: () => Userview(), binding: Userbinding())
+    GetPage(name: '/userview', page: () => Userview(), binding: Userbinding()),
+    GetPage(name: '/roleview', page: () => Roleview(), binding: Rolebinding())
   ];
 }

@@ -86,6 +86,9 @@ class Admin extends StatelessWidget {
                 _buildDrawerItem(Icons.person, "អ្នកប្រេីប្រាស់", () {
                   Get.toNamed('/userview');
                 }),
+                _buildDrawerItem(Icons.person_2_outlined, "តួនាទី", () {
+                  Get.toNamed('/roleview');
+                }),
                 _buildDrawerItem(Icons.settings, "ការកំណត់", () {}),
               ],
             ),
@@ -108,7 +111,7 @@ class Admin extends StatelessWidget {
         leading: Icon(icon, color: color ?? TheColors.errorColor),
         title: Text(
           title,
-          style: TextStyles.kantomruy(
+          style: TextStyles.siemreap(
             context,
             fontSize: CommonWidgets.fontsize15,
             color: color ?? TheColors.white,

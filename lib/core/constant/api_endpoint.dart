@@ -17,7 +17,8 @@ class ApiEndpoint {
   static const String incomestatement = "incomestatement";
   static const String viewrole = "viewrole";
   static const String register = "adduser";
-  static String updateuser(int id) => "updateuser/$id";
+  static String updateuser(int id) => "edituser/$id";
+  static String changestatususer(int id) => "changestatususer/$id";
   static String editjournal(int id) => "editjournal/$id";
   static String deletejournal(int id) => "deletejournal/$id";
   static const String viewchartaccount = "viewchartaccount";
@@ -35,10 +36,11 @@ class ApiEndpoint {
   static String viewDistrict(int provinceId) => "viewdistrict/${provinceId}";
   static String viewCommunce(int districtId) => "viewcommunce/$districtId";
   static String viewVillage(int communceId) => "viewvillage/$communceId";
-  static String viewschedule(int id) => "viewschedule/${id}";
+  static String viewschedule(int id) => "viewschedule/$id";
   static String VerifyCashierSession(int id) => "verifysession/$id";
   static String RollbackVerify(int id) => "rollbackverify/$id";
   static String deletereceipt(int id) => "deletereceipt/$id";
+  static String viewrolehaspermission(int id) => "viewrolepermission/$id";
 }
 
 class Message {
