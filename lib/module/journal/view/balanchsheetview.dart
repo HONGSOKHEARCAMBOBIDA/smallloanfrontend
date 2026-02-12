@@ -257,7 +257,7 @@ class BalanceSheetView extends GetView<Journalcontroller> {
           ),
           SizedBox(height: 4),
           Text(
-            '${_formatNumber(value)} ៛',
+            '${(value)} ៛',
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
@@ -269,14 +269,14 @@ class BalanceSheetView extends GetView<Journalcontroller> {
     );
   }
 
-  String _formatNumber(int number) {
-    if (number >= 1000000) {
-      return '${(number / 1000000).toStringAsFixed(2)}M';
-    } else if (number >= 1000) {
-      return '${(number / 1000).toStringAsFixed(2)}K';
-    }
-    return number.toString();
-  }
+  // String _formatNumber(int number) {
+  //   if (number >= 1000000) {
+  //     return '${(number / 1000000).toStringAsFixed(2)}M';
+  //   } else if (number >= 1000) {
+  //     return '${(number / 1000).toStringAsFixed(2)}K';
+  //   }
+  //   return number.toString();
+  // }
 
   Future<void> _showDatePicker(BuildContext context) async {
     final DateTime? picked = await showDatePicker(

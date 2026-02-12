@@ -37,7 +37,7 @@ class _CreatecashiersessionviewState extends State<Createcashiersessionview> {
         padding: EdgeInsets.only(
             left: isMobile ? 8 : 600,
             right: isMobile ? 8 : 600,
-            top: isMobile ? 8 : 100),
+            top: isMobile ? 8 : 10),
         child: Stack(
           alignment: Alignment.topCenter,
           children: [

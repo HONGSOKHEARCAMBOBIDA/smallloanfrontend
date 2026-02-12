@@ -262,8 +262,8 @@ class _UpdateclientviewState extends State<Updateclientview> {
             return Container(
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: TheColors.warningColor,
-                  width: 0.9,
+                  color: TheColors.checked,
+                  width: 2,
                 ),
                 borderRadius: BorderRadius.circular(radius),
               ),
@@ -296,7 +296,7 @@ class _UpdateclientviewState extends State<Updateclientview> {
             style: ButtonStyle(
               side: MaterialStateProperty.all(
                 BorderSide(
-                  color: TheColors.warningColor,
+                  color: TheColors.cutecolo,
                   width: 1,
                 ),
               ),
@@ -330,7 +330,7 @@ class _UpdateclientviewState extends State<Updateclientview> {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
-          color: TheColors.checked.withOpacity(0.4),
+          color: TheColors.white,
           width: 0.5,
         ),
         borderRadius: BorderRadius.circular(15),
@@ -361,7 +361,7 @@ class _UpdateclientviewState extends State<Updateclientview> {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
-          color: TheColors.checked.withOpacity(0.4),
+          color: TheColors.white,
           width: 0.5,
         ),
         borderRadius: BorderRadius.circular(15),
@@ -389,6 +389,12 @@ class _UpdateclientviewState extends State<Updateclientview> {
             Expanded(
               child: Obx(
                 () => CustomOutlinedButton(
+                  textColor: selectprovinceid.value != null
+                      ? TheColors.checked
+                      : TheColors.white,
+                  borderColor: selectprovinceid.value != null
+                      ? TheColors.checked
+                      : TheColors.white,
                   alignment: MainAxisAlignment.center,
                   text: selectprovincename.value.isEmpty
                       ? "ជ្រើសរើសខេត្ត"
@@ -423,6 +429,12 @@ class _UpdateclientviewState extends State<Updateclientview> {
             Expanded(
               child: Obx(
                 () => CustomOutlinedButton(
+                  textColor: selectdistrictid.value != null
+                      ? TheColors.checked
+                      : TheColors.white,
+                  borderColor: selectdistrictid.value != null
+                      ? TheColors.checked
+                      : TheColors.white,
                   alignment: MainAxisAlignment.center,
                   text: selectdistrictname.value.isEmpty
                       ? "ជ្រើសរើសស្រុក"
@@ -460,6 +472,12 @@ class _UpdateclientviewState extends State<Updateclientview> {
             Expanded(
               child: Obx(
                 () => CustomOutlinedButton(
+                  textColor: selectcommunceid.value != null
+                      ? TheColors.checked
+                      : TheColors.white,
+                  borderColor: selectcommunceid.value != null
+                      ? TheColors.checked
+                      : TheColors.white,
                   alignment: MainAxisAlignment.center,
                   text: selectcommuncename.value.isEmpty
                       ? "ជ្រើសរើសឃុំ"
@@ -491,6 +509,12 @@ class _UpdateclientviewState extends State<Updateclientview> {
             Expanded(
               child: Obx(
                 () => CustomOutlinedButton(
+                  textColor: selectvillageid.value != null
+                      ? TheColors.checked
+                      : TheColors.white,
+                  borderColor: selectvillageid.value != null
+                      ? TheColors.checked
+                      : TheColors.white,
                   alignment: MainAxisAlignment.center,
                   text: selectvillagename.value.isEmpty
                       ? "ជ្រើសរើសភូមិ"

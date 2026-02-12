@@ -189,7 +189,7 @@ class BalanceSheetCard extends StatelessWidget {
           ),
           SizedBox(height: 8),
           Text(
-            '${_formatNumber(amount)} ៛',
+            '${(amount)} ៛',
             style: TextStyles.siemreap(
               context,
               fontSize: 14,
@@ -278,7 +278,7 @@ class BalanceSheetCard extends StatelessWidget {
               ),
             ),
             Text(
-              '${_formatNumber(total)} ៛',
+              '${(total)} ៛',
               style: TextStyles.siemreap(
                 context,
                 fontweight: FontWeight.w600,
@@ -324,7 +324,7 @@ class BalanceSheetCard extends StatelessWidget {
               ),
             ),
             Text(
-              '${_formatNumber(amount)} ៛',
+              '${(amount)} ៛',
               style: TextStyles.siemreap(
                 context,
                 fontweight: FontWeight.w600,
@@ -367,7 +367,7 @@ class BalanceSheetCard extends StatelessWidget {
           ),
           SizedBox(width: 8),
           Text(
-            '${_formatNumber(account.balance ?? 0)} ៛',
+            '${(account.balance ?? 0)} ៛',
             style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.w500,
@@ -415,7 +415,7 @@ class BalanceSheetCard extends StatelessWidget {
                 ),
                 if (!isBalanced)
                   Text(
-                    'Difference: Rs. ${_formatNumber(difference.abs())}',
+                    'Difference: Rs. ${(difference.abs())}',
                     style: TextStyle(
                       fontSize: 12,
                       color: Colors.grey[600],
@@ -459,12 +459,12 @@ class BalanceSheetCard extends StatelessWidget {
     );
   }
 
-  String _formatNumber(int number) {
-    if (number >= 1000000) {
-      return '${(number / 1000000).toStringAsFixed(2)}M';
-    } else if (number >= 1000) {
-      return '${(number / 1000).toStringAsFixed(2)}K';
-    }
-    return number.toString();
-  }
+  // String _formatNumber(int number) {
+  //   if (number >= 1000000) {
+  //     return '${(number / 1000000).toStringAsFixed(2)}M';
+  //   } else if (number >= 1000) {
+  //     return '${(number / 1000).toStringAsFixed(2)}K';
+  //   }
+  //   return number.toString();
+  // }
 }

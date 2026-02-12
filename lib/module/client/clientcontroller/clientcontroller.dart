@@ -87,7 +87,7 @@ class ClientController extends GetxController {
 
   Future<void> listclient({
     String? name,
-    int pageSize = 10,
+    int pageSize = 12,
     bool isRefresh = false,
     bool loadMore = false,
   }) async {

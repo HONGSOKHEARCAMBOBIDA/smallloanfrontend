@@ -55,17 +55,16 @@ class AppPage {
       transition: Transition.fadeIn,
     ),
     GetPage(
-      name: '/createclient',
-      page: () => Createclientview(),
-      bindings: [
-        Clientbinding(),
-        Provincebinding(),
-        Districtbinding(),
-        Communcebinding(),
-        Villagebinding(),
-      ],
-      transition: Transition.rightToLeftWithFade,
-    ),
+        name: '/createclient',
+        page: () => Createclientview(),
+        bindings: [
+          Clientbinding(),
+          Provincebinding(),
+          Districtbinding(),
+          Communcebinding(),
+          Villagebinding(),
+        ],
+        transition: Transition.fade),
     GetPage(
       name: '/listclient',
       page: () => const Clientview(),

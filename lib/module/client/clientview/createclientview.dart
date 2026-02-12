@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:loanfrontend/core/constant/api_endpoint.dart';
 import 'package:loanfrontend/core/helper/show_communce_buttonsheet.dart';
 import 'package:loanfrontend/core/helper/show_district_buttonsheet.dart';
 import 'package:loanfrontend/core/helper/show_province_buttonsheet.dart';
@@ -67,31 +68,58 @@ class _CreateclientviewState extends State<Createclientview> {
     super.initState();
   }
 
+  bool get isFormValid {
+    return namecontroller.text.isNotEmpty &&
+        selectgender.value != null &&
+        maritalStatus.text.isNotEmpty &&
+        occupationcontroller.text.isNotEmpty &&
+        idCardNumbercontroller.text.isNotEmpty &&
+        phonecontroller.text.isNotEmpty &&
+        phonecontroller.text.length >= 8 &&
+        selectdob.value != null &&
+        selectvillageid.value != null;
+  }
+
   void _loadlocation() {
     provincecontroller.fetchprovince();
   }
 
   Future<void> createclient() async {
-    if (_formkey.currentState!.validate()) {
-      if (selectvillageid.value == null) {
-        CustomSnackbar.error(title: "ខុស", message: "ភ្លេចរេីសភូមិអតិថិជន");
-        return;
-      }
-      try {
-        await clientcontroller.createclient(
-          name: namecontroller.text.trim(),
-          gender: selectgender.value!,
-          maritalStatus: maritalStatus.text.trim(),
-          dateOfBirth: selectdob.value.toString(),
-          occupation: occupationcontroller.text.trim(),
-          idCardNumber: idCardNumbercontroller.text.trim(),
-          phone: phonecontroller.text.trim(),
-          villageId: selectvillageid.value!,
-        );
-      } catch (e) {
-        CustomSnackbar.error(title: "កំហុស", message: "មិនអាចចុះឈ្មោះបាន: $e");
-      }
+    if (!_formkey.currentState!.validate()) return;
+    if (selectvillageid.value == null) {
+      CustomSnackbar.error(title: Message.Error, message: "សូមជ្រេីសរេិសភូមិ");
+      return;
     }
+    await clientcontroller.createclient(
+      name: namecontroller.text.trim(),
+      gender: selectgender.value!,
+      maritalStatus: maritalStatus.text.trim(),
+      dateOfBirth: selectdob.value.toString(),
+      occupation: occupationcontroller.text.trim(),
+      idCardNumber: idCardNumbercontroller.text.trim(),
+      phone: phonecontroller.text.trim(),
+      villageId: selectvillageid.value!,
+    );
+    // if (_formkey.currentState!.validate()) {
+    //   if (selectvillageid.value == null) {
+    //     CustomSnackbar.error(title: "ខុស", message: "ភ្លេចរេីសភូមិអតិថិជន");
+    //     return;
+    //   }
+    //   try {
+    //     await clientcontroller.createclient(
+    //       name: namecontroller.text.trim(),
+    //       gender: selectgender.value!,
+    //       maritalStatus: maritalStatus.text.trim(),
+    //       dateOfBirth: selectdob.value.toString(),
+    //       occupation: occupationcontroller.text.trim(),
+    //       idCardNumber: idCardNumbercontroller.text.trim(),
+    //       phone: phonecontroller.text.trim(),
+    //       villageId: selectvillageid.value!,
+    //     );
+    //   } catch (e) {
+    //     CustomSnackbar.error(title: "កំហុស", message: "មិនអាចចុះឈ្មោះបាន: $e");
+    //   }
+    // }
   }
 
   @override
@@ -108,7 +136,7 @@ class _CreateclientviewState extends State<Createclientview> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: TheColors.bgColor,
-      appBar: CustomAppBar(title: "បង្កេីតអតិថិជនថ្មី"),
+      appBar: const CustomAppBar(title: "បង្កេីតអតិថិជនថ្មី"),
       body: Responsive(
         mobile: mobile(),
         web: web(),
@@ -234,7 +262,7 @@ class _CreateclientviewState extends State<Createclientview> {
             style: ButtonStyle(
               side: MaterialStateProperty.all(
                 BorderSide(
-                  color: TheColors.warningColor,
+                  color: TheColors.cutecolo,
                   width: 1,
                 ),
               ),
@@ -327,8 +355,14 @@ class _CreateclientviewState extends State<Createclientview> {
             Expanded(
               child: Obx(
                 () => CustomOutlinedButton(
+                  textColor: selectprovinceid.value != null
+                      ? TheColors.checked
+                      : TheColors.white,
                   alignment: MainAxisAlignment.center,
                   text: selectprovincename.value,
+                  borderColor: selectprovinceid.value != null
+                      ? TheColors.checked
+                      : TheColors.white,
                   onPressed: () {
                     showProvinceSelectorSheet(
                       context: context,
@@ -359,8 +393,14 @@ class _CreateclientviewState extends State<Createclientview> {
             Expanded(
               child: Obx(
                 () => CustomOutlinedButton(
+                  textColor: selectdistrictid.value != null
+                      ? TheColors.checked
+                      : TheColors.white,
                   alignment: MainAxisAlignment.center,
                   text: selectdistrictname.value,
+                  borderColor: selectdistrictid.value != null
+                      ? TheColors.checked
+                      : TheColors.white,
                   onPressed: selectprovinceid.value == null
                       ? null
                       : () {
@@ -394,8 +434,14 @@ class _CreateclientviewState extends State<Createclientview> {
             Expanded(
               child: Obx(
                 () => CustomOutlinedButton(
+                  textColor: selectcommunceid.value != null
+                      ? TheColors.checked
+                      : TheColors.white,
                   alignment: MainAxisAlignment.center,
                   text: selectcommuncename.value,
+                  borderColor: selectcommunceid.value != null
+                      ? TheColors.checked
+                      : TheColors.white,
                   onPressed: selectdistrictid.value == null
                       ? null
                       : () {
@@ -423,8 +469,14 @@ class _CreateclientviewState extends State<Createclientview> {
             Expanded(
               child: Obx(
                 () => CustomOutlinedButton(
+                  textColor: selectvillageid.value != null
+                      ? TheColors.checked
+                      : TheColors.white,
                   alignment: MainAxisAlignment.center,
                   text: selectvillagename.value,
+                  borderColor: selectvillageid.value != null
+                      ? TheColors.checked
+                      : TheColors.white,
                   onPressed: selectcommunceid.value == null
                       ? null
                       : () {
@@ -568,9 +620,28 @@ class _CreateclientviewState extends State<Createclientview> {
   }
 
   Widget _buildSubmitButton() {
-    return CustomElevatedButton(
-      text: "បង្កេីតថ្មី",
-      onPressed: createclient,
+    return Obx(
+      () {
+        // Trigger rebuild when any of these change
+        // We need to observe the values that affect form validity
+        namecontroller.text; // This will trigger rebuild when text changes
+        selectgender.value;
+        maritalStatus.text;
+        occupationcontroller.text;
+        idCardNumbercontroller.text;
+        phonecontroller.text;
+        selectdob.value;
+        selectvillageid.value;
+
+        return CustomElevatedButton(
+          textColor: isFormValid ? TheColors.white : TheColors.bgColor,
+          text: "បង្កេីតថ្មី",
+          onPressed: isFormValid ? createclient : null,
+          backgroundColor: isFormValid
+              ? TheColors.checked
+              : TheColors.bgColor, // Optional: make it grey when disabled
+        );
+      },
     );
   }
 }

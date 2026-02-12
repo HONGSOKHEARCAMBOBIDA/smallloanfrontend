@@ -37,6 +37,9 @@ class Cashiersessioncontroller extends GetxController {
       if (iscreate) {
         await getcashiersession();
         confettiController.play();
+      } else {
+        CustomSnackbar.error(
+            title: Message.Error, message: "បេីកប្រអប់ម្ដងរួចហេីយ");
       }
     } catch (e) {
       CustomSnackbar.error(
