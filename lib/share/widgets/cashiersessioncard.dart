@@ -67,14 +67,17 @@ class CashierSessionCard extends StatelessWidget {
                       color: _statusColor(session.status).withOpacity(0.15),
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: Text(
-                      session.status == "1"
-                          ? "កំពុងប្រមូលប្រាក់"
-                          : "បានផ្ទៀងផ្ទាត់",
-                      style: TextStyles.siemreap(
-                        context,
-                        color: _statusColor(session.status),
-                        fontweight: FontWeight.w600,
+                    child: Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Text(
+                        session.status == "1"
+                            ? "កំពុងប្រមូលប្រាក់"
+                            : "បានផ្ទៀងផ្ទាត់",
+                        style: TextStyles.siemreap(
+                          context,
+                          color: _statusColor(session.status),
+                          fontweight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ),

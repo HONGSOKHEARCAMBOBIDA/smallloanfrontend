@@ -118,40 +118,164 @@ class _RecieptlistviewState extends State<Recieptlistview> {
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 8),
-                                      child: ConstrainedBox(
-                                        constraints: BoxConstraints(
-                                          maxWidth: MediaQuery.of(context)
-                                                  .size
-                                                  .width -
-                                              100,
-                                        ),
-                                        child: SizedBox(
-                                          height: searchHeight,
-                                          child: CustomTextField(
-                                            controller: searchQuery,
-                                            hintText: "ស្វែងរក".tr,
-                                            prefixIcon: Icons.search,
-                                            onChanged: (value) {
-                                              // Your existing code
-                                              Future.delayed(
-                                                  const Duration(
-                                                      milliseconds: 200),
-                                                  () async {
-                                                await controller.getrecieptlist(
-                                                  client_name: value.isEmpty
-                                                      ? null
-                                                      : value,
-                                                  co_id: selectcoid.value,
-                                                  start: selectstartdate.value
-                                                      ?.toIso8601String(),
-                                                  end: selectenddate.value
-                                                      ?.toIso8601String(),
-                                                  isRefresh: true,
-                                                );
-                                              });
-                                            },
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                child: SizedBox(
+                                                  height: searchHeight,
+                                                  child: CustomTextField(
+                                                    controller: searchQuery,
+                                                    hintText: "ស្វែងរក".tr,
+                                                    prefixIcon: Icons.search,
+                                                    onChanged: (value) {
+                                                      // Your existing code
+                                                      Future.delayed(
+                                                          const Duration(
+                                                              milliseconds:
+                                                                  200),
+                                                          () async {
+                                                        await controller
+                                                            .getrecieptlist(
+                                                          client_name:
+                                                              value.isEmpty
+                                                                  ? null
+                                                                  : value,
+                                                          co_id:
+                                                              selectcoid.value,
+                                                          start: selectstartdate
+                                                              .value
+                                                              ?.toIso8601String(),
+                                                          end: selectenddate
+                                                              .value
+                                                              ?.toIso8601String(),
+                                                          isRefresh: true,
+                                                        );
+                                                      });
+                                                    },
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                        ),
+                                          SizedBox(
+                                            height: 7,
+                                          ),
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                child: CustomDatePickerField(
+                                                  label: "",
+                                                  selectedDate: selectstartdate,
+                                                  onDateSelected: (date) async {
+                                                    selectstartdate.value =
+                                                        date;
+                                                    await controller
+                                                        .getrecieptlist(
+                                                      client_name: searchQuery
+                                                              .text.isEmpty
+                                                          ? null
+                                                          : searchQuery.text,
+                                                      co_id: selectcoid.value,
+                                                      start: date
+                                                          ?.toIso8601String(),
+                                                      end: selectenddate.value
+                                                          ?.toIso8601String(),
+                                                      isRefresh: true,
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              Expanded(
+                                                child: CustomDatePickerField(
+                                                  label: "",
+                                                  selectedDate:
+                                                      selectenddate, // Fixed: use selectenddate
+                                                  onDateSelected: (date) async {
+                                                    selectenddate.value = date;
+                                                    await controller
+                                                        .getrecieptlist(
+                                                      client_name: searchQuery
+                                                              .text.isEmpty
+                                                          ? null
+                                                          : searchQuery.text,
+                                                      co_id: selectcoid.value,
+                                                      start: selectstartdate
+                                                          .value
+                                                          ?.toIso8601String(),
+                                                      end: date
+                                                          ?.toIso8601String(),
+                                                      isRefresh: true,
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: 7,
+                                          ),
+                                          Obx(
+                                            () => Column(
+                                              children: [
+                                                CustomOutlinedButton(
+                                                  text: selectcoName.value,
+                                                  onPressed: () {
+                                                    showUserSelectorsheet(
+                                                      context: context,
+                                                      user: usercontroller.user,
+                                                      selecteduserId:
+                                                          selectcoid.value,
+                                                      onSelected: (id) async {
+                                                        selectcoid.value = id;
+
+                                                        await controller
+                                                            .getrecieptlist(
+                                                          client_name:
+                                                              searchQuery.text
+                                                                      .isEmpty
+                                                                  ? null
+                                                                  : searchQuery
+                                                                      .text,
+                                                          co_id: id,
+                                                          start: selectstartdate
+                                                              .value
+                                                              ?.toIso8601String(),
+                                                          end: selectenddate
+                                                              .value
+                                                              ?.toIso8601String(),
+                                                          isRefresh: true,
+                                                        );
+                                                        // Add null safety check
+                                                        final selectedUser =
+                                                            usercontroller.user
+                                                                .firstWhereOrNull(
+                                                                    (p) =>
+                                                                        p.id ==
+                                                                        id);
+                                                        if (selectedUser !=
+                                                                null &&
+                                                            selectedUser.name !=
+                                                                null) {
+                                                          selectcoName.value =
+                                                              selectedUser
+                                                                  .name!;
+                                                        } else {
+                                                          selectcoName.value =
+                                                              '';
+                                                        }
+                                                      },
+                                                    );
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   )
@@ -318,34 +442,38 @@ class _RecieptlistviewState extends State<Recieptlistview> {
                                             ),
                                           ),
                                         ),
+                                        CommonWidgets.SizeBoxwidh5,
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              left: 8,
+                                              bottom: isMobile ? 0.0 : 10),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: TheColors.cutecolo,
+                                              borderRadius:
+                                                  BorderRadius.circular(50),
+                                            ),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(3.0),
+                                              child: InkWell(
+                                                onTap: () {
+                                                  refresh();
+                                                  selectcoName.value =
+                                                      "មន្ត្រីឥណទាន";
+                                                },
+                                                child: Icon(
+                                                  Icons.refresh_outlined,
+                                                  color: TheColors.white,
+                                                  size: refreshIconSize,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ),
-                            CommonWidgets.SizeBoxwidh5,
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  left: 8, bottom: isMobile ? 0.0 : 10),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: TheColors.cutecolo,
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(3.0),
-                                  child: InkWell(
-                                    onTap: () {
-                                      refresh();
-                                      selectcoName.value = "មន្ត្រីឥណទាន";
-                                    },
-                                    child: Icon(
-                                      Icons.refresh_outlined,
-                                      color: TheColors.white,
-                                      size: refreshIconSize,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
                           ],
                         ),
                       ),

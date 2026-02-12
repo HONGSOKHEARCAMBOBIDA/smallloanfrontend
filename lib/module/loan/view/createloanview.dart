@@ -240,6 +240,12 @@ class _CreateloanviewState extends State<Createloanview> {
             const SizedBox(height: 8),
             Obx(
               () => CustomOutlinedButton(
+                textColor: selectclient.value != null
+                    ? TheColors.checked
+                    : TheColors.white,
+                borderColor: selectclient.value != null
+                    ? TheColors.checked
+                    : TheColors.white,
                 text: selectClientName.value,
                 onPressed: () {
                   showClientSelectorsheet(
@@ -281,6 +287,12 @@ class _CreateloanviewState extends State<Createloanview> {
                 const SizedBox(height: 8),
                 Obx(
                   () => CustomOutlinedButton(
+                    textColor: selectloanproduct.value != null
+                        ? TheColors.checked
+                        : TheColors.white,
+                    borderColor: selectloanproduct.value != null
+                        ? TheColors.checked
+                        : TheColors.white,
                     text: selectLoanProductName.value,
                     onPressed: () {
                       showLoanproudctSelectorsheet(
@@ -314,14 +326,22 @@ class _CreateloanviewState extends State<Createloanview> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CommonWidgets.buildLabel(context, "ទ្រព្យបញ្ជាំ"),
-                CustomDropdown(
-                  selectedValue: selectdocumenttype,
-                  items: documenttypecontroller.documenttype,
-                  hintText: "ទ្រព្យបញ្ជាំ",
-                  onChanged: (value) {
-                    selectdocumenttype.value = value;
-                  },
-                ),
+                Obx(() {
+                  return CustomDropdown(
+                    bordercolor: selectdocumenttype.value != null
+                        ? TheColors.checked
+                        : TheColors.white,
+                    textcolor: selectdocumenttype.value != null
+                        ? TheColors.checked
+                        : TheColors.white,
+                    selectedValue: selectdocumenttype,
+                    items: documenttypecontroller.documenttype,
+                    hintText: "ទ្រព្យបញ្ជាំ",
+                    onChanged: (value) {
+                      selectdocumenttype.value = value;
+                    },
+                  );
+                })
               ],
             ),
           ],
@@ -350,6 +370,12 @@ class _CreateloanviewState extends State<Createloanview> {
                   const SizedBox(height: 8),
                   Obx(
                     () => CustomOutlinedButton(
+                      textColor: selectcheckby.value != null
+                          ? TheColors.checked
+                          : TheColors.white,
+                      borderColor: selectcheckby.value != null
+                          ? TheColors.checked
+                          : TheColors.white,
                       text: selectCheckName.value,
                       onPressed: () {
                         //final filteredUsers = authcontroller.user.where((u) => u.id != selectapproveby.value).toList();
@@ -380,6 +406,12 @@ class _CreateloanviewState extends State<Createloanview> {
                   const SizedBox(height: 8),
                   Obx(
                     () => CustomOutlinedButton(
+                      textColor: selectapproveby.value != null
+                          ? TheColors.checked
+                          : TheColors.white,
+                      borderColor: selectapproveby.value != null
+                          ? TheColors.checked
+                          : TheColors.white,
                       text: selectApproveName.value,
                       onPressed: () {
                         // final filteredUsers = authcontroller.user.where((u) => u.id != selectcheckby.value).toList();

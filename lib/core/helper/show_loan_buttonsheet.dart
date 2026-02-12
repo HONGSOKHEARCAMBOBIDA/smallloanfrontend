@@ -127,7 +127,7 @@ Widget _buildClientHeader(Data loan, context) {
               children: [
                 Icon(
                   Icons.phone,
-                  color: TheColors.lightOrage,
+                  color: TheColors.checked,
                   size: iconSize,
                 ),
                 CommonWidgets.SizeBoxwidh5,
@@ -306,7 +306,7 @@ Widget _buildInfoRow(String label, String? value, BuildContext context) {
             style: TextStyles.siemreap(
               context,
               fontSize: 14,
-              color: TheColors.lightOrage,
+              color: TheColors.warningColor,
             ),
           ),
         ),

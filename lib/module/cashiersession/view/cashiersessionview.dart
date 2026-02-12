@@ -29,12 +29,12 @@ class _CashiersessionviewState extends State<Cashiersessionview> {
     final double smallFontSize = isMobile ? 12 : 15;
     return Scaffold(
       backgroundColor: TheColors.bgColor,
-      appBar: CustomAppBar(title: "លុបការផ្ទៀងប្រាក់"),
+      appBar: const CustomAppBar(title: "លុបការផ្ទៀងប្រាក់"),
       body: Padding(
         padding: EdgeInsets.only(
             left: isMobile ? 8 : 600,
             right: isMobile ? 8 : 600,
-            top: isMobile ? 8 : 100),
+            top: isMobile ? 8 : 20),
         child: Stack(
           alignment: Alignment.topCenter,
           children: [
@@ -117,7 +117,7 @@ class _CashiersessionviewState extends State<Cashiersessionview> {
                                                             10),
                                                   ),
                                                 ),
-                                                child: Text("ពិនិត្យម្ដងទៀត",
+                                                child: Text("ត្រឡប់",
                                                     style: TextStyles.siemreap(
                                                         context,
                                                         fontSize: smallFontSize,

@@ -102,7 +102,7 @@ class _CreatejournalviewState extends State<Createjournalview> {
   Widget _builbody() {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: TheColors.checked, width: 1),
+        border: Border.all(color: TheColors.gray, width: 1),
         borderRadius: BorderRadius.circular(15),
       ),
       child: Padding(

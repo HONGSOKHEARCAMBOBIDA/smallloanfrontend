@@ -103,14 +103,14 @@ class _JournalviewState extends State<Journalview> {
         Get.toNamed('/createjournal');
       }),
       backgroundColor: TheColors.bgColor,
-      appBar: const CustomAppBar(title: "បញ្ជីប្រតិបត្តិការណ៍"),
+      appBar: const CustomAppBar(title: "បញ្ជីប្រតិបត្តិការណ៍លំអិត"),
       body: RefreshIndicator(
         backgroundColor: TheColors.cutecolo,
         color: TheColors.warningColor,
         onRefresh: refresh,
         child: Obx(() {
           if (controller.isLoading.value) {
-            return Center(
+            return const Center(
               child: CustomLoading(),
             );
           }
@@ -136,34 +136,54 @@ class _JournalviewState extends State<Journalview> {
                             // Search field - responsive
                             isMobile
                                 ? Expanded(
-                                    child: ConstrainedBox(
-                                      constraints: BoxConstraints(
-                                        maxWidth:
-                                            MediaQuery.of(context).size.width -
-                                                100,
-                                      ),
-                                      child: SizedBox(
-                                        height: 50,
-                                        child: CustomTextField(
-                                          controller: searchQuery,
-                                          hintText: "ស្វែងរក".tr,
-                                          prefixIcon: Icons.search,
-                                          onChanged: (value) {
-                                            Future.delayed(
-                                              const Duration(milliseconds: 200),
-                                              () async {
-                                                await controller.getjournal(
-                                                  reference_code: value.isEmpty
-                                                      ? null
-                                                      : value,
-                                                  between: between,
-                                                  isRefresh: true,
-                                                );
-                                              },
-                                            );
-                                          },
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: ConstrainedBox(
+                                            constraints: BoxConstraints(
+                                              maxWidth: MediaQuery.of(context)
+                                                      .size
+                                                      .width -
+                                                  100,
+                                            ),
+                                            child: SizedBox(
+                                              height: 50,
+                                              child: CustomTextField(
+                                                controller: searchQuery,
+                                                hintText: "ស្វែងរក".tr,
+                                                prefixIcon: Icons.search,
+                                                onChanged: (value) {
+                                                  Future.delayed(
+                                                    const Duration(
+                                                        milliseconds: 200),
+                                                    () async {
+                                                      await controller
+                                                          .getjournal(
+                                                        reference_code:
+                                                            value.isEmpty
+                                                                ? null
+                                                                : value,
+                                                        between: between,
+                                                        isRefresh: true,
+                                                      );
+                                                    },
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                          ),
                                         ),
-                                      ),
+                                        const SizedBox(width: 4),
+                                        CustomDatePickerField(
+                                          label: "",
+                                          selectedDate: selectstartdate,
+                                        ),
+                                        const SizedBox(width: 4),
+                                        CustomDatePickerField(
+                                          label: "",
+                                          selectedDate: selectenddate,
+                                        ),
+                                      ],
                                     ),
                                   )
                                 : Expanded(

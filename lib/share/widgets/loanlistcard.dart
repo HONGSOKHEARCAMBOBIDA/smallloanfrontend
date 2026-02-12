@@ -143,7 +143,7 @@ class Loanlistcard extends StatelessWidget {
                           children: [
                             Icon(
                               Icons.phone,
-                              color: TheColors.lightOrage,
+                              color: TheColors.checked,
                               size: iconSize,
                             ),
                             CommonWidgets.SizeBoxwidh5,
@@ -231,7 +231,7 @@ class Loanlistcard extends StatelessWidget {
                       "ប្រភេទកម្ចី: ${loan.loanProductName ?? "មិនមាន"}",
                       style: GoogleFonts.siemreap(
                         fontSize: nameFontSize,
-                        color: TheColors.lightOrage,
+                        color: TheColors.warningColor,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,

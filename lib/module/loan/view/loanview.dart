@@ -186,7 +186,7 @@ class _LoanviewState extends State<Loanview> {
                           (context, index) {
                             final loan = loancontroller.loan[index];
                             return Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8),
+                              padding: const EdgeInsets.symmetric(vertical: 2),
                               child: Loanlistcard(
                                   loan: loan,
                                   onTap: () {

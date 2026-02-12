@@ -10,16 +10,19 @@ class CustomDropdown extends StatelessWidget {
   final Function(int?) onChanged;
   final Function(int)? onItemSelected;
   final bool isLoading;
-
-  const CustomDropdown({
-    Key? key,
-    required this.selectedValue,
-    required this.items,
-    required this.hintText,
-    required this.onChanged,
-    this.onItemSelected,
-    this.isLoading = false,
-  }) : super(key: key);
+  final Color? bordercolor;
+  final Color? textcolor;
+  const CustomDropdown(
+      {Key? key,
+      required this.selectedValue,
+      required this.items,
+      required this.hintText,
+      required this.onChanged,
+      this.onItemSelected,
+      this.isLoading = false,
+      this.bordercolor = TheColors.white,
+      this.textcolor = TheColors.white})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -47,19 +50,18 @@ class CustomDropdown extends StatelessWidget {
             ),
             focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide(color: TheColors.white, width: 0.5))),
+                borderSide: BorderSide(color: bordercolor!, width: 0.5))),
 
         dropdownColor: TheColors.bgColor,
         borderRadius: BorderRadius.circular(12),
-        icon: Icon(
+        icon: const Icon(
           Icons.arrow_drop_down,
           color: TheColors.white,
         ),
         iconSize: 20,
         elevation: 2,
         menuMaxHeight: 200,
-        style:
-            TextStyles.siemreap(context, fontSize: 12, color: TheColors.white),
+        style: TextStyles.siemreap(context, fontSize: 12, color: textcolor!),
         items: isLoading
             ? [] // Empty while loading
             : items.map((item) {
