@@ -243,56 +243,52 @@ class _ClientviewState extends State<Clientview> {
                       delegate: SliverChildBuilderDelegate(
                         (context, index) {
                           final client = clientcontroller.client[index];
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Clientcard(
-                              id: client.id!,
-                              name: client.name ?? '',
-                              gender: client.gender ?? 0,
-                              maritalStatus: client.maritalStatus ?? '',
-                              dateOfBirth: client.dateOfBirth ?? '',
-                              occupation: client.occupation ?? '',
-                              idCardNumber: client.idCardNumber ?? '',
-                              phone: client.phone ?? '',
-                              latitude: client.latitude ?? 0.0,
-                              longitude: client.longitude ?? 0.0,
-                              imagePath: client.imagePath ?? '',
-                              notes: client.notes ?? '',
-                              isActive: client.isActive ?? false,
-                              createdBy: client.createdBy ?? 0,
-                              createByName: client.createByName ?? '',
-                              provinceId: client.provinceId ?? 0,
-                              provinceName: client.provinceName ?? '',
-                              districtId: client.districtId ?? 0,
-                              districtName: client.districtName ?? '',
-                              communceId: client.communceId ?? 0,
-                              communceName: client.communceName ?? '',
-                              villageId: client.villageId ?? 0,
-                              villageName: client.villageName ?? '',
-                              onEdit: () {
-                                Get.to(
-                                  () => Updateclientview(clientmodel: client),
-                                  transition: Transition.rightToLeft,
-                                  binding: Updateclientbinding(),
-                                );
-                              },
-                              onDelete: () {},
-                              onTap: () {
-                                Get.to(
-                                  () => Updateclientview(clientmodel: client),
-                                  transition: Transition.rightToLeft,
-                                  binding: Updateclientbinding(),
-                                );
-                              },
-                            ),
+                          return Clientcard(
+                            id: client.id!,
+                            name: client.name ?? '',
+                            gender: client.gender ?? 0,
+                            maritalStatus: client.maritalStatus ?? '',
+                            dateOfBirth: client.dateOfBirth ?? '',
+                            occupation: client.occupation ?? '',
+                            idCardNumber: client.idCardNumber ?? '',
+                            phone: client.phone ?? '',
+                            latitude: client.latitude ?? 0.0,
+                            longitude: client.longitude ?? 0.0,
+                            imagePath: client.imagePath ?? '',
+                            notes: client.notes ?? '',
+                            isActive: client.isActive ?? false,
+                            createdBy: client.createdBy ?? 0,
+                            createByName: client.createByName ?? '',
+                            provinceId: client.provinceId ?? 0,
+                            provinceName: client.provinceName ?? '',
+                            districtId: client.districtId ?? 0,
+                            districtName: client.districtName ?? '',
+                            communceId: client.communceId ?? 0,
+                            communceName: client.communceName ?? '',
+                            villageId: client.villageId ?? 0,
+                            villageName: client.villageName ?? '',
+                            onEdit: () {
+                              Get.to(
+                                () => Updateclientview(clientmodel: client),
+                                transition: Transition.rightToLeft,
+                                binding: Updateclientbinding(),
+                              );
+                            },
+                            onDelete: () {},
+                            onTap: () {
+                              Get.to(
+                                () => Updateclientview(clientmodel: client),
+                                transition: Transition.rightToLeft,
+                                binding: Updateclientbinding(),
+                              );
+                            },
                           );
                         },
                         childCount: clientcontroller.client.length,
                       ),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: gridCount,
-                        mainAxisSpacing: 8,
-                        crossAxisSpacing: 8,
+                        mainAxisSpacing: 20,
                         childAspectRatio: isDesktop ? 3.2 : 2.6,
                       ),
                     ),
@@ -300,7 +296,7 @@ class _ClientviewState extends State<Clientview> {
 
               // Loading more indicator
               if (clientcontroller.isLoadingMore.value)
-                SliverToBoxAdapter(
+                const SliverToBoxAdapter(
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Center(

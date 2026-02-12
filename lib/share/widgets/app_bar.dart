@@ -34,7 +34,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               style: TextStyles.moul(
                 context,
                 color: TheColors.warningColor,
-                fontSize: 17,
+                fontSize: 20,
               ),
             ),
           ],

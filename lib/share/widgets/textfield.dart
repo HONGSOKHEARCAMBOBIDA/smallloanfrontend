@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:loanfrontend/core/theme/app_color.dart';
 import 'package:loanfrontend/core/theme/text_styles.dart';
 import 'package:loanfrontend/module/textfield/textfieldcontroller.dart';
@@ -14,6 +15,7 @@ class CustomTextField extends StatefulWidget {
   final ValueChanged<String>? onChanged;
   final bool readOnly;
   final TextFieldController? textFieldController;
+  final List<TextInputFormatter>? inputFormatters;
   const CustomTextField(
       {Key? key,
       this.readOnly = false,
@@ -25,7 +27,8 @@ class CustomTextField extends StatefulWidget {
       this.keyboardType = TextInputType.text,
       this.obscureText = false,
       this.onChanged,
-      this.textFieldController})
+      this.textFieldController,
+      this.inputFormatters})
       : super(key: key);
 
   @override
@@ -44,6 +47,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      inputFormatters: widget.inputFormatters,
       readOnly: widget.readOnly,
       controller: widget.controller,
       keyboardType: widget.keyboardType,

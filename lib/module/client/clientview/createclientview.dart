@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:loanfrontend/core/helper/show_communce_buttonsheet.dart';
@@ -285,7 +286,8 @@ class _CreateclientviewState extends State<Createclientview> {
             _buildTextField("មុខរបរ", occupationcontroller, "កសិករ"),
             _buildTextField(
                 "លេខអត្តសញ្ញាណប័ណ្ណ", idCardNumbercontroller, "12035478"),
-            _buildTextField("លេខទូរសព្", phonecontroller, "02145235"),
+            _buildTextField("លេខទូរសព្", phonecontroller, "02145235",
+                isPhone: true),
             _buildDatePicker(),
           ],
         ),
@@ -449,7 +451,11 @@ class _CreateclientviewState extends State<Createclientview> {
   }
 
   Widget _buildTextField(
-      String label, TextEditingController controller, String hintText) {
+    String label,
+    TextEditingController controller,
+    String hintText, {
+    bool isPhone = false,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -458,6 +464,24 @@ class _CreateclientviewState extends State<Createclientview> {
         CustomTextField(
           controller: controller,
           hintText: hintText,
+          keyboardType: isPhone ? TextInputType.phone : TextInputType.text,
+          inputFormatters: isPhone
+              ? [
+                  FilteringTextInputFormatter.digitsOnly,
+                  LengthLimitingTextInputFormatter(10),
+                ]
+              : null,
+          validator: isPhone
+              ? (value) {
+                  if (value == null || value.isEmpty) {
+                    return "សូមបញ្ចូលលេខទូរសព្ទ";
+                  }
+                  if (value.length < 8) {
+                    return "លេខទូរសព្ទមិនត្រឹមត្រូវ";
+                  }
+                  return null;
+                }
+              : null,
         ),
         const SizedBox(height: 12),
       ],

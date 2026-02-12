@@ -156,10 +156,6 @@ class Clientcard extends StatelessWidget {
                         color:
                             isActive ? TheColors.successColor : TheColors.red,
                         shape: BoxShape.circle,
-                        border: Border.all(
-                          color: isDarkMode ? Colors.grey[850]! : Colors.white,
-                          width: 2,
-                        ),
                       ),
                     ),
                   ),
@@ -190,7 +186,7 @@ class Clientcard extends StatelessWidget {
                           ],
                         ),
                       ),
-                      SizedBox(height: 4),
+                      SizedBox(height: 7),
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(
@@ -199,7 +195,7 @@ class Clientcard extends StatelessWidget {
                               "មុខរបរ : ",
                               style: GoogleFonts.siemreap(
                                 fontSize: smallFontSize,
-                                color: TheColors.successColor,
+                                color: TheColors.warningColor,
                               ),
                             ),
                             SizedBox(width: 4),
@@ -215,7 +211,7 @@ class Clientcard extends StatelessWidget {
                               "ភេទ : ",
                               style: GoogleFonts.siemreap(
                                 fontSize: smallFontSize,
-                                color: TheColors.successColor,
+                                color: TheColors.warningColor,
                               ),
                             ),
                             SizedBox(width: 4),
@@ -231,7 +227,7 @@ class Clientcard extends StatelessWidget {
                               "អាយុ: ",
                               style: GoogleFonts.siemreap(
                                 fontSize: smallFontSize,
-                                color: TheColors.successColor,
+                                color: TheColors.warningColor,
                               ),
                             ),
                             SizedBox(width: 4),
@@ -245,14 +241,14 @@ class Clientcard extends StatelessWidget {
                           ],
                         ),
                       ),
-                      SizedBox(height: 6),
+                      SizedBox(height: 7),
                       // Phone number
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(
                           children: [
                             Icon(Icons.phone,
-                                size: iconSize, color: TheColors.lightOrage),
+                                size: iconSize, color: TheColors.checked),
                             SizedBox(width: 6),
                             Text(
                               phone,
@@ -263,7 +259,7 @@ class Clientcard extends StatelessWidget {
                           ],
                         ),
                       ),
-                      SizedBox(height: 6),
+                      SizedBox(height: 10),
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(
@@ -272,7 +268,7 @@ class Clientcard extends StatelessWidget {
                               "លេខអត្តសញ្ញាណបណ្ណ : ",
                               style: GoogleFonts.siemreap(
                                 fontSize: smallFontSize,
-                                color: TheColors.successColor,
+                                color: TheColors.warningColor,
                               ),
                             ),
                             SizedBox(width: 4),
@@ -286,7 +282,7 @@ class Clientcard extends StatelessWidget {
                           ],
                         ),
                       ),
-                      SizedBox(height: 4),
+                      const SizedBox(height: 15),
                       // Location
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
@@ -295,7 +291,7 @@ class Clientcard extends StatelessWidget {
                         child: Row(
                           children: [
                             Icon(Icons.location_on,
-                                size: iconSize, color: TheColors.lightOrage),
+                                size: iconSize, color: TheColors.checked),
                             const SizedBox(width: 6),
                             Text(
                               "$villageName, $communceName, $districtName, $provinceName",

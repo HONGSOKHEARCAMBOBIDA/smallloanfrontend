@@ -26,13 +26,18 @@ class _RecieptlistviewState extends State<Recieptlistview> {
   final usercontroller = Get.find<AuthController>();
   final TextEditingController searchQuery = TextEditingController();
   final selectstartdate = Rxn<DateTime>();
+
   final selectenddate = Rxn<DateTime>();
   final selectcoid = Rxn<int>();
   final ScrollController _scrollController = ScrollController();
+  var start = ''.obs;
   @override
   void initState() {
+    final now = DateTime.now();
+    start.value =
+        '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}';
     usercontroller.getuser();
-    controller.getrecieptlist(isRefresh: true);
+    controller.getrecieptlist(isRefresh: true, start: start.value);
     super.initState();
     _scrollController.addListener(_onScroll);
   }
