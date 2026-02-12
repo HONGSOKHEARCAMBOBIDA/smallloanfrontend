@@ -19,6 +19,7 @@ import 'package:loanfrontend/module/journal/view/journalview.dart';
 import 'package:loanfrontend/module/journal/view/updatejournalview.dart';
 import 'package:loanfrontend/module/loan/binding/loanbinding.dart';
 import 'package:loanfrontend/module/loan/view/createloanview.dart';
+import 'package:loanfrontend/module/loan/view/lateloanview.dart';
 import 'package:loanfrontend/module/loan/view/loanforapprove.dart';
 import 'package:loanfrontend/module/loan/view/loanforcheck.dart';
 import 'package:loanfrontend/module/loan/view/loanview.dart';
@@ -98,6 +99,12 @@ class AppPage {
     GetPage(
       name: '/viewloan',
       page: () => const Loanview(),
+      bindings: [Loanbinding()],
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: '/viewlateloan',
+      page: () => const Lateloanview(),
       bindings: [Loanbinding()],
       transition: Transition.rightToLeft,
     ),

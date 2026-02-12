@@ -96,6 +96,9 @@ class _LoanState extends State<Loan> {
                 _buildDrawerItem(Icons.receipt_long, "បញ្ជីកម្ចីទាំងអស់", () {
                   Get.toNamed('/viewloan');
                 }),
+                _buildDrawerItem(Icons.receipt_long, "បញ្ចីកម្ចីយឺត", () {
+                  Get.toNamed('/viewlateloan');
+                }),
                 Obx(() {
                   final count = controller.reciept
                       .where((e) => (e.totalCollect ?? 0) > 0)

@@ -199,7 +199,7 @@ class Recieptlistcard extends StatelessWidget {
                       // Total to collect
                       _buildAmountRow(
                         context,
-                        label: 'ប្រាក់សរុបបានបង់',
+                        label: 'ប្រាក់សរុបត្រូវបង់',
                         amount: totalAmount,
                         isMobile: isMobile,
                         isPrimary: true,
@@ -211,7 +211,7 @@ class Recieptlistcard extends StatelessWidget {
                       if (penaltyAmount > 0) ...[
                         _buildAmountRow(
                           context,
-                          label: 'ពិន័យសរុប',
+                          label: 'ពិន័យសរុបបានបង់',
                           amount: penaltyAmount,
                           isMobile: isMobile,
                           isWarning: true,
@@ -222,7 +222,7 @@ class Recieptlistcard extends StatelessWidget {
                       // Lump sum payment
                       _buildAmountRow(
                         context,
-                        label: 'ប្រាក់ដេីម',
+                        label: 'ប្រាក់ដេីមបានបង់',
                         amount: principalAmount,
                         isMobile: isMobile,
                         isPrimary: true,
@@ -230,7 +230,7 @@ class Recieptlistcard extends StatelessWidget {
                       SizedBox(height: 12),
                       _buildAmountRow(
                         context,
-                        label: 'ការប្រាក់',
+                        label: 'ការប្រាក់បានបង់',
                         amount: interestAmount,
                         isMobile: isMobile,
                         isPrimary: true,

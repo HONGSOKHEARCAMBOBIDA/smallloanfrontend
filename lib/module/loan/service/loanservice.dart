@@ -115,6 +115,28 @@ class Loanservice {
     }
   }
 
+  Future<List<loanmodel.Data>> getlateloan(
+      {String? name, String? startdate, int? page, int? pageSize}) async {
+    try {
+      final params = <String, dynamic>{};
+      if (name != null && name.isNotEmpty) params['name'] = name;
+      if (startdate != null) params['start'] = startdate;
+      if (page != null) params['page'] = page;
+      if (pageSize != null) params['pageSize'] = pageSize;
+      final response = await apiProvider.get(ApiEndpoint.viewlateloan,
+          queryParameters: params.isNotEmpty ? params : null);
+      if (response.statusCode == 200) {
+        final json = response.data;
+        final model = loanmodel.LoanModel.fromJson(json);
+        return model.data ?? [];
+      } else {
+        throw Exception("Failed ${response.statusCode}");
+      }
+    } catch (e) {
+      throw Exception("Failed ${e.toString()}");
+    }
+  }
+
   Future<bool> deleteLoanbeforapprove({required int id}) async {
     try {
       final isdelete =

@@ -9,13 +9,18 @@ import 'package:loanfrontend/data/models/loanapprovemodel.dart' as modelapprove;
 class LoanController extends GetxController {
   final Loanservice service = Loanservice();
   var isLoading = false.obs;
+  var isLoadinglateloan = false.obs;
   var loanforcheck = <Data>[].obs;
   var loanforapprove = <modelapprove.Data>[].obs;
   var loan = <loanmodel.Data>[].obs;
   final RxString searchQuery = ''.obs;
+  final RxString searchQueryLateloan = ''.obs;
   var isLoadingMore = false.obs;
+  var isLoadingMoreLateloan = false.obs;
   var hasMore = true.obs;
+  var hasMoreLateLoan = true.obs;
   var currentPage = 1.obs;
+  var currentPageLateloan = 1.obs;
 
   @override
   void onInit() {
@@ -23,6 +28,12 @@ class LoanController extends GetxController {
       currentPage.value = 1;
       hasMore.value = true;
       getloan(name: searchQuery.value, isRefresh: true);
+    }, time: const Duration(microseconds: 200));
+
+    debounce(searchQueryLateloan, (_) {
+      currentPageLateloan.value = 1;
+      hasMoreLateLoan.value = true;
+      getlateloan(name: searchQueryLateloan.value, isRefresh: true);
     }, time: const Duration(microseconds: 200));
     super.onInit();
   }
@@ -198,5 +209,54 @@ class LoanController extends GetxController {
     } finally {
       isLoading.value = false;
     }
+  }
+
+  Future<void> getlateloan(
+      {String? name,
+      String? startdate,
+      int pageSize = 10,
+      bool isRefresh = false,
+      bool loadMorelate = false}) async {
+    if (loadMorelate && (!hasMoreLateLoan.value || isLoadingMoreLateloan.value))
+      return;
+    try {
+      if (loadMorelate) {
+        isLoadingMoreLateloan.value = true;
+      } else {
+        isLoadinglateloan.value = true;
+      }
+      if (isRefresh) {
+        loan.clear();
+        currentPageLateloan.value = 1;
+        hasMoreLateLoan.value = true;
+      }
+      final result = await service.getlateloan(
+          name: name,
+          startdate: startdate,
+          page: currentPageLateloan.value,
+          pageSize: pageSize);
+      if (loadMorelate) {
+        loan.addAll(result);
+      } else {
+        loan.assignAll(result);
+      }
+      if (result.length < pageSize) {
+        hasMoreLateLoan.value = false;
+      }
+      if (result.isNotEmpty) {
+        currentPage.value++;
+      }
+    } catch (e) {
+      CustomSnackbar.error(title: "មានបញ្ហា", message: e.toString());
+    } finally {
+      isLoadinglateloan.value = false;
+      isLoadingMoreLateloan.value = false;
+    }
+  }
+
+  Future<void> loadMoreLateLoan() async {
+    await getlateloan(
+        name: searchQueryLateloan.value.isEmpty ? null : searchQuery.value,
+        loadMorelate: true);
   }
 }

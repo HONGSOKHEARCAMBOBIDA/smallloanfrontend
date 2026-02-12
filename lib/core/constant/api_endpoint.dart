@@ -41,6 +41,7 @@ class ApiEndpoint {
   static String RollbackVerify(int id) => "rollbackverify/$id";
   static String deletereceipt(int id) => "deletereceipt/$id";
   static String viewrolehaspermission(int id) => "viewrolepermission/$id";
+  static const viewlateloan = "viewlateloan";
 }
 
 class Message {
