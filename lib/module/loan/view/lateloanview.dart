@@ -229,7 +229,7 @@ class _LateloanviewState extends State<Lateloanview> {
                             crossAxisCount: gridCount,
                             mainAxisSpacing: 8,
                             crossAxisSpacing: 8,
-                            childAspectRatio: isDesktop ? 2.65 : 1.8,
+                            childAspectRatio: isDesktop ? 2.5 : 1.8,
                           ),
                         ),
                       ),

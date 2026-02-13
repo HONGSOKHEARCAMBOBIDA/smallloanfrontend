@@ -22,7 +22,7 @@ class TheColors {
   static const black = Colors.black;
   static const orange = Color.fromARGB(255, 252, 252, 252);
   static const red = Color.fromARGB(255, 255, 13, 0);
-  static const green = Color(0xff45b332);
+  static const green = Color.fromARGB(255, 30, 172, 5);
   static const cutecolo = Color(0xffc276f4);
   static const pending = Color.fromARGB(255, 252, 189, 2);
   static const checked = Color.fromARGB(255, 0, 115, 255);

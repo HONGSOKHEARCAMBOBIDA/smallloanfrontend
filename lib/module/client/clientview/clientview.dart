@@ -160,6 +160,10 @@ class _ClientviewState extends State<Clientview> {
                                 ),
                               ),
                             ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("សរុប: ${clientcontroller.client.length} នាក់",style: TextStyles.siemreap(context,color: TheColors.white,fontSize: 13),),
+                            )
                           ],
                         ),
                       ),

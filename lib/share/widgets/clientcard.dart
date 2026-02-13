@@ -69,18 +69,14 @@ class Clientcard extends StatelessWidget {
   @override
   @override
   Widget build(BuildContext context) {
-    // responsive helpers
     final breakpoints = ResponsiveBreakpoints.of(context);
     final bool isMobile = breakpoints.isMobile;
     final bool isTablet = breakpoints.isTablet;
-
-    // responsive sizes
     final double avatarRadius = isMobile ? 36 : (isTablet ? 44 : 56);
     final double iconSize = isMobile ? 12 : 18;
     final double nameFontSize = isMobile ? 13 : (isTablet ? 14 : 18);
     final double smallFontSize = isMobile ? 12 : 15;
     final double cardPadding = isMobile ? 10 : 12;
-
     int calculateAge(String dob) {
       DateTime birthDate = DateTime.parse(dob);
       DateTime today = DateTime.now();
@@ -91,10 +87,6 @@ class Clientcard extends StatelessWidget {
       }
       return age;
     }
-
-    final theme = Theme.of(context);
-    final isDarkMode = theme.brightness == Brightness.dark;
-
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(18.0),
@@ -250,7 +242,7 @@ class Clientcard extends StatelessWidget {
                             Icon(Icons.phone,
                                 size: iconSize, color: TheColors.checked),
                             SizedBox(width: 6),
-                            Text(
+                            SelectableText(
                               phone,
                               style: TextStyles.siemreap(context,
                                   color: TheColors.white,

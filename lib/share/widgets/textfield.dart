@@ -53,14 +53,13 @@ class _CustomTextFieldState extends State<CustomTextField> {
       keyboardType: widget.keyboardType,
       obscureText: _obscureText,
       decoration: InputDecoration(
-        hoverColor: TheColors.approve,
-        prefixIcon: Icon(widget.prefixIcon, color: TheColors.white),
+        prefixIcon: Icon(widget.prefixIcon, color: TheColors.checked),
         // suffixIcon: Icon(suffixIcon,color: TheColors.errorColor,),
         suffixIcon: widget.obscureText
             ? IconButton(
                 icon: Icon(
                   _obscureText ? Icons.visibility_off : Icons.visibility,
-                  color: TheColors.white,
+                  color: TheColors.checked,
                 ),
                 onPressed: () {
                   setState(() {
@@ -80,7 +79,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(
             color: TheColors.gray,
-            width: 0.5,
+            width: 0.8,
           ), // Primary Blue
         ),
 
@@ -88,7 +87,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(
             color: TheColors.checked,
-            width: 0.5,
+            width: 1,
           ), // Primary Blue
         ),
         contentPadding: const EdgeInsets.symmetric(
