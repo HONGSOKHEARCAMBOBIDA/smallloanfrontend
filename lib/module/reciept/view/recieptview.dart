@@ -188,7 +188,7 @@ class _RecieptviewState extends State<Recieptview> {
 
                             return Padding(
                                 padding: const EdgeInsets.only(
-                                    right: 10, left: 10, bottom: 8),
+                                    right: 5, left: 5, bottom: 8),
                                 child: Recieptcard(
                                     reciept: reciept,
                                     ontap: () {
@@ -260,7 +260,7 @@ class _RecieptviewState extends State<Recieptview> {
                                                                 .siemreap(
                                                                     context,
                                                                     fontSize:
-                                                                        15,
+                                                                        12,
                                                                     color: TheColors
                                                                         .white)),
                                                       ),
@@ -318,7 +318,7 @@ class _RecieptviewState extends State<Recieptview> {
                                                                       .siemreap(
                                                                     context,
                                                                     fontSize:
-                                                                        16,
+                                                                        12,
                                                                     color: TheColors
                                                                         .white,
                                                                   ),

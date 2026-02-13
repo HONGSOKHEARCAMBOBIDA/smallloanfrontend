@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:loanfrontend/core/constant/constants.dart';
 import 'package:loanfrontend/core/theme/app_color.dart';
@@ -53,8 +54,11 @@ class Loanlistcard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
+    final isTablet = ResponsiveBreakpoints.of(context).isTablet;
     final double iconSize = isMobile ? 12 : 18;
-    final double nameFontSize = isMobile ? 11 : 14;
+    final double nameFontSize = isMobile ? 11 : 16;
+
+    final double avatarRadius = isMobile ? 36 : (isTablet ? 44 : 40);
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(12),
@@ -80,22 +84,26 @@ class Loanlistcard extends StatelessWidget {
                   Container(
                     decoration: BoxDecoration(
                       border: Border.all(
-                        color: TheColors.checked,
+                        color: statusColor(loan.status),
                         width: 2,
                       ),
                       borderRadius: BorderRadius.circular(isMobile ? 50 : 70),
                     ),
-                    child: CircleAvatar(
-                      radius: 40,
-                      backgroundColor: TheColors.bgColor,
-                      backgroundImage: loan.clientImage != null &&
-                              loan.clientImage!.isNotEmpty
-                          ? NetworkImage(
-                              "${Appconstants.baseUrl}/clientimage/${loan.clientImage}",
-                            )
-                          : const NetworkImage(
-                              "https://cdn-icons-png.flaticon.com/512/17634/17634775.png",
-                            ),
+                    child: ClipOval(
+                      child: CachedNetworkImage(
+                        imageUrl:
+                            "${Appconstants.baseUrl}/clientimage/${loan.clientImage}",
+                        width: avatarRadius * 2,
+                        height: avatarRadius * 2,
+                        fit: BoxFit.cover,
+                        placeholder: (_, __) => const CircularProgressIndicator(
+                          color: TheColors.warningColor,
+                        ),
+                        errorWidget: (_, __, ___) => Image.network(
+                          'https://cdn-icons-png.flaticon.com/512/17634/17634775.png',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -124,14 +132,17 @@ class Loanlistcard extends StatelessWidget {
                                 vertical: 4,
                               ),
                               decoration: BoxDecoration(
-                                color: statusColor(loan.status),
-                                borderRadius: BorderRadius.circular(6),
-                              ),
+                                  color: statusColor(loan.status)
+                                      .withOpacity(0.15),
+                                  borderRadius: BorderRadius.circular(6),
+                                  border: Border.all(
+                                      color: statusColor(loan.status)
+                                          .withOpacity(0.3))),
                               child: Text(
                                 getStatusText(loan.status),
                                 style: GoogleFonts.siemreap(
                                   fontSize: nameFontSize,
-                                  color: Colors.white,
+                                  color: statusColor(loan.status),
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),

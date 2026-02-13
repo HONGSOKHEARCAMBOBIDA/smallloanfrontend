@@ -49,28 +49,29 @@ class Recieptcard extends StatelessWidget {
                     // Client avatar with status indicator
                     Stack(
                       children: [
-                                        Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: TheColors.checked,
-                        width: 1.5,
-                      ),
-                      borderRadius: BorderRadius.circular(isMobile ? 50 : 60),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: CircleAvatar(
-                        radius: avatarRadius,
-                        backgroundColor: TheColors.bgColor,
-                        backgroundImage: reciept.clientImage != null
-                            ? NetworkImage(
-                                "${Appconstants.baseUrl}/clientimage/${reciept.clientImage}")
-                            : const NetworkImage(
-                                'https://cdn-icons-png.flaticon.com/512/17634/17634775.png',
-                              ) as ImageProvider,
-                      ),
-                    ),
-                  ),
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: TheColors.checked,
+                              width: 1.5,
+                            ),
+                            borderRadius:
+                                BorderRadius.circular(isMobile ? 50 : 60),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(2.0),
+                            child: CircleAvatar(
+                              radius: avatarRadius,
+                              backgroundColor: TheColors.bgColor,
+                              backgroundImage: reciept.clientImage != null
+                                  ? NetworkImage(
+                                      "${Appconstants.baseUrl}/clientimage/${reciept.clientImage}")
+                                  : const NetworkImage(
+                                      'https://cdn-icons-png.flaticon.com/512/17634/17634775.png',
+                                    ) as ImageProvider,
+                            ),
+                          ),
+                        ),
                         Positioned(
                           right: 0,
                           bottom: 0,
@@ -90,7 +91,7 @@ class Recieptcard extends StatelessWidget {
                       ],
                     ),
                     SizedBox(width: 10),
-            
+
                     // Client name and status
                     Expanded(
                       child: Column(
@@ -112,7 +113,7 @@ class Recieptcard extends StatelessWidget {
                                 ),
                               ),
                               Container(
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                   horizontal: 8,
                                   vertical: 4,
                                 ),
@@ -166,16 +167,16 @@ class Recieptcard extends StatelessWidget {
                     ),
                   ],
                 ),
-            
+
                 SizedBox(height: 20),
-            
+
                 // Amounts section with clean layout
                 Container(
                   padding: EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    border:
-                        Border.all(color: TheColors.errorColor.withOpacity(0.3)),
+                    border: Border.all(
+                        color: TheColors.errorColor.withOpacity(0.3)),
                   ),
                   child: SingleChildScrollView(
                     child: Column(
@@ -188,9 +189,9 @@ class Recieptcard extends StatelessWidget {
                           isMobile: isMobile,
                           isPrimary: true,
                         ),
-                    
+
                         SizedBox(height: 12),
-                    
+
                         // Penalty details if exists
                         if (reciept.totalPenalty! > 0) ...[
                           _buildAmountRow(
@@ -208,7 +209,7 @@ class Recieptcard extends StatelessWidget {
                           ),
                           SizedBox(height: 12),
                         ],
-                    
+
                         // Lump sum payment
                         _buildAmountRow(
                           context,
@@ -221,9 +222,9 @@ class Recieptcard extends StatelessWidget {
                     ),
                   ),
                 ),
-            
+
                 SizedBox(height: 16),
-            
+
                 // Footer with action button
                 Row(
                   children: [

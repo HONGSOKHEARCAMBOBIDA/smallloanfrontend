@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:loanfrontend/core/constant/api_endpoint.dart';
 import 'package:loanfrontend/core/theme/app_color.dart';
 import 'package:loanfrontend/core/theme/text_styles.dart';
 import 'package:loanfrontend/data/models/balanchsheetmodel.dart';
@@ -18,7 +19,7 @@ class BalanceSheetView extends GetView<Journalcontroller> {
     final isMobile = breakpoint.isMobile;
     return Scaffold(
       backgroundColor: TheColors.bgColor,
-      appBar: const CustomAppBar(title: "របាយការណ៍ សមតុល្យ"),
+      appBar: const CustomAppBar(title: "ស្ថានភាពលុយ និងបំណុល"),
       body: Padding(
         padding: EdgeInsets.only(
             left: isMobile ? 3 : 600,
@@ -30,12 +31,7 @@ class BalanceSheetView extends GetView<Journalcontroller> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CustomLoading(),
-                  SizedBox(height: 16),
-                  Text(
-                    'Loading Balance Sheet...',
-                    style: TextStyle(color: Colors.grey),
-                  ),
+                  Center(child: CustomLoading()),
                 ],
               ),
             );
@@ -47,19 +43,19 @@ class BalanceSheetView extends GetView<Journalcontroller> {
             return const Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [Center(child: Text("No Data"))],
+                children: [Center(child: Text(Message.NoData))],
               ),
             );
           }
 
           return SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
                   // Date Selection Card
 
-                  SizedBox(height: 16),
+                  SizedBox(height: 10),
 
                   // Main Balance Sheet Card
                   BalanceSheetCard(

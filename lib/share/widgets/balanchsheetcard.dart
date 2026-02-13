@@ -116,41 +116,44 @@ class BalanceSheetCard extends StatelessWidget {
   Widget _buildQuickStats(Totals? totals, BuildContext context) {
     if (totals == null) return SizedBox();
 
-    return Row(
+    return Column(
       children: [
         // Total Assets
-        Expanded(
-          child: _buildStatCard(
-            context: context,
-            title: 'ទ្រព្យ',
-            amount: totals.totalAssets ?? 0,
-            color: TheColors.green,
-            icon: Icons.account_balance_wallet,
-          ),
-        ),
-        SizedBox(width: 12),
+        Row(
+          children: [
+            Expanded(
+              child: _buildStatCard(
+                context: context,
+                title: 'ទ្រព្យ',
+                amount: totals.totalAssets ?? 0,
+                color: TheColors.green,
+                icon: Icons.account_balance_wallet,
+              ),
+            ),
+            SizedBox(width: 8),
 
-        // Total Liabilities
-        Expanded(
-          child: _buildStatCard(
-            context: context,
-            title: 'បំណុល',
-            amount: totals.totalLiabilities ?? 0,
-            color: TheColors.warningColor,
-            icon: Icons.money_off,
-          ),
+            // Total Liabilities
+            Expanded(
+              child: _buildStatCard(
+                context: context,
+                title: 'បំណុល',
+                amount: totals.totalLiabilities ?? 0,
+                color: TheColors.warningColor,
+                icon: Icons.money_off,
+              ),
+            ),
+          ],
         ),
-        SizedBox(width: 12),
+
+        SizedBox(height: 12),
 
         // Total Equity
-        Expanded(
-          child: _buildStatCard(
-            context: context,
-            title: 'ដើមទុន',
-            amount: totals.totalEquity ?? 0,
-            color: TheColors.cutecolo,
-            icon: Icons.business,
-          ),
+        _buildStatCard(
+          context: context,
+          title: 'ដើមទុន',
+          amount: totals.totalEquity ?? 0,
+          color: TheColors.cutecolo,
+          icon: Icons.business,
         ),
       ],
     );
@@ -170,31 +173,28 @@ class BalanceSheetCard extends StatelessWidget {
         border: Border.all(color: color.withOpacity(0.3), width: 1),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Icon(icon, size: 16, color: color),
-              SizedBox(width: 4),
-              Text(
-                title,
-                style: TextStyles.siemreap(
-                  context,
-                  fontSize: 12,
-                  fontweight: FontWeight.w500,
-                  color: color,
-                ),
+          Center(
+            child: Text(
+              title,
+              style: TextStyles.siemreap(
+                context,
+                fontSize: 12,
+                fontweight: FontWeight.w500,
+                color: color,
               ),
-            ],
+            ),
           ),
           SizedBox(height: 8),
-          Text(
-            '${(amount)} ៛',
-            style: TextStyles.siemreap(
-              context,
-              fontSize: 14,
-              fontweight: FontWeight.bold,
-              color: TheColors.white,
+          Center(
+            child: Text(
+              '${(amount)} ៛',
+              style: TextStyles.siemreap(
+                context,
+                fontSize: 14,
+                fontweight: FontWeight.bold,
+                color: TheColors.white,
+              ),
             ),
           ),
         ],

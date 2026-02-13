@@ -144,7 +144,8 @@ class _AccountState extends State<Account> {
                 _buildDrawerItem(Icons.attach_money, "លទ្ធផលប្រមូលបាន", () {
                   Get.toNamed('/viewrecieptlist');
                 }),
-                _buildDrawerItem(Icons.attach_money, "របាយការណ៍ សមតុល្យ", () {
+                _buildDrawerItem(Icons.attach_money, "ស្ថានភាពលុយ និងបំណុល",
+                    () {
                   Get.toNamed('/balanchsheet');
                 }),
                 _buildDrawerItem(Icons.attach_money, "របាយការណ៍ ចំណេញ/ខាត", () {
