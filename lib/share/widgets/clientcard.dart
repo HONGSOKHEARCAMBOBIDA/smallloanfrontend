@@ -17,8 +17,8 @@ class Clientcard extends StatelessWidget {
   final String occupation;
   final String idCardNumber;
   final String phone;
-  final double latitude;
-  final double longitude;
+  // final double latitude;
+  // final double longitude;
   final String imagePath;
   final String notes;
   final isActive;
@@ -35,6 +35,8 @@ class Clientcard extends StatelessWidget {
   final VoidCallback onEdit;
   final VoidCallback onDelete;
   final VoidCallback onTap;
+  final bool isborrow;
+  final int? loanamount;
 
   const Clientcard({
     Key? key,
@@ -46,8 +48,8 @@ class Clientcard extends StatelessWidget {
     required this.occupation,
     required this.idCardNumber,
     required this.phone,
-    required this.latitude,
-    required this.longitude,
+    // required this.latitude,
+    // required this.longitude,
     required this.imagePath,
     required this.notes,
     required this.isActive,
@@ -64,6 +66,8 @@ class Clientcard extends StatelessWidget {
     required this.onEdit,
     required this.onDelete,
     required this.onTap,
+    required this.isborrow,
+    this.loanamount
   }) : super(key: key);
 
   @override
@@ -163,11 +167,10 @@ class Clientcard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // Name row
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            SelectableText(
+                      Row(
+                        children: [
+                          Expanded(
+                            child: SelectableText(
                               name,
                               style: TextStyles.siemreap(context,
                                   fontSize: nameFontSize,
@@ -175,8 +178,30 @@ class Clientcard extends StatelessWidget {
                                   color: TheColors.white),
                               maxLines: 1,
                             ),
-                          ],
-                        ),
+                          ),
+                          if(isborrow ?? false)
+                            Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 4,
+                            ),
+                            decoration: BoxDecoration(
+                                color: TheColors.warningColor
+                                    .withOpacity(0.15),
+                                borderRadius: BorderRadius.circular(6),
+                                border: Border.all(
+                                    color: TheColors.warningColor
+                                        .withOpacity(0.3))),
+                            child: Text(
+                              "${loanamount ?? 0} ៛",
+                              style: GoogleFonts.siemreap(
+                                fontSize: nameFontSize,
+                                color: TheColors.warningColor,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                                                        ),
+                        ],
                       ),
                       SizedBox(height: 7),
                       SingleChildScrollView(
@@ -293,6 +318,7 @@ class Clientcard extends StatelessWidget {
                                 color: TheColors.white,
                               ),
                             ),
+                            
                           ],
                         ),
                       ),
@@ -300,7 +326,7 @@ class Clientcard extends StatelessWidget {
                   ),
                 ),
               ),
-              _buildActionMenu(context),
+              
             ],
           ),
         ),

@@ -40,8 +40,8 @@ class Data {
   String? occupation;
   String? idCardNumber;
   String? phone;
-  double? latitude;
-  double? longitude;
+  int? latitude;
+  int? longitude;
   String? imagePath;
   String? notes;
   bool? isActive;
@@ -55,6 +55,8 @@ class Data {
   String? communceName;
   int? villageId;
   String? villageName;
+  bool? isBorrow;
+  int? loanAmount;
 
   Data(
       {this.id,
@@ -79,7 +81,9 @@ class Data {
       this.communceId,
       this.communceName,
       this.villageId,
-      this.villageName});
+      this.villageName,
+      this.isBorrow,
+      this.loanAmount});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -105,6 +109,8 @@ class Data {
     communceName = json['communce_name'];
     villageId = json['village_id'];
     villageName = json['village_name'];
+    isBorrow = json['is_borrow'];
+    loanAmount = json['loan_amount'];
   }
 
   Map<String, dynamic> toJson() {
@@ -132,6 +138,8 @@ class Data {
     data['communce_name'] = this.communceName;
     data['village_id'] = this.villageId;
     data['village_name'] = this.villageName;
+    data['is_borrow'] = this.isBorrow;
+    data['loan_amount'] = this.loanAmount;
     return data;
   }
 }

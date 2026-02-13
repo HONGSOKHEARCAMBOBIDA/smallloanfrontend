@@ -204,8 +204,8 @@ class _ClientviewState extends State<Clientview> {
                             occupation: client.occupation ?? '',
                             idCardNumber: client.idCardNumber ?? '',
                             phone: client.phone ?? '',
-                            latitude: client.latitude ?? 0.0,
-                            longitude: client.longitude ?? 0.0,
+                            // latitude: client.latitude ?? 0.0,
+                            // longitude: client.longitude ?? 0.0,
                             imagePath: client.imagePath ?? '',
                             notes: client.notes ?? '',
                             isActive: client.isActive ?? false,
@@ -219,6 +219,8 @@ class _ClientviewState extends State<Clientview> {
                             communceName: client.communceName ?? '',
                             villageId: client.villageId ?? 0,
                             villageName: client.villageName ?? '',
+                            isborrow: client.isBorrow!,
+                            loanamount: client.loanAmount,
                             onEdit: () {
                               Get.to(
                                 () => Updateclientview(clientmodel: client),
@@ -256,8 +258,8 @@ class _ClientviewState extends State<Clientview> {
                             occupation: client.occupation ?? '',
                             idCardNumber: client.idCardNumber ?? '',
                             phone: client.phone ?? '',
-                            latitude: client.latitude ?? 0.0,
-                            longitude: client.longitude ?? 0.0,
+                            // latitude: client.latitude ?? 0.0,
+                            // longitude: client.longitude ?? 0.0,
                             imagePath: client.imagePath ?? '',
                             notes: client.notes ?? '',
                             isActive: client.isActive ?? false,
@@ -271,6 +273,8 @@ class _ClientviewState extends State<Clientview> {
                             communceName: client.communceName ?? '',
                             villageId: client.villageId ?? 0,
                             villageName: client.villageName ?? '',
+                            isborrow: client.isBorrow!,
+                            loanamount: client.loanAmount,
                             onEdit: () {
                               Get.to(
                                 () => Updateclientview(clientmodel: client),
@@ -293,7 +297,7 @@ class _ClientviewState extends State<Clientview> {
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: gridCount,
                         mainAxisSpacing: 20,
-                        childAspectRatio: isDesktop ? 3.2 : 2.6,
+                        childAspectRatio: isDesktop ? 3 : 2.6,
                       ),
                     ),
                   ),
