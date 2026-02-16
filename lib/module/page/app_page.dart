@@ -145,7 +145,7 @@ class AppPage {
     ),
     GetPage(
       name: '/balanchsheet',
-      page: () => const BalanceSheetView(),
+      page: () =>  BalanceSheetView(),
       bindings: [Journalbinding()],
       transition: Transition.fadeIn,
     ),

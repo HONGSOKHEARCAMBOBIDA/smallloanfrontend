@@ -8,12 +8,14 @@ class BalanceSheetCard extends StatelessWidget {
   final BalanchsheetModel balanceSheet;
   final VoidCallback? onViewDetails;
   final VoidCallback? onRefresh;
+  final VoidCallback? onTap;
 
   const BalanceSheetCard({
     Key? key,
     required this.balanceSheet,
     this.onViewDetails,
     this.onRefresh,
+    this.onTap
   }) : super(key: key);
 
   @override
@@ -88,6 +90,16 @@ class BalanceSheetCard extends StatelessWidget {
                       color: TheColors.white,
                     ),
                   ),
+                  SizedBox(height: 10,),
+                InkWell(
+  onTap: onTap,
+  child: const Icon(
+    Icons.date_range_outlined,
+    color: TheColors.checked,
+    size: 28,
+  ),
+)
+
                 ],
               ),
             ],
@@ -179,7 +191,7 @@ class BalanceSheetCard extends StatelessWidget {
               title,
               style: TextStyles.siemreap(
                 context,
-                fontSize: 12,
+                fontSize: 15,
                 fontweight: FontWeight.w500,
                 color: color,
               ),

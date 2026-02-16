@@ -7,11 +7,13 @@ import 'package:loanfrontend/data/models/balanchsheetmodel.dart';
 import 'package:loanfrontend/module/journal/controller/journalcontroller.dart';
 import 'package:loanfrontend/share/widgets/app_bar.dart';
 import 'package:loanfrontend/share/widgets/balanchsheetcard.dart';
+import 'package:loanfrontend/share/widgets/datepicker.dart';
 import 'package:loanfrontend/share/widgets/loading.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 class BalanceSheetView extends GetView<Journalcontroller> {
-  const BalanceSheetView({Key? key}) : super(key: key);
+  final selectdob = Rxn<DateTime>();
+   BalanceSheetView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -56,12 +58,19 @@ class BalanceSheetView extends GetView<Journalcontroller> {
                   // Date Selection Card
 
                   SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: _buildDatePicker(),
+                  ),
 
                   // Main Balance Sheet Card
                   BalanceSheetCard(
                     balanceSheet: balanceSheet,
                     onViewDetails: () => _navigateToDetailedView(balanceSheet),
                     onRefresh: () {},
+                    onTap: (){
+                      _buildDatePicker();
+                    },
                   ),
                   SizedBox(height: 16),
 
@@ -97,15 +106,10 @@ class BalanceSheetView extends GetView<Journalcontroller> {
               'សង្ខែបរបាយការណ៍គណនេយ្យ',
               style: TextStyles.siemreap(
                 context,
-                fontSize: 18,
+                fontSize: 20,
                 fontweight: FontWeight.bold,
                 color: TheColors.checked,
               ),
-            ),
-            SizedBox(height: 12),
-            Divider(
-              color: TheColors.gray,
-              height: 0.5,
             ),
             SizedBox(height: 12),
             Row(
@@ -118,7 +122,7 @@ class BalanceSheetView extends GetView<Journalcontroller> {
                     color: Colors.green,
                   ),
                 ),
-                SizedBox(width: 16),
+               const SizedBox(width: 16),
                 Expanded(
                   child: _buildSummaryItem(
                     context: context,
@@ -247,7 +251,7 @@ class BalanceSheetView extends GetView<Journalcontroller> {
             label,
             style: TextStyles.siemreap(
               context,
-              fontSize: 12,
+              fontSize: 15,
               color: TheColors.white,
             ),
           ),
@@ -273,16 +277,32 @@ class BalanceSheetView extends GetView<Journalcontroller> {
   //   }
   //   return number.toString();
   // }
+Widget _buildDatePicker() {
+  return CustomDatePickerField(
+    label: "",
+    selectedDate: selectdob,
+    onDateSelected: (DateTime? picked) async {
+      if (picked == null) return;
+  
+      // format date
+      final formattedDate =
+          '${picked.year}-${picked.month.toString().padLeft(2, '0')}-${picked.day.toString().padLeft(2, '0')}';
+  
+      // update controller
+      controller.selectedDate.value = formattedDate;
+  
+      // call API
+      await controller.getBalanceSheet(endate: formattedDate);
+    },
+  );
+}
+
+
 
   Future<void> _showDatePicker(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime.now(),
-    );
 
-    if (picked != null) {
+    if (selectdob.value != null) {
+      final picked = selectdob.value!;
       // Format date as YYYY-MM-DD
       final formattedDate =
           '${picked.year}-${picked.month.toString().padLeft(2, '0')}-${picked.day.toString().padLeft(2, '0')}';
