@@ -71,6 +71,28 @@ class Usercontroller extends GetxController {
     }
   }
 
+  Future<void> changepassword(
+      {required String password, required int id}) async {
+    try {
+      isLoading.value = true;
+      final isupdate =
+          await service.changepassword(newpassword: password, id: id);
+      if (isupdate) {
+        Get.back();
+        await getuser();
+        CustomSnackbar.success(
+            title: Message.Success, message: "ពាក្យសម្ងាត់ប្ដូរបានជោគជ័យ");
+      } else {
+        CustomSnackbar.error(
+            title: Message.Error, message: Message.UpdateError);
+      }
+    } catch (e) {
+      CustomSnackbar.error(title: Message.Error, message: e.toString());
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
   Future<void> getuser() async {
     try {
       isLoading.value = true;

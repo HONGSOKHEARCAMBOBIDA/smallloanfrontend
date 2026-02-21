@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/src/simple/list_notifier.dart';
 import 'package:loanfrontend/core/theme/app_color.dart';
 import 'package:loanfrontend/core/theme/text_styles.dart';
 import 'package:loanfrontend/data/models/usermodel.dart';
+import 'package:loanfrontend/module/user/controller/usercontroller.dart';
+import 'package:loanfrontend/share/widgets/textfield.dart';
+import 'package:get/get.dart';
 
-class UserCard extends StatelessWidget {
+class UserCard extends StatefulWidget {
   final Data user;
   final bool isSelected;
   final VoidCallback? onTap;
@@ -18,6 +22,20 @@ class UserCard extends StatelessWidget {
     this.onEdit,
     this.onDelete,
   }) : super(key: key);
+
+  @override
+  State<UserCard> createState() => _UserCardState();
+}
+
+class _UserCardState extends State<UserCard> {
+  final controller = Get.find<Usercontroller>();
+  final newpasswordcontroller = TextEditingController();
+
+  @override
+  void dispose() {
+    newpasswordcontroller.dispose();
+    super.dispose();
+  }
 
   Color statusColor(bool status) {
     switch (status) {
@@ -62,11 +80,11 @@ class UserCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
-    final statusBgColor = user.isActive == true
+    final statusBgColor = widget.user.isActive == true
         ? TheColors.green.withOpacity(0.1)
         : TheColors.warningColor.withOpacity(0.1);
     final statusTextColor =
-        user.isActive == true ? TheColors.green : TheColors.red;
+        widget.user.isActive == true ? TheColors.green : TheColors.red;
 
     return Card(
       color: TheColors.bgColor,
@@ -74,12 +92,12 @@ class UserCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
         side: BorderSide(
-          color: isSelected ? TheColors.primaryColor : TheColors.gray,
-          width: isSelected ? 1.5 : 0.5,
+          color: widget.isSelected ? TheColors.primaryColor : TheColors.gray,
+          width: widget.isSelected ? 1.5 : 0.5,
         ),
       ),
       child: InkWell(
-        onTap: onTap,
+        onTap: widget.onTap,
         borderRadius: BorderRadius.circular(16),
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -99,15 +117,15 @@ class UserCard extends StatelessWidget {
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                         colors: [
-                          _getRoleColor(user.roleName).withOpacity(0.8),
-                          _getRoleColor(user.roleName).withOpacity(0.4),
+                          _getRoleColor(widget.user.roleName).withOpacity(0.8),
+                          _getRoleColor(widget.user.roleName).withOpacity(0.4),
                         ],
                       ),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Center(
                       child: Text(
-                        _getInitials(user.name),
+                        _getInitials(widget.user.name),
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -132,8 +150,8 @@ class UserCard extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    user.name ?? 'No Name',
-                                    style: TextStyle(
+                                    widget.user.name ?? 'No Name',
+                                    style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,
                                       color: TheColors.white,
@@ -143,7 +161,7 @@ class UserCard extends StatelessWidget {
                                   ),
                                   SizedBox(height: 2),
                                   Text(
-                                    '@${user.username ?? 'N/A'}',
+                                    '@${widget.user.username ?? 'N/A'}',
                                     style: TextStyle(
                                       fontSize: 13,
                                       color: TheColors.white,
@@ -154,43 +172,191 @@ class UserCard extends StatelessWidget {
                             ),
 
                             // Status badge
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 4,
-                              ),
-                              decoration: BoxDecoration(
-                                color: statusBgColor,
-                                borderRadius: BorderRadius.circular(20),
-                                border: Border.all(
-                                  color: statusTextColor.withOpacity(0.3),
-                                  width: 1,
+                            Column(
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 10,
+                                    vertical: 4,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: statusBgColor,
+                                    borderRadius: BorderRadius.circular(20),
+                                    border: Border.all(
+                                      color: statusTextColor.withOpacity(0.3),
+                                      width: 1,
+                                    ),
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Container(
+                                        width: 8,
+                                        height: 8,
+                                        decoration: BoxDecoration(
+                                          color: statusTextColor,
+                                          shape: BoxShape.circle,
+                                        ),
+                                      ),
+                                      SizedBox(width: 6),
+                                      Text(
+                                        widget.user.isActive == true
+                                            ? 'Active'
+                                            : 'Inactive',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: statusTextColor,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Container(
-                                    width: 8,
-                                    height: 8,
-                                    decoration: BoxDecoration(
-                                      color: statusTextColor,
-                                      shape: BoxShape.circle,
+                                InkWell(
+                                  onTap: () {
+                                    Get.defaultDialog(
+                                      title: "ប្រមូលប្រាក់",
+                                      titleStyle: TextStyles.moul(context,
+                                          fontSize: 16,
+                                          color: TheColors.warningColor),
+                                      backgroundColor:
+                                          TheColors.bgColor, // important
+                                      content: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Container(
+                                          padding: const EdgeInsets.all(16),
+                                          decoration: BoxDecoration(
+                                            color: TheColors.bgColor,
+                                            borderRadius:
+                                                BorderRadius.circular(16),
+                                            border: Border.all(
+                                              color: TheColors.gray,
+                                              width: 1.2,
+                                            ),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.black
+                                                    .withOpacity(0.15),
+                                                blurRadius: 12,
+                                                offset: const Offset(0, 6),
+                                              ),
+                                            ],
+                                          ),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Text(
+                                                "តេីអ្នកពិតជាចង់កែប្រែពាក្យសម្ងាត់មែនទេ?",
+                                                style: TextStyles.siemreap(
+                                                    context),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                              const SizedBox(height: 10),
+                                              CustomTextField(
+                                                  controller:
+                                                      newpasswordcontroller,
+                                                  hintText: "ពាក្យសម្ងាត់ថ្មី"),
+                                              const SizedBox(height: 20),
+                                              Row(
+                                                children: [
+                                                  Expanded(
+                                                    child: OutlinedButton(
+                                                      onPressed: () =>
+                                                          Get.back(),
+                                                      style: OutlinedButton
+                                                          .styleFrom(
+                                                        side: const BorderSide(
+                                                            color:
+                                                                TheColors.red),
+                                                        shape:
+                                                            RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                        ),
+                                                      ),
+                                                      child: Text("ចាកចេញ",
+                                                          style: TextStyles
+                                                              .siemreap(context,
+                                                                  fontSize: 12,
+                                                                  color: TheColors
+                                                                      .white)),
+                                                    ),
+                                                  ),
+                                                  const SizedBox(width: 12),
+                                                  Expanded(
+                                                    child: Obx(() {
+                                                      return ElevatedButton(
+                                                        onPressed:
+                                                            controller.isLoading
+                                                                    .value
+                                                                ? null
+                                                                : () async {
+                                                                    await controller.changepassword(
+                                                                        id: widget
+                                                                            .user
+                                                                            .id!,
+                                                                        password:
+                                                                            newpasswordcontroller.text!);
+                                                                  },
+                                                        style: ElevatedButton
+                                                            .styleFrom(
+                                                          backgroundColor:
+                                                              TheColors.green,
+                                                          shape:
+                                                              RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10),
+                                                          ),
+                                                        ),
+                                                        child: controller
+                                                                .isLoading.value
+                                                            ? const SizedBox(
+                                                                width: 20,
+                                                                height: 20,
+                                                                child:
+                                                                    CircularProgressIndicator(
+                                                                  strokeWidth:
+                                                                      2,
+                                                                  color: TheColors
+                                                                      .cutecolo,
+                                                                ),
+                                                              )
+                                                            : Text(
+                                                                "កែប្រែ",
+                                                                style: TextStyles
+                                                                    .siemreap(
+                                                                  context,
+                                                                  fontSize: 12,
+                                                                  color:
+                                                                      TheColors
+                                                                          .white,
+                                                                ),
+                                                              ),
+                                                      );
+                                                    }),
+                                                  ),
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: const Padding(
+                                    padding: EdgeInsets.only(
+                                        left: 8, right: 8, top: 2),
+                                    child: Icon(
+                                      Icons.lock,
+                                      size: 30,
+                                      color: TheColors.pending,
                                     ),
                                   ),
-                                  SizedBox(width: 6),
-                                  Text(
-                                    user.isActive == true
-                                        ? 'Active'
-                                        : 'Inactive',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: statusTextColor,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                )
+                              ],
                             ),
                           ],
                         ),
@@ -204,15 +370,15 @@ class UserCard extends StatelessWidget {
                             vertical: 4,
                           ),
                           decoration: BoxDecoration(
-                            color:
-                                _getRoleColor(user.roleName).withOpacity(0.1),
+                            color: _getRoleColor(widget.user.roleName)
+                                .withOpacity(0.1),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(
-                            user.roleName ?? 'No Role',
+                            widget.user.roleName ?? 'No Role',
                             style: TextStyle(
                               fontSize: 12,
-                              color: _getRoleColor(user.roleName),
+                              color: _getRoleColor(widget.user.roleName),
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -239,21 +405,21 @@ class UserCard extends StatelessWidget {
                   _buildInfoRow(
                     icon: Icons.email_outlined,
                     label: 'Email',
-                    value: user.email ?? 'N/A',
+                    value: widget.user.email ?? 'N/A',
                     iconColor: TheColors.checked,
                   ),
                   SizedBox(height: 12),
                   _buildInfoRow(
                     icon: Icons.phone_outlined,
                     label: 'Phone',
-                    value: user.phone ?? 'N/A',
+                    value: widget.user.phone ?? 'N/A',
                     iconColor: TheColors.checked,
                   ),
                   SizedBox(height: 12),
                   _buildInfoRow(
                     icon: Icons.badge_outlined,
                     label: 'User ID',
-                    value: '#${user.id?.toString() ?? 'N/A'}',
+                    value: '#${widget.user.id?.toString() ?? 'N/A'}',
                     iconColor: TheColors.green,
                     valueColor: TheColors.checked,
                     isMonospace: true,
@@ -264,13 +430,13 @@ class UserCard extends StatelessWidget {
               SizedBox(height: 16),
 
               // Action buttons with better styling
-              if (onEdit != null || onDelete != null)
+              if (widget.onEdit != null || widget.onDelete != null)
                 Row(
                   children: [
-                    if (onEdit != null)
+                    if (widget.onEdit != null)
                       Expanded(
                         child: OutlinedButton.icon(
-                          onPressed: onEdit,
+                          onPressed: widget.onEdit,
                           icon: Icon(Icons.edit_outlined, size: 18),
                           label: Padding(
                             padding: const EdgeInsets.all(6.0),
@@ -290,16 +456,17 @@ class UserCard extends StatelessWidget {
                           ),
                         ),
                       ),
-                    if (onEdit != null && onDelete != null) SizedBox(width: 12),
-                    if (onDelete != null)
+                    if (widget.onEdit != null && widget.onDelete != null)
+                      SizedBox(width: 12),
+                    if (widget.onDelete != null)
                       Expanded(
                         child: OutlinedButton.icon(
-                          onPressed: onDelete,
+                          onPressed: widget.onDelete,
                           icon: Icon(Icons.delete_outline, size: 18),
                           label: Padding(
                             padding: const EdgeInsets.all(6.0),
                             child: Text(
-                              user.isActive == true ? "លុប" : "បេីកវិញ",
+                              widget.user.isActive == true ? "លុប" : "បេីកវិញ",
                               style: TextStyles.siemreap(context,
                                   fontweight: FontWeight.w500),
                             ),

@@ -60,6 +60,17 @@ class Userservice {
     }
   }
 
+  Future<bool> changepassword(
+      {required String newpassword, required int id}) async {
+    try {
+      final body = {'new_password': newpassword};
+      final res = await apiProvider.put(ApiEndpoint.resetpassword(id), body);
+      return res.statusCode == 200 || res.statusCode == 201;
+    } catch (e) {
+      throw Exception("Failed ${e.toString()}");
+    }
+  }
+
   Future<bool> changestatususer({required int id}) async {
     try {
       final update = await apiProvider.put(ApiEndpoint.changestatususer(id), 1);

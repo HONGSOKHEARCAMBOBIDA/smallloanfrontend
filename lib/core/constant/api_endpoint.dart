@@ -18,6 +18,7 @@ class ApiEndpoint {
   static const String viewrole = "viewrole";
   static const String register = "adduser";
   static String updateuser(int id) => "edituser/$id";
+  static String resetpassword(int id) => "resetpassword/$id";
   static String changestatususer(int id) => "changestatususer/$id";
   static String editjournal(int id) => "editjournal/$id";
   static String deletejournal(int id) => "deletejournal/$id";
